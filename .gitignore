@@ -1,0 +1,23 @@
+# Папки сборки
+bin/
+obj/
+
+# Файлы сборки
+*.exe
+*.pdb
+*.dll
+*.dll.mdb
+
+# Локальные настройки
+devices.json
+
+# Временные файлы
+*.user
+*.suo
+*.cache
+*.tmp
+
+# Файлы IDE
+.vs/
+.idea/
+*.csproj.user
