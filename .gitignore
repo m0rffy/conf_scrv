@@ -3,9 +3,6 @@ obj/
 
 # Файлы сборки
 *.exe
-*.pdb
-*.dll
-*.dll.mdb
 
 # Локальные настройки
 devices.json
