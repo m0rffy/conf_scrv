@@ -1,4 +1,5 @@
 ﻿using ModBusHelper;
+using OfficeOpenXml;
 using System.Data;
 using System.Globalization;
 
@@ -10,7 +11,6 @@ namespace Uetm_2_0
         private ModBusProfile profileHelper = new ModBusProfile();
         private DataTable journalTable;
         private List<ModBusProfile.journal_record> records;
-        
 
         public UcJournal(ConfiguratorForm mainForm)
         {
@@ -18,19 +18,16 @@ namespace Uetm_2_0
             this.Dock = DockStyle.Fill;
             this.mainForm = mainForm;
 
-          
-
             journalTable = new DataTable();
             journalTable.Columns.Add("№", typeof(int));
             journalTable.Columns.Add("Тип события", typeof(string));
-            journalTable.Columns.Add("Канал", typeof(string));   // строка
+            journalTable.Columns.Add("Канал", typeof(string));
             journalTable.Columns.Add("Дата и время", typeof(string));
             journalTable.Columns.Add("Действующее значение тока (А)", typeof(float));
             journalTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
 
             journalDataGridView.DataSource = journalTable;
             journalDataGridView.AutoGenerateColumns = true;
-            journalDataGridView.DataError += (s, e) => e.ThrowException = false;
         }
 
         private string ChannelNumberToLetter(int number)
@@ -68,7 +65,7 @@ namespace Uetm_2_0
                         idx++;
                     }
                 }
-                MessageBox.Show($"Загружено {journalTable.Rows.Count} записей.");
+                MessageBox.Show($"Загружено {journalTable.Rows.Count} записей");
             }
             catch (Exception ex)
             {
@@ -78,36 +75,167 @@ namespace Uetm_2_0
 
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            if (journalTable.Rows.Count == 0)
-            {
-                MessageBox.Show("Нет данных для экспорта.");
-                return;
-            }
             using (SaveFileDialog sfd = new SaveFileDialog())
             {
-                sfd.Filter = "CSV файлы (*.csv)|*.csv";
-                sfd.DefaultExt = "csv";
+                sfd.Filter = "Excel файлы (*.xlsx)|*.xlsx";
+                sfd.DefaultExt = "xlsx";
                 if (sfd.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        using (StreamWriter sw = new StreamWriter(sfd.FileName, false, System.Text.Encoding.UTF8))
+                        // Установка лицензии для EPPlus 8 (некоммерческое использование)
+                        ExcelPackage.License.SetNonCommercialPersonal("Пользователь UETM");
+
+                        using (var package = new ExcelPackage())
                         {
-                            sw.WriteLine(string.Join(";", "№", "Тип события", "Канал", "Дата и время", "Ток (А)", "Ресурс (%)"));
-                            foreach (DataRow row in journalTable.Rows)
-                            {
-                                sw.WriteLine(string.Join(";", row[0], row[1], row[2], row[3], row[4], row[5]));
-                            }
+                            // Лист "Состояние"
+                            var wsState = package.Workbook.Worksheets.Add("Состояние");
+                            FillStateSheet(wsState);
+
+                            // Лист "Общие настройки"
+                            var wsGeneral = package.Workbook.Worksheets.Add("Общие настройки");
+                            FillGeneralSheet(wsGeneral);
+
+                            // Лист "Сетевые настройки"
+                            var wsNetwork = package.Workbook.Worksheets.Add("Сетевые настройки");
+                            FillNetworkSheet(wsNetwork);
+
+                            // Лист "Журнал"
+                            var wsJournal = package.Workbook.Worksheets.Add("Журнал");
+                            FillJournalSheet(wsJournal);
+
+                            FileInfo fi = new FileInfo(sfd.FileName);
+                            package.SaveAs(fi);
                         }
-                        MessageBox.Show("Экспорт выполнен.");
+                        MessageBox.Show("Экспорт завершён", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        MessageBox.Show($"Ошибка экспорта: {ex.Message}");
+                        MessageBox.Show($"Ошибка экспорта: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
         }
 
+        private void FillStateSheet(ExcelWorksheet ws)
+        {
+            ws.Cells[1, 1].Value = "Параметр";
+            ws.Cells[1, 2].Value = "Значение";
+            int row = 2;
+
+            ws.Cells[row, 1].Value = "Статус устройства";
+            ws.Cells[row, 2].Value = mainForm.ucManagement.GetDeviceStatusText();
+            row++;
+            ws.Cells[row, 1].Value = "Синхронизация PTP";
+            ws.Cells[row, 2].Value = mainForm.ucManagement.GetSyncStatusText();
+            row++;
+            ws.Cells[row, 1].Value = "Состояние RTC";
+            ws.Cells[row, 2].Value = mainForm.ucManagement.GetRtcStatusText();
+            row++;
+            ws.Cells[row, 1].Value = "Время устройства";
+            ws.Cells[row, 2].Value = mainForm.ucManagement.GetDeviceTimeText();
+            row++;
+            ws.Cells[row, 1].Value = "Серийный номер";
+            ws.Cells[row, 2].Value = mainForm.ucManagement.GetSerialNumberText();
+            row++;
+            ws.Cells[row, 1].Value = "Версия прошивки";
+            ws.Cells[row, 2].Value = mainForm.ucManagement.GetFirmwareVersionText();
+            row += 2;
+
+            // Действующие значения тока
+            ws.Cells[row, 1].Value = "Действующие значения тока";
+            row++;
+            ws.Cells[row, 1].Value = "Канал";
+            ws.Cells[row, 2].Value = "Значение (А)";
+            DataTable rms = mainForm.ucManagement.GetRmsDataTable();
+            int rmsRow = row + 1;
+            foreach (DataRow dr in rms.Rows)
+            {
+                ws.Cells[rmsRow, 1].Value = dr[0].ToString();
+                ws.Cells[rmsRow, 2].Value = Convert.ToDouble(dr[1]);
+                rmsRow++;
+            }
+
+            row = rmsRow + 2;
+            ws.Cells[row, 1].Value = "Ресурс выключателя";
+            row++;
+            ws.Cells[row, 1].Value = "Канал";
+            ws.Cells[row, 2].Value = "Ресурс (%)";
+            ws.Cells[row, 3].Value = "Отключений";
+            ws.Cells[row, 4].Value = "Включений";
+            DataTable cntv = mainForm.ucManagement.GetCntvDataTable();
+            int cntvRow = row + 1;
+            foreach (DataRow dr in cntv.Rows)
+            {
+                ws.Cells[cntvRow, 1].Value = dr[0].ToString();
+                ws.Cells[cntvRow, 2].Value = Convert.ToDouble(dr[1]);
+                ws.Cells[cntvRow, 3].Value = Convert.ToInt32(dr[2]);
+                ws.Cells[cntvRow, 4].Value = Convert.ToInt32(dr[3]);
+                cntvRow++;
+            }
+
+            ws.Cells.AutoFitColumns();
+        }
+
+        private void FillGeneralSheet(ExcelWorksheet ws)
+        {
+            var dict = mainForm.ucGeneral.GetGeneralSettingsDictionary();
+            int row = 1;
+            foreach (var kvp in dict)
+            {
+                ws.Cells[row, 1].Value = kvp.Key;
+                ws.Cells[row, 2].Value = kvp.Value;
+                row++;
+            }
+
+            row++;
+            ws.Cells[row, 1].Value = "Задержки срабатывания (мс)";
+            row++;
+            ws.Cells[row, 1].Value = "Канал";
+            ws.Cells[row, 2].Value = "Отключение";
+            ws.Cells[row, 3].Value = "Включение";
+            DataTable delay = mainForm.ucGeneral.GetDelayTable();
+            int delayRow = row + 1;
+            foreach (DataRow dr in delay.Rows)
+            {
+                ws.Cells[delayRow, 1].Value = dr[0].ToString();
+                ws.Cells[delayRow, 2].Value = dr[1].ToString();
+                ws.Cells[delayRow, 3].Value = dr[2].ToString();
+                delayRow++;
+            }
+
+            ws.Cells.AutoFitColumns();
+        }
+
+        private void FillNetworkSheet(ExcelWorksheet ws)
+        {
+            var dict = mainForm.ucNetwork.GetNetworkSettingsDictionary();
+            int row = 1;
+            foreach (var kvp in dict)
+            {
+                ws.Cells[row, 1].Value = kvp.Key;
+                ws.Cells[row, 2].Value = kvp.Value;
+                row++;
+            }
+            ws.Cells.AutoFitColumns();
+        }
+
+        private void FillJournalSheet(ExcelWorksheet ws)
+        {
+            if (journalTable.Rows.Count == 0)
+            {
+                ws.Cells[1, 1].Value = "Нет записей в журнале";
+                return;
+            }
+
+            for (int i = 0; i < journalTable.Columns.Count; i++)
+                ws.Cells[1, i + 1].Value = journalTable.Columns[i].ColumnName;
+
+            for (int i = 0; i < journalTable.Rows.Count; i++)
+                for (int j = 0; j < journalTable.Columns.Count; j++)
+                    ws.Cells[i + 2, j + 1].Value = journalTable.Rows[i][j]?.ToString();
+
+            ws.Cells.AutoFitColumns();
+        }
     }
 }

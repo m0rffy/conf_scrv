@@ -52,6 +52,19 @@ namespace Uetm_2_0
             ptpIdTextBox.Text = settings.syns.ptps.id.clkId ?? "-";
         }
 
+        public Dictionary<string, string> GetNetworkSettingsDictionary()
+        {
+            return new Dictionary<string, string>
+            {
+                ["MAC-адрес"] = macTextBox.Text,
+                ["IP-адрес"] = ipTextBox.Text,
+                ["Маска подсети"] = maskTextBox.Text,
+                ["PTP MAC-адрес мастера"] = ptpMasterMacTextBox.Text,
+                ["PTP порт"] = ptpPortTextBox.Text,
+                ["PTP идентификатор"] = ptpIdTextBox.Text
+            };
+        }
+
         public void SaveToDatabase()
         {
             if (Database.CurrentRole != "Администратор") return;

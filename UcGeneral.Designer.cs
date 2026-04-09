@@ -21,20 +21,14 @@
             tableLayoutPanelMain = new TableLayoutPanel();
             groupBoxBreakerInfo = new GroupBox();
             tableLayoutBreakerInfo = new TableLayoutPanel();
+            labelSwitchType = new Label();
+            switchTypeComboBox = new ComboBox();
             labelNominalCurrent = new Label();
             nominalCurrentTextBox = new TextBox();
-            labelSwitchType = new Label();
-            maxCurrentTextBox = new TextBox();
-            switchTypeComboBox = new ComboBox();
             labelMaxCurrent = new Label();
+            maxCurrentTextBox = new TextBox();
             groupBoxInstallation = new GroupBox();
             tableLayoutInstallation = new TableLayoutPanel();
-            switchModelTextBox = new TextBox();
-            labelInstallationPlace = new Label();
-            installationPlaceTextBox = new TextBox();
-            labelSwitchLabel = new Label();
-            switchLabelTextBox = new TextBox();
-            label1 = new Label();
             groupBoxPrimaryCT = new GroupBox();
             tableLayoutPrimaryCT = new TableLayoutPanel();
             secondaryCurrentTextBox = new TextBox();
@@ -69,6 +63,12 @@
             labelC4 = new Label();
             groupBoxDelay = new GroupBox();
             delayDataGridView = new DataGridView();
+            installationPlaceTextBox = new TextBox();
+            labelInstallationPlace = new Label();
+            switchLabelTextBox = new TextBox();
+            labelSwitchLabel = new Label();
+            label1 = new Label();
+            switchModelTextBox = new TextBox();
             tableLayoutPanelMain.SuspendLayout();
             groupBoxBreakerInfo.SuspendLayout();
             tableLayoutBreakerInfo.SuspendLayout();
@@ -120,11 +120,11 @@
             groupBoxBreakerInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxBreakerInfo.Controls.Add(tableLayoutBreakerInfo);
             groupBoxBreakerInfo.Font = new Font("Times New Roman", 14F);
-            groupBoxBreakerInfo.Location = new Point(4, 16);
+            groupBoxBreakerInfo.Location = new Point(4, 19);
             groupBoxBreakerInfo.Margin = new Padding(4);
             groupBoxBreakerInfo.Name = "groupBoxBreakerInfo";
             groupBoxBreakerInfo.Padding = new Padding(4);
-            groupBoxBreakerInfo.Size = new Size(534, 155);
+            groupBoxBreakerInfo.Size = new Size(507, 149);
             groupBoxBreakerInfo.TabIndex = 0;
             groupBoxBreakerInfo.TabStop = false;
             groupBoxBreakerInfo.Text = "Информация о выключателе";
@@ -137,30 +137,55 @@
             tableLayoutBreakerInfo.ColumnCount = 2;
             tableLayoutBreakerInfo.ColumnStyles.Add(new ColumnStyle());
             tableLayoutBreakerInfo.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutBreakerInfo.Controls.Add(labelNominalCurrent, 0, 0);
-            tableLayoutBreakerInfo.Controls.Add(nominalCurrentTextBox, 1, 0);
             tableLayoutBreakerInfo.Controls.Add(labelSwitchType, 0, 2);
-            tableLayoutBreakerInfo.Controls.Add(maxCurrentTextBox, 1, 1);
             tableLayoutBreakerInfo.Controls.Add(switchTypeComboBox, 1, 2);
-            tableLayoutBreakerInfo.Controls.Add(labelMaxCurrent, 0, 1);
+            tableLayoutBreakerInfo.Controls.Add(labelNominalCurrent, 0, 3);
+            tableLayoutBreakerInfo.Controls.Add(nominalCurrentTextBox, 1, 3);
+            tableLayoutBreakerInfo.Controls.Add(labelMaxCurrent, 0, 4);
+            tableLayoutBreakerInfo.Controls.Add(maxCurrentTextBox, 1, 4);
             tableLayoutBreakerInfo.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutBreakerInfo.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutBreakerInfo.Location = new Point(3, 26);
+            tableLayoutBreakerInfo.Location = new Point(10, 33);
             tableLayoutBreakerInfo.Margin = new Padding(4);
             tableLayoutBreakerInfo.Name = "tableLayoutBreakerInfo";
-            tableLayoutBreakerInfo.RowCount = 3;
+            tableLayoutBreakerInfo.RowCount = 5;
             tableLayoutBreakerInfo.RowStyles.Add(new RowStyle());
             tableLayoutBreakerInfo.RowStyles.Add(new RowStyle());
             tableLayoutBreakerInfo.RowStyles.Add(new RowStyle());
-            tableLayoutBreakerInfo.Size = new Size(525, 103);
+            tableLayoutBreakerInfo.RowStyles.Add(new RowStyle());
+            tableLayoutBreakerInfo.RowStyles.Add(new RowStyle());
+            tableLayoutBreakerInfo.Size = new Size(475, 103);
             tableLayoutBreakerInfo.TabIndex = 0;
+            // 
+            // labelSwitchType
+            // 
+            labelSwitchType.Anchor = AnchorStyles.Left;
+            labelSwitchType.AutoSize = true;
+            labelSwitchType.Location = new Point(4, 8);
+            labelSwitchType.Margin = new Padding(4, 0, 4, 0);
+            labelSwitchType.Name = "labelSwitchType";
+            labelSwitchType.Size = new Size(132, 19);
+            labelSwitchType.TabIndex = 4;
+            labelSwitchType.Text = "Тип выключателя:";
+            // 
+            // switchTypeComboBox
+            // 
+            switchTypeComboBox.Anchor = AnchorStyles.None;
+            switchTypeComboBox.BackColor = Color.LightGray;
+            switchTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            switchTypeComboBox.Items.AddRange(new object[] { "ВГТ-35", "ВГТ-110", "ВЭБ-110", "ВГТ-220", "ВГТ-330", "ВГТ-750", "ВГК-500", "ВГТ-1А1-220-40-3150", "ВЭБ-220-50", "ВГБ-35-12,5-С1", "ВГБ-35-12,5-С2", "ВГТ-500-40-3150", "ВГТ-500-50-3150", "Пользовательский" });
+            switchTypeComboBox.Location = new Point(314, 4);
+            switchTypeComboBox.Margin = new Padding(4);
+            switchTypeComboBox.Name = "switchTypeComboBox";
+            switchTypeComboBox.Size = new Size(157, 27);
+            switchTypeComboBox.TabIndex = 5;
             // 
             // labelNominalCurrent
             // 
             labelNominalCurrent.Anchor = AnchorStyles.Left;
             labelNominalCurrent.AutoSize = true;
             labelNominalCurrent.Font = new Font("Times New Roman", 12F);
-            labelNominalCurrent.Location = new Point(4, 7);
+            labelNominalCurrent.Location = new Point(4, 42);
             labelNominalCurrent.Margin = new Padding(4, 0, 4, 0);
             labelNominalCurrent.Name = "labelNominalCurrent";
             labelNominalCurrent.Size = new Size(155, 19);
@@ -171,57 +196,34 @@
             // 
             nominalCurrentTextBox.Anchor = AnchorStyles.None;
             nominalCurrentTextBox.Enabled = false;
-            nominalCurrentTextBox.Location = new Point(340, 4);
+            nominalCurrentTextBox.Location = new Point(314, 39);
             nominalCurrentTextBox.Margin = new Padding(4);
             nominalCurrentTextBox.Name = "nominalCurrentTextBox";
             nominalCurrentTextBox.ReadOnly = true;
-            nominalCurrentTextBox.Size = new Size(154, 26);
+            nominalCurrentTextBox.Size = new Size(156, 26);
             nominalCurrentTextBox.TabIndex = 1;
             nominalCurrentTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // labelSwitchType
-            // 
-            labelSwitchType.Anchor = AnchorStyles.Left;
-            labelSwitchType.AutoSize = true;
-            labelSwitchType.Location = new Point(4, 76);
-            labelSwitchType.Margin = new Padding(4, 0, 4, 0);
-            labelSwitchType.Name = "labelSwitchType";
-            labelSwitchType.Size = new Size(132, 19);
-            labelSwitchType.TabIndex = 4;
-            labelSwitchType.Text = "Тип выключателя:";
-            // 
-            // maxCurrentTextBox
-            // 
-            maxCurrentTextBox.Anchor = AnchorStyles.None;
-            maxCurrentTextBox.Location = new Point(342, 38);
-            maxCurrentTextBox.Margin = new Padding(4);
-            maxCurrentTextBox.Name = "maxCurrentTextBox";
-            maxCurrentTextBox.Size = new Size(151, 26);
-            maxCurrentTextBox.TabIndex = 3;
-            maxCurrentTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // switchTypeComboBox
-            // 
-            switchTypeComboBox.Anchor = AnchorStyles.None;
-            switchTypeComboBox.BackColor = Color.LightGray;
-            switchTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            switchTypeComboBox.Items.AddRange(new object[] { "ВГТ-35", "ВГТ-110", "ВЭБ-110", "ВГТ-220", "ВГТ-330", "ВГТ-750", "ВГК-500", "ВГТ-1А1-220-40-3150", "ВЭБ-220-50", "ВГБ-35-12,5-С1", "ВГБ-35-12,5-С2", "ВГТ-500-40-3150", "ВГТ-500-50-3150", "Пользовательский" });
-            switchTypeComboBox.Location = new Point(314, 72);
-            switchTypeComboBox.Margin = new Padding(4);
-            switchTypeComboBox.Name = "switchTypeComboBox";
-            switchTypeComboBox.Size = new Size(207, 27);
-            switchTypeComboBox.TabIndex = 5;
             // 
             // labelMaxCurrent
             // 
             labelMaxCurrent.Anchor = AnchorStyles.Left;
             labelMaxCurrent.Font = new Font("Times New Roman", 12F);
-            labelMaxCurrent.Location = new Point(4, 40);
+            labelMaxCurrent.Location = new Point(4, 75);
             labelMaxCurrent.Margin = new Padding(4, 0, 4, 0);
             labelMaxCurrent.Name = "labelMaxCurrent";
             labelMaxCurrent.Size = new Size(302, 22);
             labelMaxCurrent.TabIndex = 2;
             labelMaxCurrent.Text = "Номинальный ток отключения, кА:";
+            // 
+            // maxCurrentTextBox
+            // 
+            maxCurrentTextBox.Anchor = AnchorStyles.None;
+            maxCurrentTextBox.Location = new Point(315, 73);
+            maxCurrentTextBox.Margin = new Padding(4);
+            maxCurrentTextBox.Name = "maxCurrentTextBox";
+            maxCurrentTextBox.Size = new Size(154, 26);
+            maxCurrentTextBox.TabIndex = 3;
+            maxCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // groupBoxInstallation
             // 
@@ -229,11 +231,11 @@
             groupBoxInstallation.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxInstallation.Controls.Add(tableLayoutInstallation);
             groupBoxInstallation.Font = new Font("Times New Roman", 14F);
-            groupBoxInstallation.Location = new Point(5, 192);
+            groupBoxInstallation.Location = new Point(9, 192);
             groupBoxInstallation.Margin = new Padding(4);
             groupBoxInstallation.Name = "groupBoxInstallation";
             groupBoxInstallation.Padding = new Padding(4);
-            groupBoxInstallation.Size = new Size(532, 146);
+            groupBoxInstallation.Size = new Size(496, 146);
             groupBoxInstallation.TabIndex = 2;
             groupBoxInstallation.TabStop = false;
             groupBoxInstallation.Text = "Место установки";
@@ -245,87 +247,24 @@
             tableLayoutInstallation.ColumnCount = 2;
             tableLayoutInstallation.ColumnStyles.Add(new ColumnStyle());
             tableLayoutInstallation.ColumnStyles.Add(new ColumnStyle());
-            tableLayoutInstallation.Controls.Add(switchModelTextBox, 1, 2);
-            tableLayoutInstallation.Controls.Add(labelInstallationPlace, 0, 1);
-            tableLayoutInstallation.Controls.Add(installationPlaceTextBox, 1, 1);
-            tableLayoutInstallation.Controls.Add(labelSwitchLabel, 0, 4);
-            tableLayoutInstallation.Controls.Add(switchLabelTextBox, 1, 4);
-            tableLayoutInstallation.Controls.Add(label1, 0, 2);
+            tableLayoutInstallation.Controls.Add(switchModelTextBox, 1, 1);
+            tableLayoutInstallation.Controls.Add(labelInstallationPlace, 0, 0);
+            tableLayoutInstallation.Controls.Add(installationPlaceTextBox, 1, 0);
+            tableLayoutInstallation.Controls.Add(labelSwitchLabel, 0, 2);
+            tableLayoutInstallation.Controls.Add(switchLabelTextBox, 1, 2);
+            tableLayoutInstallation.Controls.Add(label1, 0, 1);
             tableLayoutInstallation.Font = new Font("Times New Roman", 12F);
             tableLayoutInstallation.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutInstallation.Location = new Point(2, 31);
+            tableLayoutInstallation.Location = new Point(17, 31);
             tableLayoutInstallation.Margin = new Padding(4);
             tableLayoutInstallation.Name = "tableLayoutInstallation";
-            tableLayoutInstallation.RowCount = 5;
+            tableLayoutInstallation.RowCount = 3;
             tableLayoutInstallation.RowStyles.Add(new RowStyle());
             tableLayoutInstallation.RowStyles.Add(new RowStyle());
             tableLayoutInstallation.RowStyles.Add(new RowStyle());
-            tableLayoutInstallation.RowStyles.Add(new RowStyle());
-            tableLayoutInstallation.RowStyles.Add(new RowStyle());
-            tableLayoutInstallation.Size = new Size(460, 100);
+            tableLayoutInstallation.RowStyles.Add(new RowStyle(SizeType.Absolute, 20F));
+            tableLayoutInstallation.Size = new Size(457, 100);
             tableLayoutInstallation.TabIndex = 0;
-            // 
-            // switchModelTextBox
-            // 
-            switchModelTextBox.Anchor = AnchorStyles.None;
-            switchModelTextBox.Location = new Point(206, 37);
-            switchModelTextBox.Name = "switchModelTextBox";
-            switchModelTextBox.Size = new Size(250, 26);
-            switchModelTextBox.TabIndex = 1;
-            switchModelTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // labelInstallationPlace
-            // 
-            labelInstallationPlace.Anchor = AnchorStyles.Left;
-            labelInstallationPlace.AutoSize = true;
-            labelInstallationPlace.Location = new Point(4, 7);
-            labelInstallationPlace.Margin = new Padding(4, 0, 4, 0);
-            labelInstallationPlace.Name = "labelInstallationPlace";
-            labelInstallationPlace.Size = new Size(128, 19);
-            labelInstallationPlace.TabIndex = 2;
-            labelInstallationPlace.Text = "Место установки:";
-            // 
-            // installationPlaceTextBox
-            // 
-            installationPlaceTextBox.Anchor = AnchorStyles.None;
-            installationPlaceTextBox.BorderStyle = BorderStyle.FixedSingle;
-            installationPlaceTextBox.Location = new Point(208, 4);
-            installationPlaceTextBox.Margin = new Padding(4);
-            installationPlaceTextBox.Name = "installationPlaceTextBox";
-            installationPlaceTextBox.Size = new Size(245, 26);
-            installationPlaceTextBox.TabIndex = 3;
-            installationPlaceTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // labelSwitchLabel
-            // 
-            labelSwitchLabel.Anchor = AnchorStyles.Left;
-            labelSwitchLabel.AutoSize = true;
-            labelSwitchLabel.Location = new Point(4, 73);
-            labelSwitchLabel.Margin = new Padding(4, 0, 4, 0);
-            labelSwitchLabel.Name = "labelSwitchLabel";
-            labelSwitchLabel.Size = new Size(194, 19);
-            labelSwitchLabel.TabIndex = 6;
-            labelSwitchLabel.Text = "Обозначение выключателя:";
-            // 
-            // switchLabelTextBox
-            // 
-            switchLabelTextBox.Anchor = AnchorStyles.None;
-            switchLabelTextBox.Location = new Point(206, 70);
-            switchLabelTextBox.Margin = new Padding(4);
-            switchLabelTextBox.Name = "switchLabelTextBox";
-            switchLabelTextBox.Size = new Size(250, 26);
-            switchLabelTextBox.TabIndex = 7;
-            switchLabelTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
-            // label1
-            // 
-            label1.Anchor = AnchorStyles.Left;
-            label1.AutoSize = true;
-            label1.Location = new Point(3, 40);
-            label1.Name = "label1";
-            label1.Size = new Size(94, 19);
-            label1.TabIndex = 1;
-            label1.Text = "Тип изделия";
             // 
             // groupBoxPrimaryCT
             // 
@@ -333,11 +272,11 @@
             groupBoxPrimaryCT.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPrimaryCT.Controls.Add(tableLayoutPrimaryCT);
             groupBoxPrimaryCT.Font = new Font("Times New Roman", 14F);
-            groupBoxPrimaryCT.Location = new Point(41, 351);
+            groupBoxPrimaryCT.Location = new Point(54, 351);
             groupBoxPrimaryCT.Margin = new Padding(4);
             groupBoxPrimaryCT.Name = "groupBoxPrimaryCT";
             groupBoxPrimaryCT.Padding = new Padding(4);
-            groupBoxPrimaryCT.Size = new Size(460, 114);
+            groupBoxPrimaryCT.Size = new Size(406, 114);
             groupBoxPrimaryCT.TabIndex = 4;
             groupBoxPrimaryCT.TabStop = false;
             groupBoxPrimaryCT.Text = "Первичный датчик (трансформатор тока)";
@@ -411,11 +350,11 @@
             groupBoxDebounce.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxDebounce.Controls.Add(tableLayoutDebounce);
             groupBoxDebounce.Font = new Font("Times New Roman", 14F);
-            groupBoxDebounce.Location = new Point(564, 346);
+            groupBoxDebounce.Location = new Point(617, 346);
             groupBoxDebounce.Margin = new Padding(4);
             groupBoxDebounce.Name = "groupBoxDebounce";
             groupBoxDebounce.Padding = new Padding(4);
-            groupBoxDebounce.Size = new Size(531, 124);
+            groupBoxDebounce.Size = new Size(398, 124);
             groupBoxDebounce.TabIndex = 5;
             groupBoxDebounce.TabStop = false;
             groupBoxDebounce.Text = "Время защиты от дребезга вспомогательного контакта после обнаружения события, мс";
@@ -432,7 +371,7 @@
             tableLayoutDebounce.Controls.Add(labelDebounceOff, 0, 0);
             tableLayoutDebounce.Controls.Add(labelDebounceOn, 0, 1);
             tableLayoutDebounce.Font = new Font("Times New Roman", 12F);
-            tableLayoutDebounce.Location = new Point(138, 48);
+            tableLayoutDebounce.Location = new Point(76, 48);
             tableLayoutDebounce.Margin = new Padding(4);
             tableLayoutDebounce.Name = "tableLayoutDebounce";
             tableLayoutDebounce.RowCount = 2;
@@ -489,7 +428,7 @@
             groupBoxAlgorithm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxAlgorithm.Controls.Add(tableLayoutAlgorithm);
             groupBoxAlgorithm.Font = new Font("Times New Roman", 14F);
-            groupBoxAlgorithm.Location = new Point(558, 4);
+            groupBoxAlgorithm.Location = new Point(544, 4);
             groupBoxAlgorithm.Margin = new Padding(4);
             groupBoxAlgorithm.Name = "groupBoxAlgorithm";
             groupBoxAlgorithm.Padding = new Padding(4);
@@ -565,11 +504,11 @@
             // 
             nominalOperationsTextBox.Anchor = AnchorStyles.None;
             nominalOperationsTextBox.Enabled = false;
-            nominalOperationsTextBox.Location = new Point(400, 38);
+            nominalOperationsTextBox.Location = new Point(401, 38);
             nominalOperationsTextBox.Margin = new Padding(4);
             nominalOperationsTextBox.Name = "nominalOperationsTextBox";
             nominalOperationsTextBox.ReadOnly = true;
-            nominalOperationsTextBox.Size = new Size(114, 26);
+            nominalOperationsTextBox.Size = new Size(112, 26);
             nominalOperationsTextBox.TabIndex = 3;
             nominalOperationsTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -577,11 +516,11 @@
             // 
             warningThresholdTextBox.Anchor = AnchorStyles.None;
             warningThresholdTextBox.Enabled = false;
-            warningThresholdTextBox.Location = new Point(402, 72);
+            warningThresholdTextBox.Location = new Point(400, 72);
             warningThresholdTextBox.Margin = new Padding(4);
             warningThresholdTextBox.Name = "warningThresholdTextBox";
             warningThresholdTextBox.ReadOnly = true;
-            warningThresholdTextBox.Size = new Size(110, 26);
+            warningThresholdTextBox.Size = new Size(114, 26);
             warningThresholdTextBox.TabIndex = 7;
             warningThresholdTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -613,11 +552,11 @@
             // 
             alarmThresholdTextBox.Anchor = AnchorStyles.None;
             alarmThresholdTextBox.Enabled = false;
-            alarmThresholdTextBox.Location = new Point(401, 106);
+            alarmThresholdTextBox.Location = new Point(400, 106);
             alarmThresholdTextBox.Margin = new Padding(4);
             alarmThresholdTextBox.Name = "alarmThresholdTextBox";
             alarmThresholdTextBox.ReadOnly = true;
-            alarmThresholdTextBox.Size = new Size(111, 26);
+            alarmThresholdTextBox.Size = new Size(114, 26);
             alarmThresholdTextBox.TabIndex = 9;
             alarmThresholdTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -627,7 +566,7 @@
             groupBoxCoefficients.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxCoefficients.Controls.Add(tableLayoutCoefficients);
             groupBoxCoefficients.Font = new Font("Times New Roman", 14F);
-            groupBoxCoefficients.Location = new Point(560, 210);
+            groupBoxCoefficients.Location = new Point(546, 210);
             groupBoxCoefficients.Margin = new Padding(4);
             groupBoxCoefficients.Name = "groupBoxCoefficients";
             groupBoxCoefficients.Padding = new Padding(4);
@@ -674,7 +613,6 @@
             c1TextBox.Size = new Size(122, 26);
             c1TextBox.TabIndex = 1;
             c1TextBox.TextAlign = HorizontalAlignment.Center;
-            c1TextBox.TextChanged += c1TextBox_TextChanged;
             // 
             // c4TextBox
             // 
@@ -813,6 +751,68 @@
             delayDataGridView.Size = new Size(727, 124);
             delayDataGridView.TabIndex = 0;
             // 
+            // installationPlaceTextBox
+            // 
+            installationPlaceTextBox.Anchor = AnchorStyles.None;
+            installationPlaceTextBox.BorderStyle = BorderStyle.FixedSingle;
+            installationPlaceTextBox.Location = new Point(207, 4);
+            installationPlaceTextBox.Margin = new Padding(4);
+            installationPlaceTextBox.Name = "installationPlaceTextBox";
+            installationPlaceTextBox.Size = new Size(245, 26);
+            installationPlaceTextBox.TabIndex = 3;
+            installationPlaceTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelInstallationPlace
+            // 
+            labelInstallationPlace.Anchor = AnchorStyles.Left;
+            labelInstallationPlace.AutoSize = true;
+            labelInstallationPlace.Location = new Point(4, 7);
+            labelInstallationPlace.Margin = new Padding(4, 0, 4, 0);
+            labelInstallationPlace.Name = "labelInstallationPlace";
+            labelInstallationPlace.Size = new Size(128, 19);
+            labelInstallationPlace.TabIndex = 2;
+            labelInstallationPlace.Text = "Место установки:";
+            // 
+            // switchLabelTextBox
+            // 
+            switchLabelTextBox.Anchor = AnchorStyles.None;
+            switchLabelTextBox.Location = new Point(206, 70);
+            switchLabelTextBox.Margin = new Padding(4);
+            switchLabelTextBox.Name = "switchLabelTextBox";
+            switchLabelTextBox.Size = new Size(247, 26);
+            switchLabelTextBox.TabIndex = 7;
+            switchLabelTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
+            // labelSwitchLabel
+            // 
+            labelSwitchLabel.Anchor = AnchorStyles.Left;
+            labelSwitchLabel.AutoSize = true;
+            labelSwitchLabel.Location = new Point(4, 73);
+            labelSwitchLabel.Margin = new Padding(4, 0, 4, 0);
+            labelSwitchLabel.Name = "labelSwitchLabel";
+            labelSwitchLabel.Size = new Size(194, 19);
+            labelSwitchLabel.TabIndex = 6;
+            labelSwitchLabel.Text = "Обозначение выключателя:";
+            // 
+            // label1
+            // 
+            label1.Anchor = AnchorStyles.Left;
+            label1.AutoSize = true;
+            label1.Location = new Point(3, 40);
+            label1.Name = "label1";
+            label1.Size = new Size(94, 19);
+            label1.TabIndex = 1;
+            label1.Text = "Тип изделия";
+            // 
+            // switchModelTextBox
+            // 
+            switchModelTextBox.Anchor = AnchorStyles.None;
+            switchModelTextBox.Location = new Point(206, 37);
+            switchModelTextBox.Name = "switchModelTextBox";
+            switchModelTextBox.Size = new Size(247, 26);
+            switchModelTextBox.TabIndex = 1;
+            switchModelTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // UcGeneral
             // 
             AutoScaleDimensions = new SizeF(10F, 21F);
@@ -860,21 +860,13 @@
         private System.Windows.Forms.Label labelNominalCurrent;
         private System.Windows.Forms.TextBox nominalCurrentTextBox;
         private System.Windows.Forms.Label labelSwitchType;
-        private System.Windows.Forms.TextBox maxCurrentTextBox;
         private System.Windows.Forms.ComboBox switchTypeComboBox;
-        private System.Windows.Forms.Label labelMaxCurrent;
         private System.Windows.Forms.Label labelWarningThreshold;
         private System.Windows.Forms.TextBox warningThresholdTextBox;
         private System.Windows.Forms.Label labelAlarmThreshold;
         private System.Windows.Forms.TextBox alarmThresholdTextBox;
         private System.Windows.Forms.GroupBox groupBoxInstallation;
         private System.Windows.Forms.TableLayoutPanel tableLayoutInstallation;
-        private System.Windows.Forms.TextBox switchModelTextBox;
-        private System.Windows.Forms.Label labelInstallationPlace;
-        private System.Windows.Forms.TextBox installationPlaceTextBox;
-        private System.Windows.Forms.Label labelSwitchLabel;
-        private System.Windows.Forms.TextBox switchLabelTextBox;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.GroupBox groupBoxPrimaryCT;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPrimaryCT;
         private System.Windows.Forms.TextBox secondaryCurrentTextBox;
@@ -905,5 +897,13 @@
         private System.Windows.Forms.Label labelC4;
         private System.Windows.Forms.GroupBox groupBoxDelay;
         private System.Windows.Forms.DataGridView delayDataGridView;
+        private Label labelMaxCurrent;
+        private TextBox maxCurrentTextBox;
+        private TextBox switchModelTextBox;
+        private Label labelInstallationPlace;
+        private TextBox installationPlaceTextBox;
+        private Label labelSwitchLabel;
+        private TextBox switchLabelTextBox;
+        private Label label1;
     }
 }

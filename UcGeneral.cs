@@ -272,7 +272,7 @@ namespace Uetm_2_0
             }
             if (innA < 0 || innA > 65000)
             {
-                MessageBox.Show("Номинальный ток должен быть в диапазоне 0–65000 А", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Номинальный ток должен быть в диапазоне 0–65000 (А)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _updating = false;
                 return false;
             }
@@ -287,7 +287,7 @@ namespace Uetm_2_0
             }
             if (imaxKA > 100)
             {
-                MessageBox.Show("Максимальный ток не может превышать 100 кА", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Максимальный ток не может превышать 100 (кА)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _updating = false;
                 return false;
             }
@@ -305,7 +305,7 @@ namespace Uetm_2_0
             }
             if (iotcF < 0 || iotcF > 65000)
             {
-                MessageBox.Show("Ток порога должен быть в диапазоне 0–65000 А", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Ток порога должен быть в диапазоне 0–65000 (А)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _updating = false;
                 return false;
             }
@@ -368,7 +368,7 @@ namespace Uetm_2_0
             }
             if (inom1A < 0 || inom1A > 65000)
             {
-                MessageBox.Show("Первичный ток должен быть в диапазоне 0–65000 А", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Первичный ток должен быть в диапазоне 0–65000 (А)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _updating = false;
                 return false;
             }
@@ -383,7 +383,7 @@ namespace Uetm_2_0
             }
             if (secA < 0 || secA > 10)
             {
-                MessageBox.Show("Вторичный ток должен быть в диапазоне 0–10 А", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Вторичный ток должен быть в диапазоне 0–10 (А)", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _updating = false;
                 return false;
             }
@@ -400,7 +400,7 @@ namespace Uetm_2_0
             }
             if (offdMs * 10 > short.MaxValue || ondMs * 10 > short.MaxValue)
             {
-                MessageBox.Show("Слишком большое значение задержки.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Слишком большое значение задержки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 _updating = false;
                 return false;
             }
@@ -414,13 +414,13 @@ namespace Uetm_2_0
                 if (!TryParseFloat(row[1]?.ToString(), out float offdVal) ||
                     !TryParseFloat(row[2]?.ToString(), out float ondVal))
                 {
-                    MessageBox.Show($"Введите корректные числа для задержек канала {row[0]}.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"Введите корректные числа для задержек канала {row[0]}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     _updating = false;
                     return false;
                 }
                 if (offdVal * 10 > short.MaxValue || ondVal * 10 > short.MaxValue)
                 {
-                    MessageBox.Show($"Слишком большое значение задержки канала {row[0]}.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show($"Слишком большое значение задержки канала {row[0]}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     _updating = false;
                     return false;
                 }
@@ -443,7 +443,7 @@ namespace Uetm_2_0
                     if (!TryParseFloat(newValue, out _))
                     {
                         e.Cancel = true;
-                        MessageBox.Show("Введите число (целое или дробное) с точкой в качестве разделителя.", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                        MessageBox.Show("Введите число (целое или дробное) с точкой в качестве разделителя", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     }
                 }
             }
@@ -475,9 +475,33 @@ namespace Uetm_2_0
                 delayDataGridView.DefaultCellStyle.BackColor = System.Drawing.SystemColors.Control;
         }
 
-        private void c1TextBox_TextChanged(object sender, EventArgs e)
+        public Dictionary<string, string> GetGeneralSettingsDictionary()
         {
-
+            return new Dictionary<string, string>
+            {
+                ["Номинальный ток (А)"] = nominalCurrentTextBox.Text,
+                ["Максимальный ток отключения (кА)"] = maxCurrentTextBox.Text,
+                ["Тип выключателя"] = switchTypeComboBox.Text,
+                ["Обозначение выключателя"] = switchLabelTextBox.Text,
+                ["Марка выключателя"] = switchModelTextBox.Text,
+                ["Ток порога (А)"] = thresholdCurrentTextBox.Text,
+                ["Номинальное кол-во отключений"] = nominalOperationsTextBox.Text,
+                ["C1"] = c1TextBox.Text,
+                ["C2"] = c2TextBox.Text,
+                ["C3"] = c3TextBox.Text,
+                ["C4"] = c4TextBox.Text,
+                ["Место установки"] = installationPlaceTextBox.Text,
+                ["Первичный ток, А"] = primaryCurrentTextBox.Text,
+                ["Вторичный ток, А"] = secondaryCurrentTextBox.Text,
+                ["Задержка дребезга (отключение) (мс)"] = debounceOffTextBox.Text,
+                ["Задержка дребезга (включение) (мс)"] = debounceOnTextBox.Text,
+                ["Порог предупр. сигнализации (%)"] = warningThresholdTextBox.Text,
+                ["Порог аварийной сигнализации (%)"] = alarmThresholdTextBox.Text
+            };
         }
+
+        public DataTable GetDelayTable() => delayTable;
+
+        
     }
 }

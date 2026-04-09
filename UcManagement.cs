@@ -221,18 +221,18 @@ namespace Uetm_2_0
             string ip = ipTextBox.Text.Trim();
             if (!IPAddress.TryParse(ip, out _))
             {
-                MessageBox.Show("Некорректный IP адрес.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Некорректный IP адрес", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             int port;
             if (!int.TryParse(portTextBox.Text, out port) || port < 1 || port > 65535)
             {
-                MessageBox.Show("Некорректный порт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Некорректный порт", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (Database.Devices.Exists(d => d.IP == ip))
             {
-                MessageBox.Show("Устройство с таким IP уже есть в списке.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Устройство с таким IP уже есть в списке", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
             var newDev = new DeviceInfo
@@ -253,7 +253,7 @@ namespace Uetm_2_0
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Требуются права администратора", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -269,9 +269,9 @@ namespace Uetm_2_0
                 {
                     var response = commandsHelper.nulify_swrc(conn.Item2);
                     if (response.Data[0] == 0xFF)
-                        MessageBox.Show("Счётчик ресурса обнулён.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Счётчик ресурса обнулён", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     else
-                        MessageBox.Show("Ошибка обнуления счётчика.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Ошибка обнуления счётчика", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -280,7 +280,7 @@ namespace Uetm_2_0
             }
             else
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Нет подключения к устройству", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -288,19 +288,19 @@ namespace Uetm_2_0
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Требуются права администратора", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Подтверждение установки времени
-            if (MessageBox.Show("Установить новое время на устройстве? Это вызовет перезагрузку.", "Подтверждение",
+            if (MessageBox.Show("Установить новое время на устройстве? Это вызовет перезагрузку", "Подтверждение",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             var conn = mainForm.GetCurrentConnection();
             if (conn?.Item1?.Connected != true)
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Нет подключения к устройству", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -342,20 +342,20 @@ namespace Uetm_2_0
                         var response = commands.upload_settings(conn.Item2, 0x0100);
                         if (response?.Data != null && response.Data[0] == 0xFF)
                         {
-                            MessageBox.Show("Время установлено. Устройство перезагружается.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                            MessageBox.Show("Время установлено. Устройство перезагружается", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             mainForm.Disconnect();
                             var timer = new System.Windows.Forms.Timer();
                             timer.Interval = 5000;
                             timer.Tick += (s, args) =>
                             {
                                 timer.Stop();
-                                MessageBox.Show("Устройство перезагружено. Подключитесь заново.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                                MessageBox.Show("Устройство перезагружено. Подключитесь заново", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                             };
                             timer.Start();
                         }
                         else
                         {
-                            MessageBox.Show("Ошибка сохранения времени. Возможно, устройство не поддерживает запись времени во flash.",
+                            MessageBox.Show("Ошибка сохранения времени. Возможно, устройство не поддерживает запись времени во flash",
                                 "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
@@ -367,16 +367,25 @@ namespace Uetm_2_0
             }
         }
 
+        public DataTable GetRmsDataTable() => rmsTable;
+        public DataTable GetCntvDataTable() => cntvTable;
+        public string GetDeviceStatusText() => deviceStatusLabel.Text;
+        public string GetSyncStatusText() => syncStatusLabel.Text;
+        public string GetRtcStatusText() => rtcStatusLabel.Text;
+        public string GetDeviceTimeText() => deviceTimeLabel.Text;
+        public string GetSerialNumberText() => serialNumberLabel.Text;
+        public string GetFirmwareVersionText() => firmwareVersionLabel.Text;
+
         private void RebootButton_Click(object sender, EventArgs e)
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Требуются права администратора", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // Подтверждение перезагрузки
-            if (MessageBox.Show("Перезагрузить устройство? Соединение будет разорвано.", "Подтверждение",
+            if (MessageBox.Show("Перезагрузить устройство? Соединение будет разорвано", "Подтверждение",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
                 return;
 
@@ -388,11 +397,11 @@ namespace Uetm_2_0
                     var response = commandsHelper.reset_ect(conn.Item2);
                     if (response.Data[0] == 0xFF)
                     {
-                        MessageBox.Show("Устройство перезагружается.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Устройство перезагружается", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         mainForm.Disconnect(); // принудительно отключаемся, чтобы UI обновился
                     }
                     else
-                        MessageBox.Show("Ошибка перезагрузки.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        MessageBox.Show("Ошибка перезагрузки", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
@@ -401,7 +410,7 @@ namespace Uetm_2_0
             }
             else
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Нет подключения к устройству", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }  
     }

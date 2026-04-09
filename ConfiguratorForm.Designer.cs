@@ -203,7 +203,7 @@
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new Padding(9, 3, 0, 3);
             menuStrip.RenderMode = ToolStripRenderMode.Professional;
-            menuStrip.Size = new Size(463, 31);
+            menuStrip.Size = new Size(343, 31);
             menuStrip.TabIndex = 1;
             menuStrip.Text = "menuStrip";
             // 

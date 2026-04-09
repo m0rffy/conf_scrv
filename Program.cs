@@ -1,5 +1,6 @@
 
 
+using OfficeOpenXml;
 using System.Runtime.InteropServices;
 
 namespace Uetm_2_0
@@ -12,6 +13,10 @@ namespace Uetm_2_0
         [STAThread]
         private static void Main()
         {
+
+            // Установка лицензии EPPlus 8 при старте приложения
+            ExcelPackage.License.SetNonCommercialPersonal("UETM Configurator");
+
             ApplicationConfiguration.Initialize();
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);

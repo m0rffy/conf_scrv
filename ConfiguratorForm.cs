@@ -23,10 +23,10 @@ namespace Uetm_2_0
         public event Action SettingsRead;
 
         // UserControl'ы для вкладок
-        private UcManagement ucManagement;
-        private UcGeneral ucGeneral;
-        private UcNetwork ucNetwork;
-        private UcJournal ucJournal;
+        public UcManagement ucManagement;
+        public UcGeneral ucGeneral;
+        public UcNetwork ucNetwork;
+        public UcJournal ucJournal;
 
         // Элементы интерфейса (создаются в дизайнере)
         private FlowLayoutPanel Sidebar;
