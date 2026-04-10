@@ -23,7 +23,6 @@
             btnNetwork = new Button();
             btnJournal = new Button();
             topPanel = new Panel();
-            btnRead = new Button();
             btnWrite = new Button();
             menuStrip = new MenuStrip();
             helpMenu = new ToolStripMenuItem();
@@ -145,7 +144,6 @@
             topPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             topPanel.BackColor = Color.LightGray;
             topPanel.BorderStyle = BorderStyle.FixedSingle;
-            topPanel.Controls.Add(btnRead);
             topPanel.Controls.Add(btnWrite);
             topPanel.Controls.Add(menuStrip);
             topPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
@@ -154,24 +152,6 @@
             topPanel.Name = "topPanel";
             topPanel.Size = new Size(1654, 48);
             topPanel.TabIndex = 2;
-            // 
-            // btnRead
-            // 
-            btnRead.Anchor = AnchorStyles.None;
-            btnRead.AutoSize = true;
-            btnRead.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnRead.BackColor = Color.LightSkyBlue;
-            btnRead.FlatStyle = FlatStyle.Popup;
-            btnRead.Font = new Font("Times New Roman", 14.25F);
-            btnRead.ForeColor = Color.Black;
-            btnRead.Location = new Point(613, 7);
-            btnRead.Margin = new Padding(4);
-            btnRead.Name = "btnRead";
-            btnRead.Size = new Size(106, 31);
-            btnRead.TabIndex = 0;
-            btnRead.Text = "Прочитать";
-            btnRead.UseVisualStyleBackColor = false;
-            btnRead.Click += BtnRead_Click;
             // 
             // btnWrite
             // 

@@ -23,7 +23,6 @@
 
         public event EventHandler DeleteClicked;
         public event EventHandler ConnectClicked;
-        
 
         private void deleteButton_Click(object sender, EventArgs e)
         {
@@ -34,7 +33,5 @@
         {
             ConnectClicked?.Invoke(this, e);
         }
-
-        
     }
 }

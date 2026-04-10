@@ -57,14 +57,8 @@ namespace Uetm_2_0
             }
         }
 
-        public static bool IsConnectionActive()
-        {
-            return _connection != null;
-        }
+        
 
-        private static bool IsValidIpAddress(string ipAddress)
-        {
-            return IPAddress.TryParse(ipAddress, out _);
-        }
+       
     }
 }

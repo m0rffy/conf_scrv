@@ -46,14 +46,14 @@
             tableLayoutPanelMain.Controls.Add(groupBoxEthernet, 0, 0);
             tableLayoutPanelMain.Controls.Add(groupBoxPTP, 0, 2);
             tableLayoutPanelMain.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutPanelMain.Location = new Point(34, 26);
+            tableLayoutPanelMain.Location = new Point(34, 36);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 3;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(442, 352);
+            tableLayoutPanelMain.Size = new Size(466, 326);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // groupBoxEthernet
@@ -63,11 +63,11 @@
             groupBoxEthernet.BackColor = Color.Transparent;
             groupBoxEthernet.Controls.Add(tableLayoutEthernet);
             groupBoxEthernet.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxEthernet.Location = new Point(42, 4);
+            groupBoxEthernet.Location = new Point(40, 4);
             groupBoxEthernet.Margin = new Padding(4);
             groupBoxEthernet.Name = "groupBoxEthernet";
             groupBoxEthernet.Padding = new Padding(4);
-            groupBoxEthernet.Size = new Size(357, 154);
+            groupBoxEthernet.Size = new Size(385, 144);
             groupBoxEthernet.TabIndex = 0;
             groupBoxEthernet.TabStop = false;
             groupBoxEthernet.Text = "Ethernet";
@@ -87,23 +87,23 @@
             tableLayoutEthernet.Controls.Add(maskTextBox, 1, 2);
             tableLayoutEthernet.Controls.Add(labelMac, 0, 0);
             tableLayoutEthernet.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutEthernet.Location = new Point(18, 39);
+            tableLayoutEthernet.Location = new Point(32, 30);
             tableLayoutEthernet.Margin = new Padding(4);
             tableLayoutEthernet.Name = "tableLayoutEthernet";
             tableLayoutEthernet.RowCount = 3;
             tableLayoutEthernet.RowStyles.Add(new RowStyle());
             tableLayoutEthernet.RowStyles.Add(new RowStyle());
             tableLayoutEthernet.RowStyles.Add(new RowStyle());
-            tableLayoutEthernet.Size = new Size(321, 102);
+            tableLayoutEthernet.Size = new Size(339, 102);
             tableLayoutEthernet.TabIndex = 0;
             // 
             // macTextBox
             // 
             macTextBox.Anchor = AnchorStyles.None;
-            macTextBox.Location = new Point(128, 4);
+            macTextBox.Location = new Point(126, 4);
             macTextBox.Margin = new Padding(4);
             macTextBox.Name = "macTextBox";
-            macTextBox.Size = new Size(185, 26);
+            macTextBox.Size = new Size(208, 26);
             macTextBox.TabIndex = 1;
             macTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -121,10 +121,10 @@
             // ipTextBox
             // 
             ipTextBox.Anchor = AnchorStyles.None;
-            ipTextBox.Location = new Point(127, 38);
+            ipTextBox.Location = new Point(125, 38);
             ipTextBox.Margin = new Padding(4);
             ipTextBox.Name = "ipTextBox";
-            ipTextBox.Size = new Size(188, 26);
+            ipTextBox.Size = new Size(209, 26);
             ipTextBox.TabIndex = 3;
             ipTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -146,7 +146,7 @@
             maskTextBox.Location = new Point(125, 72);
             maskTextBox.Margin = new Padding(4);
             maskTextBox.Name = "maskTextBox";
-            maskTextBox.Size = new Size(192, 26);
+            maskTextBox.Size = new Size(210, 26);
             maskTextBox.TabIndex = 5;
             maskTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -167,7 +167,7 @@
             groupBoxPTP.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPTP.Controls.Add(tableLayoutPTP);
             groupBoxPTP.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxPTP.Location = new Point(24, 178);
+            groupBoxPTP.Location = new Point(36, 160);
             groupBoxPTP.Margin = new Padding(4);
             groupBoxPTP.Name = "groupBoxPTP";
             groupBoxPTP.Padding = new Padding(4);
@@ -198,7 +198,7 @@
             tableLayoutPTP.RowStyles.Add(new RowStyle());
             tableLayoutPTP.RowStyles.Add(new RowStyle());
             tableLayoutPTP.RowStyles.Add(new RowStyle());
-            tableLayoutPTP.Size = new Size(358, 102);
+            tableLayoutPTP.Size = new Size(360, 102);
             tableLayoutPTP.TabIndex = 0;
             // 
             // labelPtpMasterMac
@@ -215,7 +215,7 @@
             // ptpMasterMacTextBox
             // 
             ptpMasterMacTextBox.Anchor = AnchorStyles.None;
-            ptpMasterMacTextBox.Location = new Point(152, 4);
+            ptpMasterMacTextBox.Location = new Point(153, 4);
             ptpMasterMacTextBox.Margin = new Padding(4);
             ptpMasterMacTextBox.Name = "ptpMasterMacTextBox";
             ptpMasterMacTextBox.Size = new Size(202, 26);
@@ -237,10 +237,10 @@
             // ptpPortTextBox
             // 
             ptpPortTextBox.Anchor = AnchorStyles.None;
-            ptpPortTextBox.Location = new Point(219, 38);
+            ptpPortTextBox.Location = new Point(153, 38);
             ptpPortTextBox.Margin = new Padding(4);
             ptpPortTextBox.Name = "ptpPortTextBox";
-            ptpPortTextBox.Size = new Size(68, 26);
+            ptpPortTextBox.Size = new Size(202, 26);
             ptpPortTextBox.TabIndex = 3;
             ptpPortTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -258,10 +258,10 @@
             // ptpIdTextBox
             // 
             ptpIdTextBox.Anchor = AnchorStyles.None;
-            ptpIdTextBox.Location = new Point(154, 72);
+            ptpIdTextBox.Location = new Point(152, 72);
             ptpIdTextBox.Margin = new Padding(4);
             ptpIdTextBox.Name = "ptpIdTextBox";
-            ptpIdTextBox.Size = new Size(198, 26);
+            ptpIdTextBox.Size = new Size(204, 26);
             ptpIdTextBox.TabIndex = 5;
             ptpIdTextBox.TextAlign = HorizontalAlignment.Center;
             // 
