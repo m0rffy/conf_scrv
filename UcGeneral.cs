@@ -124,10 +124,6 @@ namespace Uetm_2_0
         }
 
 
-
-
-
-
         private string DetectBreakerType()
         {
             string inn = nominalCurrentTextBox.Text;
@@ -382,8 +378,6 @@ namespace Uetm_2_0
             }
         }
 
-        
-        
 
         private void ApplyRoleRestrictions()
         {
@@ -415,24 +409,24 @@ namespace Uetm_2_0
         {
             return new Dictionary<string, string>
             {
-                ["Номинальный ток, А"] = nominalCurrentTextBox.Text,
-                ["Максимальный ток отключения, кА"] = maxCurrentTextBox.Text,
+                ["Номинальный ток (А)"] = nominalCurrentTextBox.Text,
+                ["Максимальный ток отключения (кА)"] = maxCurrentTextBox.Text,
                 ["Тип выключателя"] = switchTypeComboBox.Text,
                 ["Обозначение выключателя"] = switchLabelTextBox.Text,
                 ["Марка выключателя"] = switchModelTextBox.Text,
-                ["Ток порога, А"] = thresholdCurrentTextBox.Text,
+                ["Ток порога (А)"] = thresholdCurrentTextBox.Text,
                 ["Номинальное кол-во отключений"] = nominalOperationsTextBox.Text,
                 ["C1"] = c1TextBox.Text,
                 ["C2"] = c2TextBox.Text,
                 ["C3"] = c3TextBox.Text,
                 ["C4"] = c4TextBox.Text,
                 ["Место установки"] = installationPlaceTextBox.Text,
-                ["Первичный ток, А"] = primaryCurrentTextBox.Text,
-                ["Вторичный ток, А"] = secondaryCurrentTextBox.Text,
-                ["Задержка дребезга (отключение), мс"] = debounceOffTextBox.Text,
-                ["Задержка дребезга (включение), мс"] = debounceOnTextBox.Text,
-                ["Порог предупр. сигнализации, %"] = warningThresholdTextBox.Text,
-                ["Порог аварийной сигнализации, %"] = alarmThresholdTextBox.Text
+                ["Первичный ток (А)"] = primaryCurrentTextBox.Text,
+                ["Вторичный ток (А)"] = secondaryCurrentTextBox.Text,
+                ["Задержка дребезга (отключение) (мс)"] = debounceOffTextBox.Text,
+                ["Задержка дребезга (включение) (мс)"] = debounceOnTextBox.Text,
+                ["Порог предупр. сигнализации (%)"] = warningThresholdTextBox.Text,
+                ["Порог аварийной сигнализации (%)"] = alarmThresholdTextBox.Text
             };
         }
 

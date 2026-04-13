@@ -46,7 +46,7 @@ namespace Uetm_2_0
         {
             rmsTable = new DataTable();
             rmsTable.Columns.Add("Канал", typeof(string));
-            rmsTable.Columns.Add("Значение, А", typeof(float));
+            rmsTable.Columns.Add("Значение (А)", typeof(float));
             rmsDataGridView.DataSource = rmsTable;
             rmsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             rmsDataGridView.RowHeadersVisible = false;
@@ -56,7 +56,7 @@ namespace Uetm_2_0
 
             cntvTable = new DataTable();
             cntvTable.Columns.Add("Канал", typeof(string));
-            cntvTable.Columns.Add("Выработанный ресурс, %", typeof(float));
+            cntvTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
             cntvTable.Columns.Add("Кол-во отключений", typeof(ushort));
             cntvTable.Columns.Add("Кол-во включений", typeof(ushort));
             cntvDataGridView.DataSource = cntvTable;

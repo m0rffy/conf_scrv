@@ -162,7 +162,7 @@
             btnWrite.FlatStyle = FlatStyle.Popup;
             btnWrite.Font = new Font("Times New Roman", 14.25F);
             btnWrite.ForeColor = Color.Black;
-            btnWrite.Location = new Point(746, 7);
+            btnWrite.Location = new Point(648, 8);
             btnWrite.Margin = new Padding(4);
             btnWrite.Name = "btnWrite";
             btnWrite.Size = new Size(92, 31);
@@ -210,10 +210,10 @@
             rightPanel.BorderStyle = BorderStyle.FixedSingle;
             rightPanel.Controls.Add(devicesPanel);
             rightPanel.Controls.Add(devicesLabel);
-            rightPanel.Location = new Point(1271, 55);
+            rightPanel.Location = new Point(1305, 55);
             rightPanel.Margin = new Padding(4);
             rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(385, 836);
+            rightPanel.Size = new Size(351, 836);
             rightPanel.TabIndex = 3;
             // 
             // devicesPanel
@@ -225,10 +225,10 @@
             devicesPanel.BorderStyle = BorderStyle.FixedSingle;
             devicesPanel.FlowDirection = FlowDirection.TopDown;
             devicesPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            devicesPanel.Location = new Point(17, 66);
+            devicesPanel.Location = new Point(11, 66);
             devicesPanel.Margin = new Padding(4);
             devicesPanel.Name = "devicesPanel";
-            devicesPanel.Size = new Size(352, 741);
+            devicesPanel.Size = new Size(330, 737);
             devicesPanel.TabIndex = 1;
             devicesPanel.WrapContents = false;
             // 
@@ -240,7 +240,7 @@
             devicesLabel.FlatStyle = FlatStyle.Flat;
             devicesLabel.Font = new Font("Times New Roman", 14.25F);
             devicesLabel.ForeColor = Color.Black;
-            devicesLabel.Location = new Point(75, 20);
+            devicesLabel.Location = new Point(58, 20);
             devicesLabel.Margin = new Padding(4, 0, 4, 0);
             devicesLabel.Name = "devicesLabel";
             devicesLabel.Size = new Size(214, 21);
@@ -255,10 +255,10 @@
             ChildFormPanel.BackColor = Color.LightSteelBlue;
             ChildFormPanel.BorderStyle = BorderStyle.FixedSingle;
             ChildFormPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ChildFormPanel.Location = new Point(140, 55);
+            ChildFormPanel.Location = new Point(138, 55);
             ChildFormPanel.Margin = new Padding(4);
             ChildFormPanel.Name = "ChildFormPanel";
-            ChildFormPanel.Size = new Size(1127, 838);
+            ChildFormPanel.Size = new Size(1164, 838);
             ChildFormPanel.TabIndex = 4;
             // 
             // ConfiguratorForm

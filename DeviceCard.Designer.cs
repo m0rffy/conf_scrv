@@ -27,10 +27,10 @@
             placeTextBox.Anchor = AnchorStyles.None;
             placeTextBox.BorderStyle = BorderStyle.FixedSingle;
             placeTextBox.Font = new Font("Times New Roman", 12F);
-            placeTextBox.Location = new Point(139, 47);
+            placeTextBox.Location = new Point(62, 46);
             placeTextBox.Name = "placeTextBox";
             placeTextBox.ReadOnly = true;
-            placeTextBox.Size = new Size(190, 26);
+            placeTextBox.Size = new Size(210, 26);
             placeTextBox.TabIndex = 2;
             placeTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -39,10 +39,10 @@
             switchTextBox.Anchor = AnchorStyles.None;
             switchTextBox.BorderStyle = BorderStyle.FixedSingle;
             switchTextBox.Font = new Font("Times New Roman", 12F);
-            switchTextBox.Location = new Point(139, 92);
+            switchTextBox.Location = new Point(62, 91);
             switchTextBox.Name = "switchTextBox";
             switchTextBox.ReadOnly = true;
-            switchTextBox.Size = new Size(190, 26);
+            switchTextBox.Size = new Size(210, 26);
             switchTextBox.TabIndex = 4;
             switchTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -54,7 +54,7 @@
             deleteButton.BackColor = Color.LightSkyBlue;
             deleteButton.FlatStyle = FlatStyle.Popup;
             deleteButton.Font = new Font("Times New Roman", 12F);
-            deleteButton.Location = new Point(32, 90);
+            deleteButton.Location = new Point(62, 132);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(74, 29);
             deleteButton.TabIndex = 5;
@@ -70,7 +70,7 @@
             connectButton.BackColor = Color.LightSkyBlue;
             connectButton.FlatStyle = FlatStyle.Popup;
             connectButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            connectButton.Location = new Point(8, 46);
+            connectButton.Location = new Point(155, 132);
             connectButton.Name = "connectButton";
             connectButton.Size = new Size(117, 29);
             connectButton.TabIndex = 6;
@@ -83,7 +83,7 @@
             ipLabel.Anchor = AnchorStyles.None;
             ipLabel.AutoSize = true;
             ipLabel.Font = new Font("Times New Roman", 12F);
-            ipLabel.Location = new Point(139, 16);
+            ipLabel.Location = new Point(62, 11);
             ipLabel.Name = "ipLabel";
             ipLabel.Size = new Size(23, 19);
             ipLabel.TabIndex = 0;
@@ -92,6 +92,7 @@
             // 
             // DeviceCard
             // 
+            AutoScroll = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.LightGray;
             BorderStyle = BorderStyle.FixedSingle;
@@ -100,10 +101,10 @@
             Controls.Add(switchTextBox);
             Controls.Add(placeTextBox);
             Controls.Add(ipLabel);
-            Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ForeColor = Color.Black;
             Name = "DeviceCard";
-            Size = new Size(340, 142);
+            Size = new Size(320, 175);
             ResumeLayout(false);
             PerformLayout();
         }
