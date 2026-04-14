@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using ModBusHelper;
+using System.Globalization;
+using System.Text;
 using static ModBusHelper.ModBusExporterLinker;
 
 namespace Uetm_2_0
@@ -17,25 +19,17 @@ namespace Uetm_2_0
             _updating = false;
             settings = Database.GeneralSettings_TextFormat;
 
-            // Настройка валидации для полей ввода
             SetupInputValidation();
-            // Применение ограничений по роли
             ApplyRoleRestrictions();
-            // Загрузка данных из базы
             UpdateFromDatabase();
         }
 
-        /// <summary>
-        /// Установка обработчиков для проверки вводимых данных.
-        /// </summary>
         private void SetupInputValidation()
         {
-            // MAC-адрес: разрешены только шестнадцатеричные цифры и двоеточие
             macTextBox.KeyPress += MacAddress_KeyPress;
             macTextBox.TextChanged += MacAddress_TextChanged;
-            macTextBox.MaxLength = 17; // FF:FF:FF:FF:FF:FF
+            macTextBox.MaxLength = 17;
 
-            // IP-адрес и маска: только цифры и точка
             ipTextBox.KeyPress += IpAddress_KeyPress;
             ipTextBox.TextChanged += IpAddress_TextChanged;
             ipTextBox.MaxLength = 15;
@@ -44,25 +38,19 @@ namespace Uetm_2_0
             maskTextBox.TextChanged += IpAddress_TextChanged;
             maskTextBox.MaxLength = 15;
 
-            // PTP MAC-адрес: аналогично обычному MAC
             ptpMasterMacTextBox.KeyPress += MacAddress_KeyPress;
             ptpMasterMacTextBox.TextChanged += MacAddress_TextChanged;
             ptpMasterMacTextBox.MaxLength = 17;
 
-            // PTP порт: только цифры, диапазон 0-65535
             ptpPortTextBox.KeyPress += Port_KeyPress;
             ptpPortTextBox.TextChanged += Port_TextChanged;
             ptpPortTextBox.MaxLength = 5;
 
-            // PTP идентификатор: 8 символов ASCII (буквы, цифры, некоторые знаки)
             ptpIdTextBox.KeyPress += ClkId_KeyPress;
             ptpIdTextBox.TextChanged += ClkId_TextChanged;
             ptpIdTextBox.MaxLength = 8;
         }
 
-        /// <summary>
-        /// Применение ограничений в зависимости от роли пользователя.
-        /// </summary>
         private void ApplyRoleRestrictions()
         {
             bool isAdmin = Database.CurrentRole == "Администратор";
@@ -84,23 +72,14 @@ namespace Uetm_2_0
             }
         }
 
-        #region Обработчики ввода MAC-адреса
-
+        #region MAC
         private void MacAddress_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Database.CurrentRole != "Администратор")
-            {
-                e.Handled = true;
-                return;
-            }
-
+            if (Database.CurrentRole != "Администратор") { e.Handled = true; return; }
             char c = e.KeyChar;
-            // Разрешены: цифры 0-9, буквы A-F (в любом регистре), двоеточие, Backspace
             if (!char.IsControl(c) && !char.IsDigit(c) && !":".Contains(c) &&
                 !(c >= 'a' && c <= 'f') && !(c >= 'A' && c <= 'F'))
-            {
                 e.Handled = true;
-            }
         }
 
         private void MacAddress_TextChanged(object sender, EventArgs e)
@@ -110,7 +89,6 @@ namespace Uetm_2_0
             if (tb == null) return;
 
             string text = tb.Text.ToUpper();
-            // Автоматически вставляем двоеточие после каждых двух символов
             string formatted = FormatMacAddress(text);
             if (formatted != tb.Text)
             {
@@ -124,11 +102,9 @@ namespace Uetm_2_0
 
         private string FormatMacAddress(string input)
         {
-            // Удаляем все не-HEX символы
             string digits = new string(input.Where(c => char.IsDigit(c) || (c >= 'A' && c <= 'F')).ToArray());
             if (digits.Length > 12) digits = digits.Substring(0, 12);
-
-            System.Text.StringBuilder sb = new System.Text.StringBuilder();
+            StringBuilder sb = new StringBuilder();
             for (int i = 0; i < digits.Length; i++)
             {
                 if (i > 0 && i % 2 == 0) sb.Append(':');
@@ -136,25 +112,15 @@ namespace Uetm_2_0
             }
             return sb.ToString();
         }
-
         #endregion
 
-        #region Обработчики ввода IP-адреса
-
+        #region IP
         private void IpAddress_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Database.CurrentRole != "Администратор")
-            {
-                e.Handled = true;
-                return;
-            }
-
+            if (Database.CurrentRole != "Администратор") { e.Handled = true; return; }
             char c = e.KeyChar;
-            // Разрешены: цифры, точка, Backspace
             if (!char.IsControl(c) && !char.IsDigit(c) && c != '.')
-            {
                 e.Handled = true;
-            }
         }
 
         private void IpAddress_TextChanged(object sender, EventArgs e)
@@ -164,14 +130,11 @@ namespace Uetm_2_0
             if (tb == null) return;
 
             string text = tb.Text;
-            // Удаляем всё, кроме цифр и точки
             string filtered = new string(text.Where(c => char.IsDigit(c) || c == '.').ToArray());
-            // Ограничиваем количество точек и цифр
             if (filtered.Count(c => c == '.') > 3)
             {
-                // Удаляем лишние точки
                 int dotCount = 0;
-                System.Text.StringBuilder sb = new System.Text.StringBuilder();
+                StringBuilder sb = new StringBuilder();
                 foreach (char c in filtered)
                 {
                     if (c == '.')
@@ -192,19 +155,12 @@ namespace Uetm_2_0
                 _updating = false;
             }
         }
-
         #endregion
 
-        #region Обработчики ввода порта
-
+        #region Port
         private void Port_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Database.CurrentRole != "Администратор")
-            {
-                e.Handled = true;
-                return;
-            }
-
+            if (Database.CurrentRole != "Администратор") { e.Handled = true; return; }
             if (!char.IsControl(e.KeyChar) && !char.IsDigit(e.KeyChar))
                 e.Handled = true;
         }
@@ -214,7 +170,6 @@ namespace Uetm_2_0
             if (_updating) return;
             TextBox tb = sender as TextBox;
             if (tb == null) return;
-
             string text = tb.Text;
             if (string.IsNullOrEmpty(text)) return;
 
@@ -230,7 +185,6 @@ namespace Uetm_2_0
             }
             else
             {
-                // Оставляем только цифры
                 string digits = new string(text.Where(char.IsDigit).ToArray());
                 if (digits != text)
                 {
@@ -241,20 +195,12 @@ namespace Uetm_2_0
                 }
             }
         }
-
         #endregion
 
-        #region Обработчики ввода идентификатора PTP (clkId)
-
+        #region clkId
         private void ClkId_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (Database.CurrentRole != "Администратор")
-            {
-                e.Handled = true;
-                return;
-            }
-
-            // Разрешены: буквы (A-Z, a-z), цифры, подчёркивание, дефис, Backspace
+            if (Database.CurrentRole != "Администратор") { e.Handled = true; return; }
             char c = e.KeyChar;
             if (!char.IsControl(c) && !char.IsLetterOrDigit(c) && c != '_' && c != '-')
                 e.Handled = true;
@@ -265,11 +211,9 @@ namespace Uetm_2_0
             if (_updating) return;
             TextBox tb = sender as TextBox;
             if (tb == null) return;
-
             string text = tb.Text;
             string filtered = new string(text.Where(c => char.IsLetterOrDigit(c) || c == '_' || c == '-').ToArray());
             if (filtered.Length > 8) filtered = filtered.Substring(0, 8);
-
             if (filtered != text)
             {
                 _updating = true;
@@ -278,20 +222,14 @@ namespace Uetm_2_0
                 _updating = false;
             }
         }
-
         #endregion
 
-        /// <summary>
-        /// Загрузка данных из глобальной переменной в поля формы.
-        /// </summary>
         public void UpdateFromDatabase()
         {
             if (_updating) return;
             _updating = true;
-
             settings = Database.GeneralSettings_TextFormat;
 
-            // Ethernet
             if (settings.nets.ownAddr != null && settings.nets.ownAddr.Length >= 6)
             {
                 macTextBox.Text = string.Format("{0:X2}:{1:X2}:{2:X2}:{3:X2}:{4:X2}:{5:X2}",
@@ -312,7 +250,6 @@ namespace Uetm_2_0
                     settings.nets.ips.ipMask[2], settings.nets.ips.ipMask[3]);
             else maskTextBox.Text = "0.0.0.0";
 
-            // PTPv2
             if (settings.syns.ptps.mmadr != null && settings.syns.ptps.mmadr.Length >= 6)
                 ptpMasterMacTextBox.Text = string.Format("{0:X2}:{1:X2}:{2:X2}:{3:X2}:{4:X2}:{5:X2}",
                     settings.syns.ptps.mmadr[0], settings.syns.ptps.mmadr[1], settings.syns.ptps.mmadr[2],
@@ -338,69 +275,69 @@ namespace Uetm_2_0
             };
         }
 
-        /// <summary>
-        /// Сохранение данных из полей в глобальную переменную.
-        /// </summary>
         public bool SaveToDatabase()
         {
             if (Database.CurrentRole != "Администратор")
                 return false;
 
-            // Валидация MAC-адреса
             if (!IsValidMacAddress(macTextBox.Text))
             {
-                MessageBox.Show("Некорректный MAC-адрес. Используйте формат XX:XX:XX:XX:XX:XX (шестнадцатеричные цифры).",
-                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Некорректный MAC-адрес.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
                 return false;
             }
-            // Валидация IP-адреса и маски
             if (!IsValidIpAddress(ipTextBox.Text))
             {
                 MessageBox.Show("Некорректный IP-адрес.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
                 return false;
             }
             if (!IsValidIpAddress(maskTextBox.Text))
             {
                 MessageBox.Show("Некорректная маска подсети.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
                 return false;
             }
-            // Валидация PTP MAC
             if (!IsValidMacAddress(ptpMasterMacTextBox.Text))
             {
                 MessageBox.Show("Некорректный PTP MAC-адрес мастера.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
                 return false;
             }
-            // Валидация порта
-            if (!int.TryParse(ptpPortTextBox.Text, out int port) || port < 0 || port > 6500)
+            if (!int.TryParse(ptpPortTextBox.Text, out int port) || port < 0 || port > 65535)
             {
-                MessageBox.Show("Порт должен быть целым числом от 0 до 6500.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Порт должен быть целым числом от 0 до 65535.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
                 return false;
             }
-            // clkId – длина до 8 символов, только ASCII
             if (ptpIdTextBox.Text.Length > 8)
             {
                 MessageBox.Show("Идентификатор PTP не может быть длиннее 8 символов.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
+                return false;
+            }
+            if (!ModBusFunctions.ValidateStringLength(ptpIdTextBox.Text, 8, out int clkIdBytes))
+            {
+                MessageBox.Show($"Идентификатор PTP слишком длинный. Максимум 7 байт в UTF-8 (сейчас {clkIdBytes} байт).",
+                    "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                UpdateFromDatabase();
                 return false;
             }
 
             try
             {
-                // MAC-адрес Ethernet
                 string[] macParts = macTextBox.Text.Split(':');
                 for (int i = 0; i < 6; i++)
                     settings.nets.ownAddr[i] = Convert.ToByte(macParts[i], 16);
 
-                // IP-адрес
                 string[] ipParts = ipTextBox.Text.Split('.');
                 for (int i = 0; i < 4; i++)
                     settings.nets.ips.ipAddr[i] = byte.Parse(ipParts[i]);
 
-                // Маска подсети
                 string[] maskParts = maskTextBox.Text.Split('.');
                 for (int i = 0; i < 4; i++)
                     settings.nets.ips.ipMask[i] = byte.Parse(maskParts[i]);
 
-                // PTP MAC-адрес мастера
                 string[] ptpMacParts = ptpMasterMacTextBox.Text.Split(':');
                 for (int i = 0; i < 6; i++)
                     settings.syns.ptps.mmadr[i] = Convert.ToByte(ptpMacParts[i], 16);
@@ -414,11 +351,10 @@ namespace Uetm_2_0
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка преобразования данных: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                UpdateFromDatabase();
                 return false;
             }
         }
-
-        #region Вспомогательные методы валидации
 
         private bool IsValidMacAddress(string mac)
         {
@@ -426,11 +362,8 @@ namespace Uetm_2_0
             string[] parts = mac.Split(':');
             if (parts.Length != 6) return false;
             foreach (string part in parts)
-            {
-                if (part.Length != 2) return false;
-                if (!System.Text.RegularExpressions.Regex.IsMatch(part, @"^[0-9A-Fa-f]{2}$"))
+                if (part.Length != 2 || !System.Text.RegularExpressions.Regex.IsMatch(part, @"^[0-9A-Fa-f]{2}$"))
                     return false;
-            }
             return true;
         }
 
@@ -440,13 +373,9 @@ namespace Uetm_2_0
             string[] parts = ip.Split('.');
             if (parts.Length != 4) return false;
             foreach (string part in parts)
-            {
                 if (!byte.TryParse(part, out _))
                     return false;
-            }
             return true;
         }
-
-        #endregion
     }
 }

@@ -40,6 +40,7 @@ namespace Uetm_2_0
         private Panel rightPanel;
         private FlowLayoutPanel devicesPanel;
 
+
         private System.Windows.Forms.Timer connectionTimeoutTimer;
 
         public ConfiguratorForm(string role)
@@ -92,7 +93,7 @@ namespace Uetm_2_0
                 MessageBox.Show("IP-адрес не задан или некорректен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (_port < 1 || _port > 1000)
+            if (_port < 1 || _port > 65535)
             {
                 MessageBox.Show("Некорректный порт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -154,7 +155,6 @@ namespace Uetm_2_0
                 Database.GeneralSettings_TextFormat = ExporterLinkerHelper.get_GeneralSettings_Text(_connection);
                 SettingsRead?.Invoke();
 
-                // Обновляем ВСЕ страницы после чтения
                 ucGeneral.UpdateFromDatabase();
                 ucNetwork.UpdateFromDatabase();
 
@@ -340,20 +340,29 @@ namespace Uetm_2_0
 
             try
             {
-                // Сохраняем данные из активной вкладки в глобальную переменную
+                bool saved = false;
                 if (ChildFormPanel.Controls[0] is UcGeneral general)
                 {
-                    if (!general.SaveToDatabase()) return;
+                    if (!general.SaveToDatabase())
+                    {
+                        general.UpdateFromDatabase();
+                        return;
+                    }
+                    saved = true;
                 }
                 else if (ChildFormPanel.Controls[0] is UcNetwork network)
                 {
-                    network.SaveToDatabase();
+                    if (!network.SaveToDatabase())
+                    {
+                        network.UpdateFromDatabase();
+                        return;
+                    }
+                    saved = true;
                 }
 
-                // Выполняем запись в устройство
-                ExporterLinkerHelper.WriteSettings(Database.GeneralSettings_TextFormat, true, _connection);
+                if (!saved) return;
 
-                // Принудительно закрываем соединение
+                ExporterLinkerHelper.WriteSettings(Database.GeneralSettings_TextFormat, true, _connection);
                 Disconnect();
 
                 if (ExporterLinkerHelper.WasRebootCommandSent)
@@ -373,7 +382,6 @@ namespace Uetm_2_0
             }
             catch (Exception ex)
             {
-                // Если ошибка связана с разрывом соединения, но команда перезагрузки была отправлена
                 if (IsConnectionError(ex) && ExporterLinkerHelper.WasRebootCommandSent)
                 {
                     Disconnect();
@@ -394,6 +402,7 @@ namespace Uetm_2_0
             return msg.Contains("socket") ||
                    msg.Contains("connection") ||
                    msg.Contains("disconnected") ||
+                   msg.Contains("transport") ||
                    (ex.InnerException != null && IsConnectionError(ex.InnerException));
         }
 
@@ -405,7 +414,7 @@ namespace Uetm_2_0
 
         private void helpMenu_Click(object sender, EventArgs e)
         {
-            string info = "АО «Уралэлектротяжмаш»\nАдрес: ул. Фронтовых бригад, 22, Екатеринбург\nВерсия: 2.0";
+            string info = "АО «Уралэлектротяжмаш»\nАдрес: ул. Фронтовых бригад, 22, Екатеринбург\nВерсия: 2.0\nРазработчик: Гультяев Павел Николаевич";
             MessageBox.Show(info, "О предприятии", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
