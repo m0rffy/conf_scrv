@@ -46,14 +46,15 @@
             tableLayoutPanelMain.Controls.Add(groupBoxEthernet, 0, 0);
             tableLayoutPanelMain.Controls.Add(groupBoxPTP, 0, 2);
             tableLayoutPanelMain.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutPanelMain.Location = new Point(34, 36);
+            tableLayoutPanelMain.ForeColor = Color.Black;
+            tableLayoutPanelMain.Location = new Point(22, 21);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 3;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(466, 326);
+            tableLayoutPanelMain.Size = new Size(530, 419);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // groupBoxEthernet
@@ -63,11 +64,11 @@
             groupBoxEthernet.BackColor = Color.Transparent;
             groupBoxEthernet.Controls.Add(tableLayoutEthernet);
             groupBoxEthernet.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxEthernet.Location = new Point(40, 4);
+            groupBoxEthernet.Location = new Point(28, 4);
             groupBoxEthernet.Margin = new Padding(4);
             groupBoxEthernet.Name = "groupBoxEthernet";
             groupBoxEthernet.Padding = new Padding(4);
-            groupBoxEthernet.Size = new Size(385, 144);
+            groupBoxEthernet.Size = new Size(474, 196);
             groupBoxEthernet.TabIndex = 0;
             groupBoxEthernet.TabStop = false;
             groupBoxEthernet.Text = "Ethernet";
@@ -87,7 +88,7 @@
             tableLayoutEthernet.Controls.Add(maskTextBox, 1, 2);
             tableLayoutEthernet.Controls.Add(labelMac, 0, 0);
             tableLayoutEthernet.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutEthernet.Location = new Point(32, 30);
+            tableLayoutEthernet.Location = new Point(77, 56);
             tableLayoutEthernet.Margin = new Padding(4);
             tableLayoutEthernet.Name = "tableLayoutEthernet";
             tableLayoutEthernet.RowCount = 3;
@@ -167,11 +168,11 @@
             groupBoxPTP.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPTP.Controls.Add(tableLayoutPTP);
             groupBoxPTP.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxPTP.Location = new Point(36, 160);
+            groupBoxPTP.Location = new Point(27, 219);
             groupBoxPTP.Margin = new Padding(4);
             groupBoxPTP.Name = "groupBoxPTP";
             groupBoxPTP.Padding = new Padding(4);
-            groupBoxPTP.Size = new Size(393, 157);
+            groupBoxPTP.Size = new Size(475, 184);
             groupBoxPTP.TabIndex = 2;
             groupBoxPTP.TabStop = false;
             groupBoxPTP.Text = "PTPv2";
@@ -191,7 +192,7 @@
             tableLayoutPTP.Controls.Add(labelPtpId, 0, 2);
             tableLayoutPTP.Controls.Add(ptpIdTextBox, 1, 2);
             tableLayoutPTP.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutPTP.Location = new Point(17, 36);
+            tableLayoutPTP.Location = new Point(58, 50);
             tableLayoutPTP.Margin = new Padding(4);
             tableLayoutPTP.Name = "tableLayoutPTP";
             tableLayoutPTP.RowCount = 3;
@@ -275,7 +276,7 @@
             Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4);
             Name = "UcNetwork";
-            Size = new Size(521, 405);
+            Size = new Size(572, 463);
             tableLayoutPanelMain.ResumeLayout(false);
             groupBoxEthernet.ResumeLayout(false);
             groupBoxEthernet.PerformLayout();

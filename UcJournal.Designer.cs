@@ -37,7 +37,7 @@
             panelButtons.Controls.Add(updateJournalButton);
             panelButtons.Controls.Add(exportButton);
             panelButtons.FlowDirection = FlowDirection.TopDown;
-            panelButtons.Location = new Point(451, 418);
+            panelButtons.Location = new Point(451, 395);
             panelButtons.Margin = new Padding(4);
             panelButtons.Name = "panelButtons";
             panelButtons.Size = new Size(149, 74);
@@ -85,13 +85,14 @@
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelMain.Controls.Add(journalDataGridView, 0, 0);
             tableLayoutPanelMain.Controls.Add(panelButtons, 0, 1);
+            tableLayoutPanelMain.ForeColor = Color.Black;
             tableLayoutPanelMain.Location = new Point(15, 23);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 2;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(1051, 505);
+            tableLayoutPanelMain.Size = new Size(1051, 480);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // journalDataGridView
@@ -114,12 +115,12 @@
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle2.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle2.ForeColor = Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             journalDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            journalDataGridView.Location = new Point(25, 4);
+            journalDataGridView.Location = new Point(51, 4);
             journalDataGridView.Margin = new Padding(4);
             journalDataGridView.Name = "journalDataGridView";
             journalDataGridView.ReadOnly = true;
@@ -133,7 +134,7 @@
             journalDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             journalDataGridView.RowHeadersVisible = false;
             journalDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            journalDataGridView.Size = new Size(1000, 398);
+            journalDataGridView.Size = new Size(949, 377);
             journalDataGridView.TabIndex = 0;
             // 
             // UcJournal

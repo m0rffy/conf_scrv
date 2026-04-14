@@ -24,10 +24,6 @@ namespace Uetm_2_0
 
         private Dictionary<string, BreakerPreset> breakerPresets;
 
-
-
-
-
         private static bool TryParseFloat(string s, out float result)
         {
             result = 0;
@@ -101,7 +97,7 @@ namespace Uetm_2_0
                 ["ВГТ-750"] = new BreakerPreset { Name = "ВГТ-750", Inn = "3000", Iotc = "10", Nn = "3000", C1 = "2.777", C2 = "3.1702", C3 = "-0.2999", C4 = "0.0087" },
                 ["ВГК-500"] = new BreakerPreset { Name = "ВГК-500", Inn = "3000", Iotc = "10", Nn = "3000", C1 = "2.777", C2 = "3.1702", C3 = "-0.2999", C4 = "0.0087" },
                 ["ВГТ-1А1-220-40-3150"] = new BreakerPreset { Name = "ВГТ-1А1-220-40-3150", Inn = "3000", Iotc = "10", Nn = "5000", C1 = "2.8987", C2 = "2.2302", C3 = "-0.0165", C4 = "-0.0011" },
-                ["ВЭБ-220-50"] = new BreakerPreset { Name = "ВЭБ-220-50", Inn = "3000", Iotc = "3000", Nn = "10", C1 = "2.3296", C2 = "2.9799", C3 = "-0.1924", C4 = "0.0038" },
+                ["ВЭБ-220-50"] = new BreakerPreset { Name = "ВЭБ-220-50", Inn = "3000", Iotc = "10", Nn = "3000", C1 = "2.3296", C2 = "2.9799", C3 = "-0.1924", C4 = "0.0038" },
                 ["ВГБ-35-12,5-С1"] = new BreakerPreset { Name = "ВГБ-35-12,5-С1", Inn = "3000", Iotc = "10", Nn = "10000", C1 = "0.99241", C2 = "0.2519", C3 = "-0.001", C4 = "-0.00004" },
                 ["ВГБ-35-12,5-С2"] = new BreakerPreset { Name = "ВГБ-35-12,5-С2", Inn = "3000", Iotc = "10", Nn = "3960", C1 = "0.63", C2 = "2", C3 = "10.1", C4 = "0" },
                 ["ВГТ-500-40-3150"] = new BreakerPreset { Name = "ВГТ-500-40-3150", Inn = "3000", Iotc = "10", Nn = "5000", C1 = "3.7437", C2 = "7.9298", C3 = "-0.7593", C4 = "0.0224" },
@@ -169,36 +165,36 @@ namespace Uetm_2_0
 
             var settings = Database.GeneralSettings_TextFormat;
 
-            nominalCurrentTextBox.Text = settings.swrcs.swnf.Inn ?? "-";
-            maxCurrentTextBox.Text = settings.swrcs.swnf.Imax ?? "-";
-            string labelRaw = settings.swrcs.swnf.label ?? "-";
-            switchLabelTextBox.Text = labelRaw.Replace("\0", "-");
-            string modelRaw = settings.swrcs.swnf.model ?? "-";
-            switchModelTextBox.Text = modelRaw.Replace("\0", "-");
-            switchTypeComboBox.Text = settings.swrcs.swnf.model ?? "-";
-            thresholdCurrentTextBox.Text = settings.swrcs.algo.Iotc ?? "-";
-            nominalOperationsTextBox.Text = settings.swrcs.algo.Nn ?? "-";
-            c1TextBox.Text = settings.swrcs.algo.C1 ?? "-";
-            c2TextBox.Text = settings.swrcs.algo.C2 ?? "-";
-            c3TextBox.Text = settings.swrcs.algo.C3 ?? "-";
-            c4TextBox.Text = settings.swrcs.algo.C4 ?? "-";
-            installationPlaceTextBox.Text = settings.cmns.MntPlce ?? "-";
-            primaryCurrentTextBox.Text = settings.meas.primct.Inom1 ?? "-";
+            nominalCurrentTextBox.Text = settings.swrcs.swnf.Inn ?? "";
+            maxCurrentTextBox.Text = settings.swrcs.swnf.Imax ?? "";
+            string labelRaw = settings.swrcs.swnf.label ?? "";
+            switchLabelTextBox.Text = labelRaw.Replace("\0", "");
+            string modelRaw = settings.swrcs.swnf.model ?? "";
+            switchModelTextBox.Text = modelRaw.Replace("\0", "");
+            switchTypeComboBox.Text = settings.swrcs.swnf.model ?? "";
+            thresholdCurrentTextBox.Text = settings.swrcs.algo.Iotc ?? "";
+            nominalOperationsTextBox.Text = settings.swrcs.algo.Nn ?? "";
+            c1TextBox.Text = settings.swrcs.algo.C1 ?? "";
+            c2TextBox.Text = settings.swrcs.algo.C2 ?? "";
+            c3TextBox.Text = settings.swrcs.algo.C3 ?? "";
+            c4TextBox.Text = settings.swrcs.algo.C4 ?? "";
+            installationPlaceTextBox.Text = settings.cmns.MntPlce ?? "";
+            primaryCurrentTextBox.Text = settings.meas.primct.Inom1 ?? "";
 
             if (int.TryParse(settings.meas.primct.Inom2, out int secMA))
             {
                 float secA = secMA / 1000.0f;
                 secondaryCurrentTextBox.Text = secA.ToString(CultureInfo.InvariantCulture);
             }
-            else secondaryCurrentTextBox.Text = settings.meas.primct.Inom2 ?? "-";
+            else secondaryCurrentTextBox.Text = settings.meas.primct.Inom2 ?? "";
 
             if (short.TryParse(settings.swrcs.contacts.ajtr.offd, out short offdTenths))
                 debounceOffTextBox.Text = (offdTenths / 10.0).ToString(CultureInfo.InvariantCulture);
-            else debounceOffTextBox.Text = settings.swrcs.contacts.ajtr.offd ?? "-";
+            else debounceOffTextBox.Text = settings.swrcs.contacts.ajtr.offd ?? "";
 
             if (short.TryParse(settings.swrcs.contacts.ajtr.ond, out short ondTenths))
                 debounceOnTextBox.Text = (ondTenths / 10.0).ToString(CultureInfo.InvariantCulture);
-            else debounceOnTextBox.Text = settings.swrcs.contacts.ajtr.ond ?? "-";
+            else debounceOnTextBox.Text = settings.swrcs.contacts.ajtr.ond ?? "";
 
             delayTable.Rows.Clear();
             var cdly = settings.swrcs.contacts.cdly ?? new SCDLY_cdly_TextFormat[0];
@@ -231,9 +227,6 @@ namespace Uetm_2_0
                 _updating = false;
                 return false;
             }
-
-
-            
 
             // Валидация порогов сигнализации
             if (!int.TryParse(warningThresholdTextBox.Text, out int warningThreshold) || warningThreshold < 0 || warningThreshold > 80)

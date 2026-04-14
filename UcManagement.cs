@@ -19,7 +19,7 @@ namespace Uetm_2_0
         private Tuple<TcpClient, IModbusMaster> _connection;
 
         // Переменная для хранения последнего введённого IP (только во время работы программы)
-        private string _lastIp = "-";
+        private string _lastIp = "";
 
         public UcManagement(ConfiguratorForm mainForm)
         {
@@ -93,12 +93,12 @@ namespace Uetm_2_0
             {
                 rmsTable.Rows.Clear();
                 cntvTable.Rows.Clear();
-                deviceStatusLabel.Text = "-";
-                syncStatusLabel.Text = "-";
-                rtcStatusLabel.Text = "-";
-                deviceTimeLabel.Text = "-";
-                serialNumberLabel.Text = "-";
-                firmwareVersionLabel.Text = "-";
+                deviceStatusLabel.Text = "";
+                syncStatusLabel.Text = "";
+                rtcStatusLabel.Text = "";
+                deviceTimeLabel.Text = "";
+                serialNumberLabel.Text = "";
+                firmwareVersionLabel.Text = "";
             });
         }
 
@@ -207,7 +207,7 @@ namespace Uetm_2_0
                 return;
             }
             int port;
-            if (!int.TryParse(portTextBox.Text, out port) || port < 1 || port > 65535)
+            if (!int.TryParse(portTextBox.Text, out port) || port < 1 || port > 6500)
             {
                 MessageBox.Show("Некорректный порт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
@@ -225,14 +225,14 @@ namespace Uetm_2_0
             {
                 IP = ip,
                 Port = port,
-                InstallationPlace = "-",
-                SwitchLabel = "-"
+                InstallationPlace = "",
+                SwitchLabel = ""
             };
             Database.Devices.Add(newDev);
             Database.SaveDevices();
             mainForm.RefreshDevicesList();
             // Не очищаем ipTextBox – оставляем введённое значение
-            portTextBox.Text = "-";
+            portTextBox.Text = "";
         }
 
         private void ClearResourceButton_Click(object sender, EventArgs e)

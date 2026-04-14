@@ -16,8 +16,8 @@ namespace Uetm_2_0
             if (!IPAddress.TryParse(ipAddress, out _))
                 throw new ArgumentException("Некорректный IP-адрес.");
 
-            if (modBusPort < 0 || modBusPort > 65535)
-                throw new ArgumentOutOfRangeException(nameof(modBusPort), "Порт должен быть в диапазоне от 0 до 65535.");
+            if (modBusPort < 0 || modBusPort > 65000)
+                throw new ArgumentOutOfRangeException(nameof(modBusPort), "Порт должен быть в диапазоне от 0 до 65500.");
 
             TcpClient tcpClient = new TcpClient();
             try
@@ -27,7 +27,7 @@ namespace Uetm_2_0
                 if (!success)
                 {
                     tcpClient.Close();
-                    throw new TimeoutException("Не удалось подключиться к устройству за 5 секунд.");
+                    throw new TimeoutException("Не удалось подключиться к устройству.");
                 }
                 tcpClient.EndConnect(result);
 
@@ -57,8 +57,5 @@ namespace Uetm_2_0
             }
         }
 
-        
-
-       
     }
 }

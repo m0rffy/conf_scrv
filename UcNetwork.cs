@@ -371,9 +371,9 @@ namespace Uetm_2_0
                 return false;
             }
             // Валидация порта
-            if (!int.TryParse(ptpPortTextBox.Text, out int port) || port < 0 || port > 65535)
+            if (!int.TryParse(ptpPortTextBox.Text, out int port) || port < 0 || port > 6500)
             {
-                MessageBox.Show("Порт должен быть целым числом от 0 до 65535.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Порт должен быть целым числом от 0 до 6500.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
             // clkId – длина до 8 символов, только ASCII

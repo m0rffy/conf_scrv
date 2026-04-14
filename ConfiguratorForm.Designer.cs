@@ -50,10 +50,10 @@
             Sidebar.Controls.Add(btnJournal);
             Sidebar.FlowDirection = FlowDirection.TopDown;
             Sidebar.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Sidebar.Location = new Point(4, 54);
+            Sidebar.Location = new Point(3, 54);
             Sidebar.Margin = new Padding(4);
             Sidebar.Name = "Sidebar";
-            Sidebar.Size = new Size(132, 838);
+            Sidebar.Size = new Size(146, 837);
             Sidebar.TabIndex = 0;
             // 
             // btnManagement
@@ -63,10 +63,10 @@
             btnManagement.BackColor = Color.LightSkyBlue;
             btnManagement.FlatStyle = FlatStyle.Popup;
             btnManagement.Font = new Font("Times New Roman", 14.25F);
-            btnManagement.Location = new Point(4, 4);
+            btnManagement.Location = new Point(8, 4);
             btnManagement.Margin = new Padding(4);
             btnManagement.Name = "btnManagement";
-            btnManagement.Size = new Size(123, 35);
+            btnManagement.Size = new Size(132, 35);
             btnManagement.TabIndex = 0;
             btnManagement.Text = "Управление";
             btnManagement.UseVisualStyleBackColor = false;
@@ -79,10 +79,10 @@
             btnSettings.BackColor = Color.LightSkyBlue;
             btnSettings.FlatStyle = FlatStyle.Popup;
             btnSettings.Font = new Font("Times New Roman", 14.25F);
-            btnSettings.Location = new Point(4, 47);
+            btnSettings.Location = new Point(8, 47);
             btnSettings.Margin = new Padding(4);
             btnSettings.Name = "btnSettings";
-            btnSettings.Size = new Size(123, 35);
+            btnSettings.Size = new Size(132, 35);
             btnSettings.TabIndex = 1;
             btnSettings.Text = "Настройки +";
             btnSettings.UseVisualStyleBackColor = false;
@@ -95,7 +95,7 @@
             btnGeneral.BackColor = Color.LightSkyBlue;
             btnGeneral.FlatStyle = FlatStyle.Popup;
             btnGeneral.Font = new Font("Times New Roman", 14.25F);
-            btnGeneral.Location = new Point(40, 90);
+            btnGeneral.Location = new Point(53, 90);
             btnGeneral.Margin = new Padding(4);
             btnGeneral.Name = "btnGeneral";
             btnGeneral.Size = new Size(87, 35);
@@ -112,7 +112,7 @@
             btnNetwork.BackColor = Color.LightSkyBlue;
             btnNetwork.FlatStyle = FlatStyle.Popup;
             btnNetwork.Font = new Font("Times New Roman", 14.25F);
-            btnNetwork.Location = new Point(40, 133);
+            btnNetwork.Location = new Point(53, 133);
             btnNetwork.Margin = new Padding(4);
             btnNetwork.Name = "btnNetwork";
             btnNetwork.Size = new Size(87, 35);
@@ -132,7 +132,7 @@
             btnJournal.Location = new Point(4, 176);
             btnJournal.Margin = new Padding(4);
             btnJournal.Name = "btnJournal";
-            btnJournal.Size = new Size(123, 35);
+            btnJournal.Size = new Size(136, 35);
             btnJournal.TabIndex = 4;
             btnJournal.Text = "Журнал";
             btnJournal.UseVisualStyleBackColor = false;
@@ -147,10 +147,10 @@
             topPanel.Controls.Add(btnWrite);
             topPanel.Controls.Add(menuStrip);
             topPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            topPanel.Location = new Point(3, 2);
+            topPanel.Location = new Point(3, 3);
             topPanel.Margin = new Padding(4);
             topPanel.Name = "topPanel";
-            topPanel.Size = new Size(1654, 48);
+            topPanel.Size = new Size(1586, 48);
             topPanel.TabIndex = 2;
             // 
             // btnWrite
@@ -162,7 +162,7 @@
             btnWrite.FlatStyle = FlatStyle.Popup;
             btnWrite.Font = new Font("Times New Roman", 14.25F);
             btnWrite.ForeColor = Color.Black;
-            btnWrite.Location = new Point(648, 8);
+            btnWrite.Location = new Point(638, 8);
             btnWrite.Margin = new Padding(4);
             btnWrite.Name = "btnWrite";
             btnWrite.Size = new Size(92, 31);
@@ -179,7 +179,7 @@
             menuStrip.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             menuStrip.GripStyle = ToolStripGripStyle.Visible;
             menuStrip.Items.AddRange(new ToolStripItem[] { helpMenu, UserHelp });
-            menuStrip.Location = new Point(5, 6);
+            menuStrip.Location = new Point(-5, 6);
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new Padding(9, 3, 0, 3);
             menuStrip.RenderMode = ToolStripRenderMode.Professional;
@@ -210,7 +210,7 @@
             rightPanel.BorderStyle = BorderStyle.FixedSingle;
             rightPanel.Controls.Add(devicesPanel);
             rightPanel.Controls.Add(devicesLabel);
-            rightPanel.Location = new Point(1305, 55);
+            rightPanel.Location = new Point(1238, 55);
             rightPanel.Margin = new Padding(4);
             rightPanel.Name = "rightPanel";
             rightPanel.Size = new Size(351, 836);
@@ -225,10 +225,10 @@
             devicesPanel.BorderStyle = BorderStyle.FixedSingle;
             devicesPanel.FlowDirection = FlowDirection.TopDown;
             devicesPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            devicesPanel.Location = new Point(11, 66);
+            devicesPanel.Location = new Point(9, 46);
             devicesPanel.Margin = new Padding(4);
             devicesPanel.Name = "devicesPanel";
-            devicesPanel.Size = new Size(330, 737);
+            devicesPanel.Size = new Size(330, 781);
             devicesPanel.TabIndex = 1;
             devicesPanel.WrapContents = false;
             // 
@@ -240,7 +240,7 @@
             devicesLabel.FlatStyle = FlatStyle.Flat;
             devicesLabel.Font = new Font("Times New Roman", 14.25F);
             devicesLabel.ForeColor = Color.Black;
-            devicesLabel.Location = new Point(58, 20);
+            devicesLabel.Location = new Point(80, 14);
             devicesLabel.Margin = new Padding(4, 0, 4, 0);
             devicesLabel.Name = "devicesLabel";
             devicesLabel.Size = new Size(214, 21);
@@ -255,10 +255,10 @@
             ChildFormPanel.BackColor = Color.LightSteelBlue;
             ChildFormPanel.BorderStyle = BorderStyle.FixedSingle;
             ChildFormPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ChildFormPanel.Location = new Point(138, 55);
+            ChildFormPanel.Location = new Point(152, 55);
             ChildFormPanel.Margin = new Padding(4);
             ChildFormPanel.Name = "ChildFormPanel";
-            ChildFormPanel.Size = new Size(1164, 838);
+            ChildFormPanel.Size = new Size(1082, 836);
             ChildFormPanel.TabIndex = 4;
             // 
             // ConfiguratorForm
@@ -266,12 +266,13 @@
             AutoScaleDimensions = new SizeF(10F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1661, 896);
+            ClientSize = new Size(1591, 896);
             Controls.Add(rightPanel);
             Controls.Add(ChildFormPanel);
             Controls.Add(Sidebar);
             Controls.Add(topPanel);
             Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ForeColor = Color.Black;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip;

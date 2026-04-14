@@ -334,23 +334,67 @@ namespace Uetm_2_0
                 MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            if (MessageBox.Show("Вы уверены, что хотите записать настройки в устройство?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            if (MessageBox.Show("Вы уверены, что хотите записать настройки в устройство? После записи устройство перезагрузится, соединение будет разорвано.",
+                "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
             try
             {
+                // Сохраняем данные из активной вкладки в глобальную переменную
                 if (ChildFormPanel.Controls[0] is UcGeneral general)
+                {
                     if (!general.SaveToDatabase()) return;
-                    else if (ChildFormPanel.Controls[0] is UcNetwork network)
-                        network.SaveToDatabase();
+                }
+                else if (ChildFormPanel.Controls[0] is UcNetwork network)
+                {
+                    network.SaveToDatabase();
+                }
 
+                // Выполняем запись в устройство
                 ExporterLinkerHelper.WriteSettings(Database.GeneralSettings_TextFormat, true, _connection);
-                MessageBox.Show("Настройки записаны.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+
+                // Принудительно закрываем соединение
+                Disconnect();
+
+                if (ExporterLinkerHelper.WasRebootCommandSent)
+                {
+                    MessageBox.Show("Настройки успешно записаны. Устройство перезагружается. " +
+                                    "Подождите несколько секунд и подключитесь заново.",
+                                    "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                else
+                {
+                    MessageBox.Show("Настройки записаны в буфер, но команда перезагрузки не была подтверждена. " +
+                                    "Возможно, потребуется перезагрузить устройство вручную.",
+                                    "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+
+                RefreshDevicesList();
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                // Если ошибка связана с разрывом соединения, но команда перезагрузки была отправлена
+                if (IsConnectionError(ex) && ExporterLinkerHelper.WasRebootCommandSent)
+                {
+                    Disconnect();
+                    MessageBox.Show("Устройство перезагружается. Подождите и подключитесь заново.",
+                                    "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    RefreshDevicesList();
+                }
+                else
+                {
+                    MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
             }
+        }
+
+        private bool IsConnectionError(Exception ex)
+        {
+            string msg = ex.Message.ToLower();
+            return msg.Contains("socket") ||
+                   msg.Contains("connection") ||
+                   msg.Contains("disconnected") ||
+                   (ex.InnerException != null && IsConnectionError(ex.InnerException));
         }
 
         private void ConfiguratorForm_FormClosing(object sender, FormClosingEventArgs e)
@@ -369,8 +413,8 @@ namespace Uetm_2_0
         {
             string info =
                 "Порядок работы:\n" +
-                "1. Управление → ввод IP и порта (502) → Добавить → Подключиться.\n" +
-                "2. Считать – загрузка настроек с устройства.\n" +
+                "1. Управление - ввод IP и порта (502) - Добавить - Подключиться.\n" +
+                "2. Подключиться – загрузка настроек с устройства.\n" +
                 "3. Записать – отправка настроек (требует подтверждения).\n" +
                 "\nОграничения:\n" +
                 "- Токи: целые числа в пределах, указанных в ошибках.\n" +
@@ -378,11 +422,11 @@ namespace Uetm_2_0
                 "- Установка времени недоступна при PTP-синхронизации.\n" +
                 "- При изменении IP/MAC устройство перезагружается, соединение рвётся.\n" +
                 "\nЖурнал:\n" +
-                "- Обновить – чтение с устройства, Экспорт/Импорт – CSV.\n" +
-                "\nКоманды (админ):\n" +
+                "- Обновить – чтение с устройства, Экспорт в EXCEL.\n" +
+                "\nКоманды (администратор):\n" +
                 "- Обнулить ресурс, Установить время, Перезагрузить.\n" +
                 "\nПрочее:\n" +
-                "- Таймаут подключения 5 сек.\n" +
+                "- Таймаут подключения, перезагрузки несколько секунд сек.\n" +
                 "- Список устройств хранится в devices.json (рядом с exe).";
 
             MessageBox.Show(info, "Руководство", MessageBoxButtons.OK, MessageBoxIcon.Information);

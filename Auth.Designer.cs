@@ -52,10 +52,10 @@
             // 
             PasswordTextBox.Anchor = AnchorStyles.None;
             PasswordTextBox.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            PasswordTextBox.Location = new Point(47, 122);
+            PasswordTextBox.Location = new Point(17, 122);
             PasswordTextBox.Margin = new Padding(8, 6, 8, 6);
             PasswordTextBox.Name = "PasswordTextBox";
-            PasswordTextBox.Size = new Size(170, 29);
+            PasswordTextBox.Size = new Size(222, 29);
             PasswordTextBox.TabIndex = 83;
             // 
             // LoginLabel
@@ -63,7 +63,7 @@
             LoginLabel.Anchor = AnchorStyles.None;
             LoginLabel.AutoSize = true;
             LoginLabel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            LoginLabel.Location = new Point(68, 39);
+            LoginLabel.Location = new Point(57, 37);
             LoginLabel.Margin = new Padding(8, 0, 8, 0);
             LoginLabel.Name = "LoginLabel";
             LoginLabel.Size = new Size(146, 21);
@@ -77,10 +77,10 @@
             LoginComboBox.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             LoginComboBox.FormattingEnabled = true;
             LoginComboBox.Items.AddRange(new object[] { "Администратор", "Пользователь" });
-            LoginComboBox.Location = new Point(47, 64);
+            LoginComboBox.Location = new Point(17, 64);
             LoginComboBox.Margin = new Padding(8, 6, 8, 6);
             LoginComboBox.Name = "LoginComboBox";
-            LoginComboBox.Size = new Size(170, 29);
+            LoginComboBox.Size = new Size(222, 29);
             LoginComboBox.TabIndex = 81;
             // 
             // button1
@@ -92,7 +92,7 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(93, 172);
+            button1.Location = new Point(94, 161);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Size = new Size(64, 31);
@@ -116,6 +116,7 @@
             Controls.Add(LoginLabel);
             Controls.Add(LoginComboBox);
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ForeColor = Color.Black;
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);

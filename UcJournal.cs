@@ -60,7 +60,7 @@ namespace Uetm_2_0
                     {
                         string eventType = rec.hdr.rtype == 1 ? (rec.hdr.subtype == 0 ? "Отключение" : "Включение") : "Обнуление";
                         DateTime dt = PtpTimeHelper.PtpToDateTime(rec.hdr.stamp.ns, rec.hdr.stamp.slo);
-                        string channel = (rec.hdr.rtype == 1) ? ChannelNumberToLetter(rec.hdr.udt) : "-";
+                        string channel = (rec.hdr.rtype == 1) ? ChannelNumberToLetter(rec.hdr.udt) : "";
                         journalTable.Rows.Add(idx, eventType, channel, dt.ToString("dd.MM.yyyy HH:mm:ss"), rec.Ii, rec.Ri);
                         idx++;
                     }
@@ -173,7 +173,6 @@ namespace Uetm_2_0
                 ws.Cells[cntvRow, 4].Value = Convert.ToInt32(dr[3]);
                 cntvRow++;
             }
-
             ws.Cells.AutoFitColumns();
         }
 
@@ -203,7 +202,6 @@ namespace Uetm_2_0
                 ws.Cells[delayRow, 3].Value = dr[2].ToString();
                 delayRow++;
             }
-
             ws.Cells.AutoFitColumns();
         }
 
@@ -227,14 +225,12 @@ namespace Uetm_2_0
                 ws.Cells[1, 1].Value = "Нет записей в журнале";
                 return;
             }
-
             for (int i = 0; i < journalTable.Columns.Count; i++)
                 ws.Cells[1, i + 1].Value = journalTable.Columns[i].ColumnName;
 
             for (int i = 0; i < journalTable.Rows.Count; i++)
                 for (int j = 0; j < journalTable.Columns.Count; j++)
                     ws.Cells[i + 2, j + 1].Value = journalTable.Rows[i][j]?.ToString();
-
             ws.Cells.AutoFitColumns();
         }
     }

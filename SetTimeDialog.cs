@@ -43,12 +43,12 @@
             // 
             // dateTimePicker1
             // 
-            dateTimePicker1.Anchor = AnchorStyles.None;
-            dateTimePicker1.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            dateTimePicker1.Location = new Point(24, 29);
+            dateTimePicker1.CalendarFont = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dateTimePicker1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dateTimePicker1.Location = new Point(53, 13);
             dateTimePicker1.Margin = new Padding(4);
             dateTimePicker1.Name = "dateTimePicker1";
-            dateTimePicker1.Size = new Size(258, 29);
+            dateTimePicker1.Size = new Size(177, 26);
             dateTimePicker1.TabIndex = 0;
             // 
             // btnOk
@@ -60,7 +60,8 @@
             btnOk.FlatAppearance.BorderSize = 0;
             btnOk.FlatStyle = FlatStyle.Flat;
             btnOk.Font = new Font("Times New Roman", 12F);
-            btnOk.Location = new Point(24, 111);
+            btnOk.ForeColor = Color.Black;
+            btnOk.Location = new Point(53, 111);
             btnOk.Margin = new Padding(4);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(96, 29);
@@ -77,7 +78,8 @@
             btnCancel.BackColor = Color.LightSkyBlue;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Times New Roman", 12F);
-            btnCancel.Location = new Point(211, 111);
+            btnCancel.ForeColor = Color.Black;
+            btnCancel.Location = new Point(157, 110);
             btnCancel.Margin = new Padding(4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(73, 31);
@@ -90,11 +92,11 @@
             // 
             labelHour.Anchor = AnchorStyles.None;
             labelHour.AutoSize = true;
-            labelHour.Font = new Font("Times New Roman", 14.25F);
-            labelHour.Location = new Point(24, 70);
+            labelHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelHour.Location = new Point(84, 47);
             labelHour.Margin = new Padding(4, 0, 4, 0);
             labelHour.Name = "labelHour";
-            labelHour.Size = new Size(56, 21);
+            labelHour.Size = new Size(47, 19);
             labelHour.TabIndex = 1;
             labelHour.Text = "Часы:";
             labelHour.TextAlign = ContentAlignment.MiddleCenter;
@@ -104,11 +106,11 @@
             numericUpDownHour.Anchor = AnchorStyles.None;
             numericUpDownHour.AutoSize = true;
             numericUpDownHour.BorderStyle = BorderStyle.FixedSingle;
-            numericUpDownHour.Font = new Font("Times New Roman", 14.25F);
-            numericUpDownHour.Location = new Point(88, 65);
+            numericUpDownHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            numericUpDownHour.Location = new Point(134, 44);
             numericUpDownHour.Maximum = new decimal(new int[] { 23, 0, 0, 0 });
             numericUpDownHour.Name = "numericUpDownHour";
-            numericUpDownHour.Size = new Size(50, 29);
+            numericUpDownHour.Size = new Size(50, 26);
             numericUpDownHour.TabIndex = 2;
             numericUpDownHour.TextAlign = HorizontalAlignment.Center;
             // 
@@ -116,11 +118,11 @@
             // 
             labelMinute.Anchor = AnchorStyles.None;
             labelMinute.AutoSize = true;
-            labelMinute.Font = new Font("Times New Roman", 14.25F);
-            labelMinute.Location = new Point(145, 70);
+            labelMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelMinute.Location = new Point(62, 79);
             labelMinute.Margin = new Padding(4, 0, 4, 0);
             labelMinute.Name = "labelMinute";
-            labelMinute.Size = new Size(80, 21);
+            labelMinute.Size = new Size(69, 19);
             labelMinute.TabIndex = 3;
             labelMinute.Text = "Минуты:";
             // 
@@ -129,11 +131,11 @@
             numericUpDownMinute.Anchor = AnchorStyles.None;
             numericUpDownMinute.AutoSize = true;
             numericUpDownMinute.BorderStyle = BorderStyle.FixedSingle;
-            numericUpDownMinute.Font = new Font("Times New Roman", 14.25F);
-            numericUpDownMinute.Location = new Point(232, 64);
+            numericUpDownMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            numericUpDownMinute.Location = new Point(134, 76);
             numericUpDownMinute.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             numericUpDownMinute.Name = "numericUpDownMinute";
-            numericUpDownMinute.Size = new Size(50, 29);
+            numericUpDownMinute.Size = new Size(50, 26);
             numericUpDownMinute.TabIndex = 4;
             numericUpDownMinute.TextAlign = HorizontalAlignment.Center;
             // 
@@ -144,7 +146,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.LightGray;
-            ClientSize = new Size(306, 161);
+            ClientSize = new Size(283, 161);
             Controls.Add(btnCancel);
             Controls.Add(btnOk);
             Controls.Add(numericUpDownMinute);
@@ -153,6 +155,7 @@
             Controls.Add(labelHour);
             Controls.Add(dateTimePicker1);
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ForeColor = Color.Black;
             FormBorderStyle = FormBorderStyle.FixedDialog;
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
