@@ -121,7 +121,7 @@
             groupBoxBreakerInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxBreakerInfo.Controls.Add(tableLayoutBreakerInfo);
             groupBoxBreakerInfo.Font = new Font("Times New Roman", 14F);
-            groupBoxBreakerInfo.Location = new Point(12, 5);
+            groupBoxBreakerInfo.Location = new Point(8, 5);
             groupBoxBreakerInfo.Margin = new Padding(4);
             groupBoxBreakerInfo.Name = "groupBoxBreakerInfo";
             groupBoxBreakerInfo.Padding = new Padding(4);
@@ -165,9 +165,9 @@
             labelSwitchType.Location = new Point(4, 8);
             labelSwitchType.Margin = new Padding(4, 0, 4, 0);
             labelSwitchType.Name = "labelSwitchType";
-            labelSwitchType.Size = new Size(132, 19);
+            labelSwitchType.Size = new Size(129, 19);
             labelSwitchType.TabIndex = 4;
-            labelSwitchType.Text = "Тип выключателя:";
+            labelSwitchType.Text = "Тип выключателя";
             // 
             // switchTypeComboBox
             // 
@@ -189,9 +189,9 @@
             labelNominalCurrent.Location = new Point(4, 42);
             labelNominalCurrent.Margin = new Padding(4, 0, 4, 0);
             labelNominalCurrent.Name = "labelNominalCurrent";
-            labelNominalCurrent.Size = new Size(161, 19);
+            labelNominalCurrent.Size = new Size(158, 19);
             labelNominalCurrent.TabIndex = 0;
-            labelNominalCurrent.Text = "Номинальный ток (А):";
+            labelNominalCurrent.Text = "Номинальный ток (А)";
             // 
             // nominalCurrentTextBox
             // 
@@ -212,7 +212,7 @@
             labelMaxCurrent.Name = "labelMaxCurrent";
             labelMaxCurrent.Size = new Size(302, 22);
             labelMaxCurrent.TabIndex = 2;
-            labelMaxCurrent.Text = "Номинальный ток отключения (кА):";
+            labelMaxCurrent.Text = "Номинальный ток отключения (кА)";
             // 
             // maxCurrentTextBox
             // 
@@ -230,7 +230,7 @@
             groupBoxCoefficients.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxCoefficients.Controls.Add(tableLayoutCoefficients);
             groupBoxCoefficients.Font = new Font("Times New Roman", 14F);
-            groupBoxCoefficients.Location = new Point(567, 185);
+            groupBoxCoefficients.Location = new Point(564, 185);
             groupBoxCoefficients.Margin = new Padding(4);
             groupBoxCoefficients.Name = "groupBoxCoefficients";
             groupBoxCoefficients.Padding = new Padding(4);
@@ -353,7 +353,7 @@
             groupBoxAlgorithm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxAlgorithm.Controls.Add(tableLayoutAlgorithm);
             groupBoxAlgorithm.Font = new Font("Times New Roman", 14F);
-            groupBoxAlgorithm.Location = new Point(7, 158);
+            groupBoxAlgorithm.Location = new Point(4, 158);
             groupBoxAlgorithm.Margin = new Padding(4);
             groupBoxAlgorithm.Name = "groupBoxAlgorithm";
             groupBoxAlgorithm.Padding = new Padding(4);
@@ -387,13 +387,13 @@
             tableLayoutAlgorithm.RowStyles.Add(new RowStyle());
             tableLayoutAlgorithm.RowStyles.Add(new RowStyle());
             tableLayoutAlgorithm.RowStyles.Add(new RowStyle());
-            tableLayoutAlgorithm.Size = new Size(524, 136);
+            tableLayoutAlgorithm.Size = new Size(521, 136);
             tableLayoutAlgorithm.TabIndex = 0;
             // 
             // thresholdCurrentTextBox
             // 
             thresholdCurrentTextBox.Anchor = AnchorStyles.None;
-            thresholdCurrentTextBox.Location = new Point(407, 4);
+            thresholdCurrentTextBox.Location = new Point(404, 4);
             thresholdCurrentTextBox.Margin = new Padding(4);
             thresholdCurrentTextBox.Name = "thresholdCurrentTextBox";
             thresholdCurrentTextBox.Size = new Size(112, 26);
@@ -407,9 +407,9 @@
             labelThresholdCurrent.Location = new Point(4, 7);
             labelThresholdCurrent.Margin = new Padding(4, 0, 4, 0);
             labelThresholdCurrent.Name = "labelThresholdCurrent";
-            labelThresholdCurrent.Size = new Size(394, 19);
+            labelThresholdCurrent.Size = new Size(391, 19);
             labelThresholdCurrent.TabIndex = 0;
-            labelThresholdCurrent.Text = "Ток порога нечувствительности первичного датчика (А):";
+            labelThresholdCurrent.Text = "Ток порога нечувствительности первичного датчика (А)";
             labelThresholdCurrent.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelNominalOperations
@@ -419,14 +419,14 @@
             labelNominalOperations.Location = new Point(4, 41);
             labelNominalOperations.Margin = new Padding(4, 0, 4, 0);
             labelNominalOperations.Name = "labelNominalOperations";
-            labelNominalOperations.Size = new Size(272, 19);
+            labelNominalOperations.Size = new Size(269, 19);
             labelNominalOperations.TabIndex = 2;
-            labelNominalOperations.Text = "Номинальное количество отключений:";
+            labelNominalOperations.Text = "Номинальное количество отключений";
             // 
             // nominalOperationsTextBox
             // 
             nominalOperationsTextBox.Anchor = AnchorStyles.None;
-            nominalOperationsTextBox.Location = new Point(407, 38);
+            nominalOperationsTextBox.Location = new Point(404, 38);
             nominalOperationsTextBox.Margin = new Padding(4);
             nominalOperationsTextBox.Name = "nominalOperationsTextBox";
             nominalOperationsTextBox.Size = new Size(112, 26);
@@ -437,7 +437,7 @@
             // 
             warningThresholdTextBox.Anchor = AnchorStyles.None;
             warningThresholdTextBox.Enabled = false;
-            warningThresholdTextBox.Location = new Point(406, 72);
+            warningThresholdTextBox.Location = new Point(403, 72);
             warningThresholdTextBox.Margin = new Padding(4);
             warningThresholdTextBox.Name = "warningThresholdTextBox";
             warningThresholdTextBox.ReadOnly = true;
@@ -453,9 +453,9 @@
             labelWarningThreshold.Location = new Point(4, 75);
             labelWarningThreshold.Margin = new Padding(4, 0, 4, 0);
             labelWarningThreshold.Name = "labelWarningThreshold";
-            labelWarningThreshold.Size = new Size(318, 19);
+            labelWarningThreshold.Size = new Size(315, 19);
             labelWarningThreshold.TabIndex = 6;
-            labelWarningThreshold.Text = "Порог предупредительной сигнализации (%):";
+            labelWarningThreshold.Text = "Порог предупредительной сигнализации (%)";
             // 
             // labelAlarmThreshold
             // 
@@ -465,15 +465,16 @@
             labelAlarmThreshold.Location = new Point(4, 109);
             labelAlarmThreshold.Margin = new Padding(4, 0, 4, 0);
             labelAlarmThreshold.Name = "labelAlarmThreshold";
-            labelAlarmThreshold.Size = new Size(257, 19);
+            labelAlarmThreshold.Size = new Size(254, 19);
             labelAlarmThreshold.TabIndex = 8;
-            labelAlarmThreshold.Text = "Порог аварийной сигнализации (%):";
+            labelAlarmThreshold.Text = "Порог аварийной сигнализации (%)";
+            labelAlarmThreshold.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // alarmThresholdTextBox
             // 
             alarmThresholdTextBox.Anchor = AnchorStyles.None;
             alarmThresholdTextBox.Enabled = false;
-            alarmThresholdTextBox.Location = new Point(406, 106);
+            alarmThresholdTextBox.Location = new Point(403, 106);
             alarmThresholdTextBox.Margin = new Padding(4);
             alarmThresholdTextBox.Name = "alarmThresholdTextBox";
             alarmThresholdTextBox.ReadOnly = true;
@@ -487,7 +488,7 @@
             groupBoxInstallation.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxInstallation.Controls.Add(tableLayoutInstallation);
             groupBoxInstallation.Font = new Font("Times New Roman", 14F);
-            groupBoxInstallation.Location = new Point(562, 4);
+            groupBoxInstallation.Location = new Point(559, 4);
             groupBoxInstallation.Margin = new Padding(4);
             groupBoxInstallation.Name = "groupBoxInstallation";
             groupBoxInstallation.Padding = new Padding(4);
@@ -538,9 +539,9 @@
             labelInstallationPlace.Location = new Point(4, 7);
             labelInstallationPlace.Margin = new Padding(4, 0, 4, 0);
             labelInstallationPlace.Name = "labelInstallationPlace";
-            labelInstallationPlace.Size = new Size(128, 19);
+            labelInstallationPlace.Size = new Size(125, 19);
             labelInstallationPlace.TabIndex = 2;
-            labelInstallationPlace.Text = "Место установки:";
+            labelInstallationPlace.Text = "Место установки";
             // 
             // installationPlaceTextBox
             // 
@@ -590,7 +591,7 @@
             groupBoxPrimaryCT.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPrimaryCT.Controls.Add(tableLayoutPrimaryCT);
             groupBoxPrimaryCT.Font = new Font("Times New Roman", 14F);
-            groupBoxPrimaryCT.Location = new Point(563, 351);
+            groupBoxPrimaryCT.Location = new Point(559, 351);
             groupBoxPrimaryCT.Margin = new Padding(4);
             groupBoxPrimaryCT.Name = "groupBoxPrimaryCT";
             groupBoxPrimaryCT.Padding = new Padding(4);
@@ -617,13 +618,13 @@
             tableLayoutPrimaryCT.RowCount = 2;
             tableLayoutPrimaryCT.RowStyles.Add(new RowStyle());
             tableLayoutPrimaryCT.RowStyles.Add(new RowStyle());
-            tableLayoutPrimaryCT.Size = new Size(359, 68);
+            tableLayoutPrimaryCT.Size = new Size(356, 68);
             tableLayoutPrimaryCT.TabIndex = 0;
             // 
             // secondaryCurrentTextBox
             // 
             secondaryCurrentTextBox.Anchor = AnchorStyles.None;
-            secondaryCurrentTextBox.Location = new Point(255, 38);
+            secondaryCurrentTextBox.Location = new Point(252, 38);
             secondaryCurrentTextBox.Margin = new Padding(4);
             secondaryCurrentTextBox.Name = "secondaryCurrentTextBox";
             secondaryCurrentTextBox.Size = new Size(100, 26);
@@ -637,14 +638,14 @@
             labelPrimaryCurrent.Location = new Point(4, 7);
             labelPrimaryCurrent.Margin = new Padding(4, 0, 4, 0);
             labelPrimaryCurrent.Name = "labelPrimaryCurrent";
-            labelPrimaryCurrent.Size = new Size(243, 19);
+            labelPrimaryCurrent.Size = new Size(240, 19);
             labelPrimaryCurrent.TabIndex = 0;
-            labelPrimaryCurrent.Text = "Номинальный первичный ток (А):";
+            labelPrimaryCurrent.Text = "Номинальный первичный ток (А)";
             // 
             // primaryCurrentTextBox
             // 
             primaryCurrentTextBox.Anchor = AnchorStyles.None;
-            primaryCurrentTextBox.Location = new Point(255, 4);
+            primaryCurrentTextBox.Location = new Point(252, 4);
             primaryCurrentTextBox.Margin = new Padding(4);
             primaryCurrentTextBox.Name = "primaryCurrentTextBox";
             primaryCurrentTextBox.Size = new Size(100, 26);
@@ -658,9 +659,9 @@
             labelSecondaryCurrent.Location = new Point(4, 41);
             labelSecondaryCurrent.Margin = new Padding(4, 0, 4, 0);
             labelSecondaryCurrent.Name = "labelSecondaryCurrent";
-            labelSecondaryCurrent.Size = new Size(242, 19);
+            labelSecondaryCurrent.Size = new Size(239, 19);
             labelSecondaryCurrent.TabIndex = 2;
-            labelSecondaryCurrent.Text = "Номинальный вторичный ток (А):";
+            labelSecondaryCurrent.Text = "Номинальный вторичный ток (А)";
             // 
             // groupBoxDebounce
             // 
@@ -668,11 +669,11 @@
             groupBoxDebounce.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxDebounce.Controls.Add(tableLayoutDebounce);
             groupBoxDebounce.Font = new Font("Times New Roman", 14F);
-            groupBoxDebounce.Location = new Point(4, 346);
+            groupBoxDebounce.Location = new Point(7, 346);
             groupBoxDebounce.Margin = new Padding(4);
             groupBoxDebounce.Name = "groupBoxDebounce";
             groupBoxDebounce.Padding = new Padding(4);
-            groupBoxDebounce.Size = new Size(542, 124);
+            groupBoxDebounce.Size = new Size(529, 124);
             groupBoxDebounce.TabIndex = 5;
             groupBoxDebounce.TabStop = false;
             groupBoxDebounce.Text = "Время защиты от дребезга вспомогательного контакта после обнаружения события (мс)";
@@ -695,13 +696,13 @@
             tableLayoutDebounce.RowCount = 2;
             tableLayoutDebounce.RowStyles.Add(new RowStyle());
             tableLayoutDebounce.RowStyles.Add(new RowStyle());
-            tableLayoutDebounce.Size = new Size(243, 68);
+            tableLayoutDebounce.Size = new Size(240, 68);
             tableLayoutDebounce.TabIndex = 0;
             // 
             // debounceOnTextBox
             // 
             debounceOnTextBox.Anchor = AnchorStyles.None;
-            debounceOnTextBox.Location = new Point(139, 38);
+            debounceOnTextBox.Location = new Point(136, 38);
             debounceOnTextBox.Margin = new Padding(4);
             debounceOnTextBox.Name = "debounceOnTextBox";
             debounceOnTextBox.Size = new Size(100, 26);
@@ -711,7 +712,7 @@
             // debounceOffTextBox
             // 
             debounceOffTextBox.Anchor = AnchorStyles.None;
-            debounceOffTextBox.Location = new Point(139, 4);
+            debounceOffTextBox.Location = new Point(136, 4);
             debounceOffTextBox.Margin = new Padding(4);
             debounceOffTextBox.Name = "debounceOffTextBox";
             debounceOffTextBox.Size = new Size(100, 26);
@@ -725,9 +726,9 @@
             labelDebounceOff.Location = new Point(4, 7);
             labelDebounceOff.Margin = new Padding(4, 0, 4, 0);
             labelDebounceOff.Name = "labelDebounceOff";
-            labelDebounceOff.Size = new Size(127, 19);
+            labelDebounceOff.Size = new Size(124, 19);
             labelDebounceOff.TabIndex = 0;
-            labelDebounceOff.Text = "При отключении:";
+            labelDebounceOff.Text = "При отключении";
             // 
             // labelDebounceOn
             // 
@@ -736,9 +737,9 @@
             labelDebounceOn.Location = new Point(4, 41);
             labelDebounceOn.Margin = new Padding(4, 0, 4, 0);
             labelDebounceOn.Name = "labelDebounceOn";
-            labelDebounceOn.Size = new Size(120, 19);
+            labelDebounceOn.Size = new Size(117, 19);
             labelDebounceOn.TabIndex = 2;
-            labelDebounceOn.Text = "При включении:";
+            labelDebounceOn.Text = "При включении";
             // 
             // groupBoxDelay
             // 
@@ -747,11 +748,11 @@
             tableLayoutPanelMain.SetColumnSpan(groupBoxDelay, 2);
             groupBoxDelay.Controls.Add(delayDataGridView);
             groupBoxDelay.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxDelay.Location = new Point(133, 485);
+            groupBoxDelay.Location = new Point(133, 488);
             groupBoxDelay.Margin = new Padding(4);
             groupBoxDelay.Name = "groupBoxDelay";
             groupBoxDelay.Padding = new Padding(4);
-            groupBoxDelay.Size = new Size(805, 189);
+            groupBoxDelay.Size = new Size(805, 183);
             groupBoxDelay.TabIndex = 6;
             groupBoxDelay.TabStop = false;
             groupBoxDelay.Text = "Запаздывание/опережение срабатывания вспомогательного контакта относительно главного, мс";
@@ -782,7 +783,7 @@
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             delayDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
             delayDataGridView.GridColor = Color.LightGray;
-            delayDataGridView.Location = new Point(133, 43);
+            delayDataGridView.Location = new Point(133, 40);
             delayDataGridView.Margin = new Padding(4);
             delayDataGridView.Name = "delayDataGridView";
             delayDataGridView.ReadOnly = true;
@@ -797,7 +798,7 @@
             delayDataGridView.RowHeadersVisible = false;
             delayDataGridView.RowHeadersWidth = 40;
             delayDataGridView.ScrollBars = ScrollBars.None;
-            delayDataGridView.Size = new Size(513, 122);
+            delayDataGridView.Size = new Size(513, 123);
             delayDataGridView.TabIndex = 0;
             // 
             // UcGeneral

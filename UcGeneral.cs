@@ -164,31 +164,31 @@ namespace Uetm_2_0
 
             var settings = Database.GeneralSettings_TextFormat;
 
-            nominalCurrentTextBox.Text = settings.swrcs.swnf.Inn ?? "-";
-            maxCurrentTextBox.Text = settings.swrcs.swnf.Imax ?? "-";
-            switchLabelTextBox.Text = (settings.swrcs.swnf.label ?? "-").Replace("\0", "-");
-            switchModelTextBox.Text = (settings.swrcs.swnf.model ?? "-").Replace("\0", "-");
-            switchTypeComboBox.Text = settings.swrcs.swnf.model ?? "-";
-            thresholdCurrentTextBox.Text = settings.swrcs.algo.Iotc ?? "-";
-            nominalOperationsTextBox.Text = settings.swrcs.algo.Nn ?? "-";
-            c1TextBox.Text = settings.swrcs.algo.C1 ?? "-";
-            c2TextBox.Text = settings.swrcs.algo.C2 ?? "-";
-            c3TextBox.Text = settings.swrcs.algo.C3 ?? "-";
-            c4TextBox.Text = settings.swrcs.algo.C4 ?? "-";
-            installationPlaceTextBox.Text = settings.cmns.MntPlce ?? "-";
-            primaryCurrentTextBox.Text = settings.meas.primct.Inom1 ?? "-";
+            nominalCurrentTextBox.Text = settings.swrcs.swnf.Inn ?? "";
+            maxCurrentTextBox.Text = settings.swrcs.swnf.Imax ?? "";
+            switchLabelTextBox.Text = (settings.swrcs.swnf.label ?? "").Replace("\0", "");
+            switchModelTextBox.Text = (settings.swrcs.swnf.model ?? "").Replace("\0", "");
+            switchTypeComboBox.Text = settings.swrcs.swnf.model ?? "";
+            thresholdCurrentTextBox.Text = settings.swrcs.algo.Iotc ?? "";
+            nominalOperationsTextBox.Text = settings.swrcs.algo.Nn ?? "";
+            c1TextBox.Text = settings.swrcs.algo.C1 ?? "";
+            c2TextBox.Text = settings.swrcs.algo.C2 ?? "";
+            c3TextBox.Text = settings.swrcs.algo.C3 ?? "";
+            c4TextBox.Text = settings.swrcs.algo.C4 ?? "";
+            installationPlaceTextBox.Text = settings.cmns.MntPlce ?? "";
+            primaryCurrentTextBox.Text = settings.meas.primct.Inom1 ?? "";
 
             if (int.TryParse(settings.meas.primct.Inom2, out int secMA))
                 secondaryCurrentTextBox.Text = (secMA / 1000.0).ToString(CultureInfo.InvariantCulture);
-            else secondaryCurrentTextBox.Text = settings.meas.primct.Inom2 ?? "-";
+            else secondaryCurrentTextBox.Text = settings.meas.primct.Inom2 ?? "";
 
             if (short.TryParse(settings.swrcs.contacts.ajtr.offd, out short offdTenths))
                 debounceOffTextBox.Text = (offdTenths / 10.0).ToString(CultureInfo.InvariantCulture);
-            else debounceOffTextBox.Text = settings.swrcs.contacts.ajtr.offd ?? "-";
+            else debounceOffTextBox.Text = settings.swrcs.contacts.ajtr.offd ?? "";
 
             if (short.TryParse(settings.swrcs.contacts.ajtr.ond, out short ondTenths))
                 debounceOnTextBox.Text = (ondTenths / 10.0).ToString(CultureInfo.InvariantCulture);
-            else debounceOnTextBox.Text = settings.swrcs.contacts.ajtr.ond ?? "-";
+            else debounceOnTextBox.Text = settings.swrcs.contacts.ajtr.ond ?? "";
 
             delayTable.Rows.Clear();
             var cdly = settings.swrcs.contacts.cdly ?? new SCDLY_cdly_TextFormat[0];
@@ -427,24 +427,24 @@ namespace Uetm_2_0
         {
             return new Dictionary<string, string>
             {
-                ["Номинальный ток, А"] = nominalCurrentTextBox.Text,
-                ["Максимальный ток отключения, кА"] = maxCurrentTextBox.Text,
+                ["Номинальный ток (А)"] = nominalCurrentTextBox.Text,
+                ["Максимальный ток отключения (кА)"] = maxCurrentTextBox.Text,
                 ["Тип выключателя"] = switchTypeComboBox.Text,
                 ["Обозначение выключателя"] = switchLabelTextBox.Text,
                 ["Марка выключателя"] = switchModelTextBox.Text,
-                ["Ток порога, А"] = thresholdCurrentTextBox.Text,
-                ["Номинальное кол-во отключений"] = nominalOperationsTextBox.Text,
+                ["Ток порога (А)"] = thresholdCurrentTextBox.Text,
+                ["Номинальное количество отключений"] = nominalOperationsTextBox.Text,
                 ["C1"] = c1TextBox.Text,
                 ["C2"] = c2TextBox.Text,
                 ["C3"] = c3TextBox.Text,
                 ["C4"] = c4TextBox.Text,
                 ["Место установки"] = installationPlaceTextBox.Text,
-                ["Первичный ток, А"] = primaryCurrentTextBox.Text,
-                ["Вторичный ток, А"] = secondaryCurrentTextBox.Text,
+                ["Первичный ток (А)"] = primaryCurrentTextBox.Text,
+                ["Вторичный ток (А)"] = secondaryCurrentTextBox.Text,
                 ["Задержка дребезга (отключение), мс"] = debounceOffTextBox.Text,
                 ["Задержка дребезга (включение), мс"] = debounceOnTextBox.Text,
-                ["Порог предупр. сигнализации, %"] = warningThresholdTextBox.Text,
-                ["Порог аварийной сигнализации, %"] = alarmThresholdTextBox.Text
+                ["Порог предупредительной сигнализации (%)"] = warningThresholdTextBox.Text,
+                ["Порог аварийной сигнализации (%)"] = alarmThresholdTextBox.Text
             };
         }
 

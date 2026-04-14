@@ -27,7 +27,7 @@
             placeTextBox.Anchor = AnchorStyles.None;
             placeTextBox.BorderStyle = BorderStyle.FixedSingle;
             placeTextBox.Font = new Font("Times New Roman", 12F);
-            placeTextBox.Location = new Point(59, 30);
+            placeTextBox.Location = new Point(29, 36);
             placeTextBox.Name = "placeTextBox";
             placeTextBox.ReadOnly = true;
             placeTextBox.Size = new Size(210, 26);
@@ -39,7 +39,7 @@
             switchTextBox.Anchor = AnchorStyles.None;
             switchTextBox.BorderStyle = BorderStyle.FixedSingle;
             switchTextBox.Font = new Font("Times New Roman", 12F);
-            switchTextBox.Location = new Point(59, 75);
+            switchTextBox.Location = new Point(29, 79);
             switchTextBox.Name = "switchTextBox";
             switchTextBox.ReadOnly = true;
             switchTextBox.Size = new Size(210, 26);
@@ -54,7 +54,7 @@
             deleteButton.BackColor = Color.LightSkyBlue;
             deleteButton.FlatStyle = FlatStyle.Popup;
             deleteButton.Font = new Font("Times New Roman", 12F);
-            deleteButton.Location = new Point(59, 116);
+            deleteButton.Location = new Point(29, 120);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(74, 29);
             deleteButton.TabIndex = 5;
@@ -70,7 +70,7 @@
             connectButton.BackColor = Color.LightSkyBlue;
             connectButton.FlatStyle = FlatStyle.Popup;
             connectButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            connectButton.Location = new Point(152, 116);
+            connectButton.Location = new Point(122, 120);
             connectButton.Name = "connectButton";
             connectButton.Size = new Size(117, 29);
             connectButton.TabIndex = 6;
@@ -83,7 +83,7 @@
             ipLabel.Anchor = AnchorStyles.None;
             ipLabel.AutoSize = true;
             ipLabel.Font = new Font("Times New Roman", 12F);
-            ipLabel.Location = new Point(76, 8);
+            ipLabel.Location = new Point(71, 11);
             ipLabel.Name = "ipLabel";
             ipLabel.Size = new Size(23, 19);
             ipLabel.TabIndex = 0;
@@ -104,7 +104,7 @@
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ForeColor = Color.Black;
             Name = "DeviceCard";
-            Size = new Size(320, 154);
+            Size = new Size(260, 162);
             ResumeLayout(false);
             PerformLayout();
         }

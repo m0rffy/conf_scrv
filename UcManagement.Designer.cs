@@ -288,15 +288,15 @@
             labelSerialNumber.Location = new Point(4, 0);
             labelSerialNumber.Margin = new Padding(4, 0, 4, 0);
             labelSerialNumber.Name = "labelSerialNumber";
-            labelSerialNumber.Size = new Size(131, 19);
+            labelSerialNumber.Size = new Size(128, 19);
             labelSerialNumber.TabIndex = 0;
-            labelSerialNumber.Text = "Серийный номер:";
+            labelSerialNumber.Text = "Серийный номер";
             // 
             // serialNumberLabel
             // 
             serialNumberLabel.Anchor = AnchorStyles.Left;
             serialNumberLabel.AutoSize = true;
-            serialNumberLabel.Location = new Point(145, 0);
+            serialNumberLabel.Location = new Point(142, 0);
             serialNumberLabel.Margin = new Padding(4, 0, 4, 0);
             serialNumberLabel.Name = "serialNumberLabel";
             serialNumberLabel.Size = new Size(75, 19);
@@ -310,15 +310,15 @@
             labelFirmwareVersion.Location = new Point(4, 19);
             labelFirmwareVersion.Margin = new Padding(4, 0, 4, 0);
             labelFirmwareVersion.Name = "labelFirmwareVersion";
-            labelFirmwareVersion.Size = new Size(133, 19);
+            labelFirmwareVersion.Size = new Size(130, 19);
             labelFirmwareVersion.TabIndex = 2;
-            labelFirmwareVersion.Text = "Версия прошивки:";
+            labelFirmwareVersion.Text = "Версия прошивки";
             // 
             // firmwareVersionLabel
             // 
             firmwareVersionLabel.Anchor = AnchorStyles.Left;
             firmwareVersionLabel.AutoSize = true;
-            firmwareVersionLabel.Location = new Point(145, 19);
+            firmwareVersionLabel.Location = new Point(142, 19);
             firmwareVersionLabel.Margin = new Padding(4, 0, 4, 0);
             firmwareVersionLabel.Name = "firmwareVersionLabel";
             firmwareVersionLabel.Size = new Size(75, 19);
@@ -332,15 +332,15 @@
             labelDeviceTime.Location = new Point(4, 38);
             labelDeviceTime.Margin = new Padding(4, 0, 4, 0);
             labelDeviceTime.Name = "labelDeviceTime";
-            labelDeviceTime.Size = new Size(100, 19);
+            labelDeviceTime.Size = new Size(97, 19);
             labelDeviceTime.TabIndex = 4;
-            labelDeviceTime.Text = "Время платы:";
+            labelDeviceTime.Text = "Время платы";
             // 
             // deviceTimeLabel
             // 
             deviceTimeLabel.Anchor = AnchorStyles.Left;
             deviceTimeLabel.AutoSize = true;
-            deviceTimeLabel.Location = new Point(145, 38);
+            deviceTimeLabel.Location = new Point(142, 38);
             deviceTimeLabel.Margin = new Padding(4, 0, 4, 0);
             deviceTimeLabel.Name = "deviceTimeLabel";
             deviceTimeLabel.Size = new Size(75, 19);
@@ -455,16 +455,16 @@
             labelDeviceStatus.Location = new Point(4, 0);
             labelDeviceStatus.Margin = new Padding(4, 0, 4, 0);
             labelDeviceStatus.Name = "labelDeviceStatus";
-            labelDeviceStatus.Size = new Size(151, 19);
+            labelDeviceStatus.Size = new Size(148, 19);
             labelDeviceStatus.TabIndex = 0;
-            labelDeviceStatus.Text = "Устройство в работе:";
+            labelDeviceStatus.Text = "Устройство в работе";
             labelDeviceStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // deviceStatusLabel
             // 
             deviceStatusLabel.Anchor = AnchorStyles.Left;
             deviceStatusLabel.AutoSize = true;
-            deviceStatusLabel.Location = new Point(178, 0);
+            deviceStatusLabel.Location = new Point(175, 0);
             deviceStatusLabel.Margin = new Padding(4, 0, 4, 0);
             deviceStatusLabel.Name = "deviceStatusLabel";
             deviceStatusLabel.Size = new Size(75, 19);
@@ -478,16 +478,16 @@
             labelSyncStatus.Location = new Point(4, 19);
             labelSyncStatus.Margin = new Padding(4, 0, 4, 0);
             labelSyncStatus.Name = "labelSyncStatus";
-            labelSyncStatus.Size = new Size(166, 19);
+            labelSyncStatus.Size = new Size(163, 19);
             labelSyncStatus.TabIndex = 2;
-            labelSyncStatus.Text = "Синхронизация PTPv2:";
+            labelSyncStatus.Text = "Синхронизация PTPv2";
             labelSyncStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // syncStatusLabel
             // 
             syncStatusLabel.Anchor = AnchorStyles.Left;
             syncStatusLabel.AutoSize = true;
-            syncStatusLabel.Location = new Point(178, 19);
+            syncStatusLabel.Location = new Point(175, 19);
             syncStatusLabel.Margin = new Padding(4, 0, 4, 0);
             syncStatusLabel.Name = "syncStatusLabel";
             syncStatusLabel.Size = new Size(75, 19);
@@ -501,16 +501,16 @@
             labelRtcStatus.Location = new Point(4, 40);
             labelRtcStatus.Margin = new Padding(4, 0, 4, 0);
             labelRtcStatus.Name = "labelRtcStatus";
-            labelRtcStatus.Size = new Size(131, 19);
+            labelRtcStatus.Size = new Size(128, 19);
             labelRtcStatus.TabIndex = 4;
-            labelRtcStatus.Text = "Внутренние часы:";
+            labelRtcStatus.Text = "Внутренние часы";
             labelRtcStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // rtcStatusLabel
             // 
             rtcStatusLabel.Anchor = AnchorStyles.Left;
             rtcStatusLabel.AutoSize = true;
-            rtcStatusLabel.Location = new Point(178, 40);
+            rtcStatusLabel.Location = new Point(175, 40);
             rtcStatusLabel.Margin = new Padding(4, 0, 4, 0);
             rtcStatusLabel.Name = "rtcStatusLabel";
             rtcStatusLabel.Size = new Size(75, 19);

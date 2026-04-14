@@ -17,7 +17,7 @@
             ipLabel.Text = ip;
             placeTextBox.Text = place;
             switchTextBox.Text = switchLabel;
-            this.BackColor = isActive ? Color.PaleGreen : Color.LightGray;
+            this.BackColor = isActive ? Color.LightBlue : Color.LightGray;
             connectButton.Text = isActive ? "Отключиться" : "Подключиться";
         }
 

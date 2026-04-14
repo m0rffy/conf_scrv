@@ -43,6 +43,7 @@
             // 
             // dateTimePicker1
             // 
+            dateTimePicker1.Anchor = AnchorStyles.None;
             dateTimePicker1.CalendarFont = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             dateTimePicker1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             dateTimePicker1.Location = new Point(53, 13);
@@ -96,9 +97,9 @@
             labelHour.Location = new Point(84, 47);
             labelHour.Margin = new Padding(4, 0, 4, 0);
             labelHour.Name = "labelHour";
-            labelHour.Size = new Size(47, 19);
+            labelHour.Size = new Size(44, 19);
             labelHour.TabIndex = 1;
-            labelHour.Text = "Часы:";
+            labelHour.Text = "Часы";
             labelHour.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // numericUpDownHour
@@ -122,9 +123,10 @@
             labelMinute.Location = new Point(62, 79);
             labelMinute.Margin = new Padding(4, 0, 4, 0);
             labelMinute.Name = "labelMinute";
-            labelMinute.Size = new Size(69, 19);
+            labelMinute.Size = new Size(66, 19);
             labelMinute.TabIndex = 3;
-            labelMinute.Text = "Минуты:";
+            labelMinute.Text = "Минуты";
+            labelMinute.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // numericUpDownMinute
             // 

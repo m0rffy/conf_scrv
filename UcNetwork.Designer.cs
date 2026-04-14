@@ -95,13 +95,13 @@
             tableLayoutEthernet.RowStyles.Add(new RowStyle());
             tableLayoutEthernet.RowStyles.Add(new RowStyle());
             tableLayoutEthernet.RowStyles.Add(new RowStyle());
-            tableLayoutEthernet.Size = new Size(339, 102);
+            tableLayoutEthernet.Size = new Size(336, 102);
             tableLayoutEthernet.TabIndex = 0;
             // 
             // macTextBox
             // 
             macTextBox.Anchor = AnchorStyles.None;
-            macTextBox.Location = new Point(126, 4);
+            macTextBox.Location = new Point(123, 4);
             macTextBox.Margin = new Padding(4);
             macTextBox.Name = "macTextBox";
             macTextBox.Size = new Size(208, 26);
@@ -115,14 +115,14 @@
             labelIp.Location = new Point(4, 41);
             labelIp.Margin = new Padding(4, 0, 4, 0);
             labelIp.Name = "labelIp";
-            labelIp.Size = new Size(66, 19);
+            labelIp.Size = new Size(63, 19);
             labelIp.TabIndex = 2;
-            labelIp.Text = "IP адрес:";
+            labelIp.Text = "IP адрес";
             // 
             // ipTextBox
             // 
             ipTextBox.Anchor = AnchorStyles.None;
-            ipTextBox.Location = new Point(125, 38);
+            ipTextBox.Location = new Point(122, 38);
             ipTextBox.Margin = new Padding(4);
             ipTextBox.Name = "ipTextBox";
             ipTextBox.Size = new Size(209, 26);
@@ -136,15 +136,15 @@
             labelMask.Location = new Point(4, 75);
             labelMask.Margin = new Padding(4, 0, 4, 0);
             labelMask.Name = "labelMask";
-            labelMask.Size = new Size(113, 19);
+            labelMask.Size = new Size(110, 19);
             labelMask.TabIndex = 4;
-            labelMask.Text = "Маска подсети:";
+            labelMask.Text = "Маска подсети";
             labelMask.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // maskTextBox
             // 
             maskTextBox.Anchor = AnchorStyles.None;
-            maskTextBox.Location = new Point(125, 72);
+            maskTextBox.Location = new Point(122, 72);
             maskTextBox.Margin = new Padding(4);
             maskTextBox.Name = "maskTextBox";
             maskTextBox.Size = new Size(210, 26);
@@ -158,9 +158,9 @@
             labelMac.Location = new Point(4, 7);
             labelMac.Margin = new Padding(4, 0, 4, 0);
             labelMac.Name = "labelMac";
-            labelMac.Size = new Size(89, 19);
+            labelMac.Size = new Size(86, 19);
             labelMac.TabIndex = 0;
-            labelMac.Text = "MAC адрес:";
+            labelMac.Text = "MAC адрес";
             // 
             // groupBoxPTP
             // 
@@ -199,7 +199,7 @@
             tableLayoutPTP.RowStyles.Add(new RowStyle());
             tableLayoutPTP.RowStyles.Add(new RowStyle());
             tableLayoutPTP.RowStyles.Add(new RowStyle());
-            tableLayoutPTP.Size = new Size(360, 102);
+            tableLayoutPTP.Size = new Size(357, 102);
             tableLayoutPTP.TabIndex = 0;
             // 
             // labelPtpMasterMac
@@ -209,14 +209,14 @@
             labelPtpMasterMac.Location = new Point(4, 7);
             labelPtpMasterMac.Margin = new Padding(4, 0, 4, 0);
             labelPtpMasterMac.Name = "labelPtpMasterMac";
-            labelPtpMasterMac.Size = new Size(140, 19);
+            labelPtpMasterMac.Size = new Size(137, 19);
             labelPtpMasterMac.TabIndex = 0;
-            labelPtpMasterMac.Text = "MAC мастер часов:";
+            labelPtpMasterMac.Text = "MAC мастер часов";
             // 
             // ptpMasterMacTextBox
             // 
             ptpMasterMacTextBox.Anchor = AnchorStyles.None;
-            ptpMasterMacTextBox.Location = new Point(153, 4);
+            ptpMasterMacTextBox.Location = new Point(150, 4);
             ptpMasterMacTextBox.Margin = new Padding(4);
             ptpMasterMacTextBox.Name = "ptpMasterMacTextBox";
             ptpMasterMacTextBox.Size = new Size(202, 26);
@@ -230,15 +230,15 @@
             labelPtpPort.Location = new Point(4, 41);
             labelPtpPort.Margin = new Padding(4, 0, 4, 0);
             labelPtpPort.Name = "labelPtpPort";
-            labelPtpPort.Size = new Size(46, 19);
+            labelPtpPort.Size = new Size(43, 19);
             labelPtpPort.TabIndex = 2;
-            labelPtpPort.Text = "Порт:";
-            labelPtpPort.TextAlign = ContentAlignment.MiddleCenter;
+            labelPtpPort.Text = "Порт";
+            labelPtpPort.TextAlign = ContentAlignment.MiddleLeft;
             // 
             // ptpPortTextBox
             // 
             ptpPortTextBox.Anchor = AnchorStyles.None;
-            ptpPortTextBox.Location = new Point(153, 38);
+            ptpPortTextBox.Location = new Point(150, 38);
             ptpPortTextBox.Margin = new Padding(4);
             ptpPortTextBox.Name = "ptpPortTextBox";
             ptpPortTextBox.Size = new Size(202, 26);
@@ -252,14 +252,14 @@
             labelPtpId.Location = new Point(4, 75);
             labelPtpId.Margin = new Padding(4, 0, 4, 0);
             labelPtpId.Name = "labelPtpId";
-            labelPtpId.Size = new Size(118, 19);
+            labelPtpId.Size = new Size(115, 19);
             labelPtpId.TabIndex = 4;
-            labelPtpId.Text = "Идентификатор:";
+            labelPtpId.Text = "Идентификатор";
             // 
             // ptpIdTextBox
             // 
             ptpIdTextBox.Anchor = AnchorStyles.None;
-            ptpIdTextBox.Location = new Point(152, 72);
+            ptpIdTextBox.Location = new Point(149, 72);
             ptpIdTextBox.Margin = new Padding(4);
             ptpIdTextBox.Name = "ptpIdTextBox";
             ptpIdTextBox.Size = new Size(204, 26);
