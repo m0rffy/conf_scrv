@@ -281,7 +281,7 @@ namespace Uetm_2_0
             // Imax
             if (!int.TryParse(maxCurrentTextBox.Text, out int imaxKA) || imaxKA < 0 || imaxKA > 100)
             {
-                MessageBox.Show("Максимальный ток должен быть целым числом от 0 до 100 кА.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Номинальный ток отключения должен быть целым числом от 0 до 100 кА.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -304,7 +304,7 @@ namespace Uetm_2_0
             // Nn
             if (!int.TryParse(nominalOperationsTextBox.Text, out int nn) || nn < 0 || nn > 65000)
             {
-                MessageBox.Show("Количество отключений должно быть целым числом от 0 до 65000.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Номинальное количество отключений должно быть целым числом от 0 до 65000.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -332,7 +332,7 @@ namespace Uetm_2_0
             // Inom1
             if (!TryParseInt(primaryCurrentTextBox.Text, out int inom1A) || inom1A < 0 || inom1A > 65000)
             {
-                MessageBox.Show("Первичный ток должен быть целым числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Номинальный первичный ток должен быть целым числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -342,7 +342,7 @@ namespace Uetm_2_0
             // Inom2
             if (!TryParseFloat(secondaryCurrentTextBox.Text, out float secA) || secA < 0 || secA > 10)
             {
-                MessageBox.Show("Вторичный ток должен быть числом от 0 до 10 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Номинальный вторичный ток должен быть числом от 0 до 10 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -441,8 +441,8 @@ namespace Uetm_2_0
                 ["Место установки"] = installationPlaceTextBox.Text,
                 ["Первичный ток (А)"] = primaryCurrentTextBox.Text,
                 ["Вторичный ток (А)"] = secondaryCurrentTextBox.Text,
-                ["Задержка дребезга (отключение), мс"] = debounceOffTextBox.Text,
-                ["Задержка дребезга (включение), мс"] = debounceOnTextBox.Text,
+                ["Задержка дребезга (отключение) (мс)"] = debounceOffTextBox.Text,
+                ["Задержка дребезга (включение) (мс)"] = debounceOnTextBox.Text,
                 ["Порог предупредительной сигнализации (%)"] = warningThresholdTextBox.Text,
                 ["Порог аварийной сигнализации (%)"] = alarmThresholdTextBox.Text
             };

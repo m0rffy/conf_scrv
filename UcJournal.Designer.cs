@@ -48,7 +48,7 @@
             updateJournalButton.Anchor = AnchorStyles.None;
             updateJournalButton.AutoSize = true;
             updateJournalButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            updateJournalButton.BackColor = Color.LightSkyBlue;
+            updateJournalButton.BackColor = Color.LightSteelBlue;
             updateJournalButton.FlatStyle = FlatStyle.Popup;
             updateJournalButton.Font = new Font("Times New Roman", 12F);
             updateJournalButton.Location = new Point(4, 4);
@@ -65,7 +65,7 @@
             exportButton.Anchor = AnchorStyles.None;
             exportButton.AutoSize = true;
             exportButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            exportButton.BackColor = Color.LightSkyBlue;
+            exportButton.BackColor = Color.LightSteelBlue;
             exportButton.FlatStyle = FlatStyle.Popup;
             exportButton.Font = new Font("Times New Roman", 12F);
             exportButton.Location = new Point(36, 41);
@@ -102,7 +102,7 @@
             journalDataGridView.Anchor = AnchorStyles.None;
             journalDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             journalDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            journalDataGridView.BackgroundColor = Color.LightGray;
+            journalDataGridView.BackgroundColor = Color.Gainsboro;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Times New Roman", 14.25F);
@@ -120,6 +120,7 @@
             dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             journalDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            journalDataGridView.GridColor = Color.Gainsboro;
             journalDataGridView.Location = new Point(51, 4);
             journalDataGridView.Margin = new Padding(4);
             journalDataGridView.Name = "journalDataGridView";

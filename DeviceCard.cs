@@ -2,8 +2,6 @@
 {
     public partial class DeviceCard : UserControl
     {
-        private TextBox placeTextBox;
-        private TextBox switchTextBox;
         private Button deleteButton;
         private Button connectButton;
 
@@ -15,9 +13,9 @@
         public void SetData(string ip, string place, string switchLabel, bool isActive)
         {
             ipLabel.Text = ip;
-            placeTextBox.Text = place;
-            switchTextBox.Text = switchLabel;
-            this.BackColor = isActive ? Color.LightBlue : Color.LightGray;
+            placeLabel.Text = string.IsNullOrEmpty(place) ? "-" : place;
+            switchLabelName.Text = string.IsNullOrEmpty(switchLabel) ? "-" : switchLabel;
+            this.BackColor = isActive ? Color.LightSteelBlue : Color.Gainsboro;
             connectButton.Text = isActive ? "Отключиться" : "Подключиться";
         }
 

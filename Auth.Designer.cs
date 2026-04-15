@@ -41,7 +41,7 @@
             PasswordLabel.Anchor = AnchorStyles.None;
             PasswordLabel.AutoSize = true;
             PasswordLabel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            PasswordLabel.Location = new Point(83, 84);
+            PasswordLabel.Location = new Point(108, 109);
             PasswordLabel.Margin = new Padding(8, 0, 8, 0);
             PasswordLabel.Name = "PasswordLabel";
             PasswordLabel.Size = new Size(69, 21);
@@ -52,7 +52,7 @@
             // 
             PasswordTextBox.Anchor = AnchorStyles.None;
             PasswordTextBox.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            PasswordTextBox.Location = new Point(17, 109);
+            PasswordTextBox.Location = new Point(42, 134);
             PasswordTextBox.Margin = new Padding(8, 6, 8, 6);
             PasswordTextBox.Name = "PasswordTextBox";
             PasswordTextBox.Size = new Size(201, 29);
@@ -63,7 +63,7 @@
             LoginLabel.Anchor = AnchorStyles.None;
             LoginLabel.AutoSize = true;
             LoginLabel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            LoginLabel.Location = new Point(46, 24);
+            LoginLabel.Location = new Point(71, 49);
             LoginLabel.Margin = new Padding(8, 0, 8, 0);
             LoginLabel.Name = "LoginLabel";
             LoginLabel.Size = new Size(146, 21);
@@ -77,7 +77,7 @@
             LoginComboBox.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             LoginComboBox.FormattingEnabled = true;
             LoginComboBox.Items.AddRange(new object[] { "Администратор", "Пользователь" });
-            LoginComboBox.Location = new Point(17, 51);
+            LoginComboBox.Location = new Point(42, 76);
             LoginComboBox.Margin = new Padding(8, 6, 8, 6);
             LoginComboBox.Name = "LoginComboBox";
             LoginComboBox.Size = new Size(201, 29);
@@ -88,11 +88,11 @@
             button1.Anchor = AnchorStyles.None;
             button1.AutoSize = true;
             button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            button1.BackColor = Color.LightSkyBlue;
+            button1.BackColor = Color.LightSteelBlue;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             button1.ForeColor = Color.Black;
-            button1.Location = new Point(83, 148);
+            button1.Location = new Point(108, 173);
             button1.Margin = new Padding(4);
             button1.Name = "button1";
             button1.Size = new Size(64, 31);
@@ -106,10 +106,9 @@
             AcceptButton = button1;
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = Color.LightGray;
-            ClientSize = new Size(234, 211);
+            BackColor = Color.Gainsboro;
+            ClientSize = new Size(284, 261);
             Controls.Add(button1);
             Controls.Add(PasswordLabel);
             Controls.Add(PasswordTextBox);
@@ -121,8 +120,6 @@
             Icon = (Icon)resources.GetObject("$this.Icon");
             Margin = new Padding(4);
             MaximizeBox = false;
-            MaximumSize = new Size(250, 250);
-            MinimumSize = new Size(250, 250);
             Name = "Auth";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Авторизация";

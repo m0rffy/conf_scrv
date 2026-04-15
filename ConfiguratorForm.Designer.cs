@@ -27,21 +27,19 @@
             menuStrip = new MenuStrip();
             helpMenu = new ToolStripMenuItem();
             UserHelp = new ToolStripMenuItem();
-            rightPanel = new Panel();
-            devicesPanel = new FlowLayoutPanel();
             devicesLabel = new Label();
+            devicesPanel = new FlowLayoutPanel();
             ChildFormPanel = new Panel();
             Sidebar.SuspendLayout();
             topPanel.SuspendLayout();
             menuStrip.SuspendLayout();
-            rightPanel.SuspendLayout();
             SuspendLayout();
             // 
             // Sidebar
             // 
             Sidebar.Anchor = AnchorStyles.None;
             Sidebar.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            Sidebar.BackColor = Color.LightGray;
+            Sidebar.BackColor = Color.Silver;
             Sidebar.BorderStyle = BorderStyle.FixedSingle;
             Sidebar.Controls.Add(btnManagement);
             Sidebar.Controls.Add(btnSettings);
@@ -50,7 +48,7 @@
             Sidebar.Controls.Add(btnJournal);
             Sidebar.FlowDirection = FlowDirection.TopDown;
             Sidebar.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Sidebar.Location = new Point(2, 56);
+            Sidebar.Location = new Point(5, 56);
             Sidebar.Margin = new Padding(4);
             Sidebar.Name = "Sidebar";
             Sidebar.Size = new Size(142, 723);
@@ -60,7 +58,7 @@
             // 
             btnManagement.Anchor = AnchorStyles.Right;
             btnManagement.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnManagement.BackColor = Color.LightSkyBlue;
+            btnManagement.BackColor = Color.LightSteelBlue;
             btnManagement.FlatStyle = FlatStyle.Popup;
             btnManagement.Font = new Font("Times New Roman", 14.25F);
             btnManagement.Location = new Point(4, 4);
@@ -76,7 +74,7 @@
             // 
             btnSettings.Anchor = AnchorStyles.Right;
             btnSettings.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnSettings.BackColor = Color.LightSkyBlue;
+            btnSettings.BackColor = Color.LightSteelBlue;
             btnSettings.FlatStyle = FlatStyle.Popup;
             btnSettings.Font = new Font("Times New Roman", 14.25F);
             btnSettings.Location = new Point(4, 47);
@@ -92,7 +90,7 @@
             // 
             btnGeneral.Anchor = AnchorStyles.Right;
             btnGeneral.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnGeneral.BackColor = Color.LightSkyBlue;
+            btnGeneral.BackColor = Color.LightSteelBlue;
             btnGeneral.FlatStyle = FlatStyle.Popup;
             btnGeneral.Font = new Font("Times New Roman", 14.25F);
             btnGeneral.Location = new Point(49, 90);
@@ -109,7 +107,7 @@
             // 
             btnNetwork.Anchor = AnchorStyles.Right;
             btnNetwork.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnNetwork.BackColor = Color.LightSkyBlue;
+            btnNetwork.BackColor = Color.LightSteelBlue;
             btnNetwork.FlatStyle = FlatStyle.Popup;
             btnNetwork.Font = new Font("Times New Roman", 14.25F);
             btnNetwork.Location = new Point(49, 133);
@@ -126,7 +124,7 @@
             // 
             btnJournal.Anchor = AnchorStyles.Right;
             btnJournal.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnJournal.BackColor = Color.LightSkyBlue;
+            btnJournal.BackColor = Color.LightSteelBlue;
             btnJournal.FlatStyle = FlatStyle.Popup;
             btnJournal.Font = new Font("Times New Roman", 14.25F);
             btnJournal.Location = new Point(6, 176);
@@ -142,15 +140,15 @@
             // 
             topPanel.Anchor = AnchorStyles.None;
             topPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            topPanel.BackColor = Color.LightGray;
+            topPanel.BackColor = Color.Silver;
             topPanel.BorderStyle = BorderStyle.FixedSingle;
             topPanel.Controls.Add(btnWrite);
             topPanel.Controls.Add(menuStrip);
             topPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            topPanel.Location = new Point(3, 4);
+            topPanel.Location = new Point(5, 4);
             topPanel.Margin = new Padding(4);
             topPanel.Name = "topPanel";
-            topPanel.Size = new Size(1513, 48);
+            topPanel.Size = new Size(1465, 48);
             topPanel.TabIndex = 2;
             // 
             // btnWrite
@@ -158,11 +156,11 @@
             btnWrite.Anchor = AnchorStyles.None;
             btnWrite.AutoSize = true;
             btnWrite.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnWrite.BackColor = Color.LightSkyBlue;
+            btnWrite.BackColor = Color.LightSteelBlue;
             btnWrite.FlatStyle = FlatStyle.Popup;
             btnWrite.Font = new Font("Times New Roman", 14.25F);
             btnWrite.ForeColor = Color.Black;
-            btnWrite.Location = new Point(628, 8);
+            btnWrite.Location = new Point(626, 8);
             btnWrite.Margin = new Padding(4);
             btnWrite.Name = "btnWrite";
             btnWrite.Size = new Size(92, 31);
@@ -174,12 +172,12 @@
             // menuStrip
             // 
             menuStrip.Anchor = AnchorStyles.None;
-            menuStrip.BackColor = Color.LightGray;
+            menuStrip.BackColor = Color.Transparent;
             menuStrip.Dock = DockStyle.None;
             menuStrip.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             menuStrip.GripStyle = ToolStripGripStyle.Visible;
             menuStrip.Items.AddRange(new ToolStripItem[] { helpMenu, UserHelp });
-            menuStrip.Location = new Point(5, 8);
+            menuStrip.Location = new Point(6, 8);
             menuStrip.Name = "menuStrip";
             menuStrip.Padding = new Padding(9, 3, 0, 3);
             menuStrip.RenderMode = ToolStripRenderMode.Professional;
@@ -202,51 +200,36 @@
             UserHelp.Text = "Руководство пользователя";
             UserHelp.Click += UserHelp_Click;
             // 
-            // rightPanel
+            // devicesLabel
             // 
-            rightPanel.Anchor = AnchorStyles.None;
-            rightPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            rightPanel.BackColor = Color.LightGray;
-            rightPanel.BorderStyle = BorderStyle.FixedSingle;
-            rightPanel.Controls.Add(devicesPanel);
-            rightPanel.Controls.Add(devicesLabel);
-            rightPanel.Location = new Point(1228, 56);
-            rightPanel.Margin = new Padding(4);
-            rightPanel.Name = "rightPanel";
-            rightPanel.Size = new Size(289, 723);
-            rightPanel.TabIndex = 3;
+            devicesLabel.Anchor = AnchorStyles.None;
+            devicesLabel.AutoSize = true;
+            devicesLabel.BackColor = Color.Transparent;
+            devicesLabel.Font = new Font("Times New Roman", 14.25F);
+            devicesLabel.ForeColor = Color.Black;
+            devicesLabel.Location = new Point(1293, 59);
+            devicesLabel.Margin = new Padding(4, 0, 4, 0);
+            devicesLabel.Name = "devicesLabel";
+            devicesLabel.Size = new Size(102, 21);
+            devicesLabel.TabIndex = 0;
+            devicesLabel.Text = "Устройства";
+            devicesLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // devicesPanel
             // 
             devicesPanel.Anchor = AnchorStyles.None;
             devicesPanel.AutoScroll = true;
             devicesPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            devicesPanel.BackColor = Color.Gray;
+            devicesPanel.BackColor = Color.Silver;
             devicesPanel.BorderStyle = BorderStyle.FixedSingle;
             devicesPanel.FlowDirection = FlowDirection.TopDown;
             devicesPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            devicesPanel.Location = new Point(8, 46);
+            devicesPanel.Location = new Point(1232, 86);
             devicesPanel.Margin = new Padding(4);
             devicesPanel.Name = "devicesPanel";
-            devicesPanel.Size = new Size(272, 646);
+            devicesPanel.Size = new Size(238, 693);
             devicesPanel.TabIndex = 1;
             devicesPanel.WrapContents = false;
-            // 
-            // devicesLabel
-            // 
-            devicesLabel.Anchor = AnchorStyles.None;
-            devicesLabel.AutoSize = true;
-            devicesLabel.BackColor = Color.LightGray;
-            devicesLabel.FlatStyle = FlatStyle.Flat;
-            devicesLabel.Font = new Font("Times New Roman", 14.25F);
-            devicesLabel.ForeColor = Color.Black;
-            devicesLabel.Location = new Point(40, 10);
-            devicesLabel.Margin = new Padding(4, 0, 4, 0);
-            devicesLabel.Name = "devicesLabel";
-            devicesLabel.Size = new Size(214, 21);
-            devicesLabel.TabIndex = 0;
-            devicesLabel.Text = "Сохранённые устройства";
-            devicesLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ChildFormPanel
             // 
@@ -255,7 +238,7 @@
             ChildFormPanel.BackColor = Color.LightSteelBlue;
             ChildFormPanel.BorderStyle = BorderStyle.FixedSingle;
             ChildFormPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ChildFormPanel.Location = new Point(148, 56);
+            ChildFormPanel.Location = new Point(151, 56);
             ChildFormPanel.Margin = new Padding(4);
             ChildFormPanel.Name = "ChildFormPanel";
             ChildFormPanel.Size = new Size(1076, 723);
@@ -266,8 +249,10 @@
             AutoScaleDimensions = new SizeF(10F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            ClientSize = new Size(1519, 782);
-            Controls.Add(rightPanel);
+            BackColor = Color.Gainsboro;
+            ClientSize = new Size(1474, 782);
+            Controls.Add(devicesLabel);
+            Controls.Add(devicesPanel);
             Controls.Add(ChildFormPanel);
             Controls.Add(Sidebar);
             Controls.Add(topPanel);
@@ -278,7 +263,6 @@
             MainMenuStrip = menuStrip;
             Margin = new Padding(4);
             MaximizeBox = false;
-            MaximumSize = new Size(1725, 935);
             Name = "ConfiguratorForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Конфигуратор УЭТМ";
@@ -287,9 +271,8 @@
             topPanel.PerformLayout();
             menuStrip.ResumeLayout(false);
             menuStrip.PerformLayout();
-            rightPanel.ResumeLayout(false);
-            rightPanel.PerformLayout();
             ResumeLayout(false);
+            PerformLayout();
         }
         public Panel ChildFormPanel;
         public Label devicesLabel;

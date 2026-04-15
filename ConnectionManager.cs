@@ -23,7 +23,7 @@ namespace Uetm_2_0
             try
             {
                 IAsyncResult result = tcpClient.BeginConnect(ipAddress, modBusPort, null, null);
-                bool success = result.AsyncWaitHandle.WaitOne(5000); // 5 секунд
+                bool success = result.AsyncWaitHandle.WaitOne(5000); 
                 if (!success)
                 {
                     tcpClient.Close();

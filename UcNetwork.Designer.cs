@@ -41,17 +41,17 @@
             // 
             tableLayoutPanelMain.Anchor = AnchorStyles.None;
             tableLayoutPanelMain.AutoScroll = true;
+            tableLayoutPanelMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutPanelMain.ColumnCount = 1;
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelMain.Controls.Add(groupBoxEthernet, 0, 0);
-            tableLayoutPanelMain.Controls.Add(groupBoxPTP, 0, 2);
+            tableLayoutPanelMain.Controls.Add(groupBoxPTP, 0, 1);
             tableLayoutPanelMain.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutPanelMain.ForeColor = Color.Black;
             tableLayoutPanelMain.Location = new Point(22, 21);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
-            tableLayoutPanelMain.RowCount = 3;
-            tableLayoutPanelMain.RowStyles.Add(new RowStyle());
+            tableLayoutPanelMain.RowCount = 2;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.Size = new Size(530, 419);
@@ -296,14 +296,14 @@
         private System.Windows.Forms.TextBox ipTextBox;
         private System.Windows.Forms.Label labelMask;
         private System.Windows.Forms.TextBox maskTextBox;
-        private System.Windows.Forms.Label labelPtpMasterMac;
-        private System.Windows.Forms.TextBox ptpMasterMacTextBox;
-        private System.Windows.Forms.Label labelPtpPort;
-        private System.Windows.Forms.TextBox ptpPortTextBox;
-        private System.Windows.Forms.Label labelPtpId;
-        private System.Windows.Forms.TextBox ptpIdTextBox;
         public TableLayoutPanel tableLayoutPanelMain;
         public GroupBox groupBoxPTP;
         public TableLayoutPanel tableLayoutPTP;
+        private Label labelPtpMasterMac;
+        private TextBox ptpMasterMacTextBox;
+        private Label labelPtpPort;
+        private TextBox ptpPortTextBox;
+        private Label labelPtpId;
+        private TextBox ptpIdTextBox;
     }
 }
