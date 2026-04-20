@@ -18,8 +18,8 @@ namespace Uetm_2_0
         private ModBusCommands commandsHelper = new ModBusCommands();
         private Tuple<TcpClient, IModbusMaster> _connection;
 
-        // Переменная для хранения последнего введённого IP (только во время работы программы)
         private string _lastIp = "";
+        private bool _manualTimeSet = false;
 
         public UcManagement(ConfiguratorForm mainForm)
         {
@@ -32,7 +32,6 @@ namespace Uetm_2_0
             mainForm.ConnectionStarted += OnConnectionStarted;
             mainForm.ConnectionStopped += OnConnectionStopped;
 
-            // Загружаем последний IP из переменной (при запуске значение по умолчанию)
             ipTextBox.Text = _lastIp;
 
             var existingConnection = mainForm.GetCurrentConnection();
@@ -57,8 +56,8 @@ namespace Uetm_2_0
             cntvTable = new DataTable();
             cntvTable.Columns.Add("Канал", typeof(string));
             cntvTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
-            cntvTable.Columns.Add("Кол-во отключений", typeof(ushort));
-            cntvTable.Columns.Add("Кол-во включений", typeof(ushort));
+            cntvTable.Columns.Add("Количество отключений", typeof(ushort));
+            cntvTable.Columns.Add("Количество включений", typeof(ushort));
             cntvDataGridView.DataSource = cntvTable;
             cntvDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             cntvDataGridView.RowHeadersVisible = false;
@@ -85,10 +84,13 @@ namespace Uetm_2_0
 
         private void OnConnectionStopped()
         {
+            _manualTimeSet = false;
+
             if (backgroundWorker.IsBusy)
             {
                 backgroundWorker.CancelAsync();
             }
+
             SafeInvoke(() =>
             {
                 rmsTable.Rows.Clear();
@@ -102,16 +104,36 @@ namespace Uetm_2_0
             });
         }
 
+        private bool IsConnectionError(Exception ex)
+        {
+            if (ex == null) return false;
+            string msg = ex.Message.ToLower();
+            return msg.Contains("socket") ||
+                   msg.Contains("connection") ||
+                   msg.Contains("disconnected") ||
+                   msg.Contains("transport") ||
+                   msg.Contains("disposed") ||
+                   msg.Contains("timeout") ||
+                   (ex.InnerException != null && IsConnectionError(ex.InnerException));
+        }
+
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var connection = e.Argument as Tuple<TcpClient, IModbusMaster>;
             if (connection == null) return;
+
             TcpClient tcpClient = connection.Item1;
             IModbusMaster modbusMaster = connection.Item2;
 
             while (!backgroundWorker.CancellationPending)
             {
-                if (!tcpClient.Connected) break;
+                if (tcpClient == null || !tcpClient.Connected)
+                {
+                    SafeInvoke(() => MessageBox.Show("Соединение с устройством потеряно.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                    SafeInvoke(() => mainForm.Disconnect());
+                    break;
+                }
+
                 try
                 {
                     var esp = profileHelper.ect_state_page_Read(modbusMaster);
@@ -126,26 +148,28 @@ namespace Uetm_2_0
                         UpdateCntvTable(ssp.cntv);
                         UpdateStatus(esp.ste);
                         UpdateRtcStatus(ssp.ste[2]);
-                        deviceTimeLabel.Text = dt.ToString("dd.MM.yyyy HH:mm:ss");
+                        if (!_manualTimeSet)
+                            deviceTimeLabel.Text = dt.ToString("dd.MM.yyyy HH:mm:ss");
                         serialNumberLabel.Text = cmns.SerialNo.ToString();
                         firmwareVersionLabel.Text = cmns.FmwVer.ToString();
                     });
-                    System.Threading.Thread.Sleep(1000);
+
+                    System.Threading.Thread.Sleep(2000);
                 }
                 catch (Exception ex)
                 {
-                    string msg = ex.Message;
-                    // Игнорируем ошибки разрыва соединения
-                    if (msg.Contains("transport connection") ||
-                        msg.Contains("disconnected") ||
-                        msg.Contains("non-connected sockets") ||
-                        msg.Contains("not allowed on non-connected sockets") ||
-                        (ex.InnerException?.Message?.Contains("transport connection") == true))
+                    if (IsConnectionError(ex))
                     {
-                        break; // просто выходим из цикла
+                        SafeInvoke(() => MessageBox.Show("Потеря связи с устройством.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                        SafeInvoke(() => mainForm.Disconnect());
+                        break;
                     }
-                    SafeInvoke(() => MessageBox.Show($"Ошибка чтения: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
-                    break;
+                    else
+                    {
+                        SafeInvoke(() => MessageBox.Show($"Ошибка чтения: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
+                        SafeInvoke(() => mainForm.Disconnect());
+                        break;
+                    }
                 }
             }
         }
@@ -218,7 +242,6 @@ namespace Uetm_2_0
                 return;
             }
 
-            // Сохраняем последний IP в переменную (не очищаем поле)
             _lastIp = ip;
 
             var newDev = new DeviceInfo
@@ -231,7 +254,6 @@ namespace Uetm_2_0
             Database.Devices.Add(newDev);
             Database.SaveDevices();
             mainForm.RefreshDevicesList();
-            // Не очищаем ipTextBox – оставляем введённое значение
             portTextBox.Text = "";
         }
 
@@ -275,9 +297,6 @@ namespace Uetm_2_0
                 return;
             }
 
-            if (MessageBox.Show("Установить новое время? Устройство перезагрузится.", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
-                return;
-
             var conn = mainForm.GetCurrentConnection();
             if (conn?.Item1?.Connected != true)
             {
@@ -285,7 +304,6 @@ namespace Uetm_2_0
                 return;
             }
 
-            // Проверка PTP-синхронизации
             try
             {
                 var esp = profileHelper.ect_state_page_Read(conn.Item2);
@@ -315,36 +333,40 @@ namespace Uetm_2_0
                         registers[2] = (ushort)((slo >> 16) & 0xFFFF);
                         registers[3] = (ushort)(slo & 0xFFFF);
                         registers[4] = ptsecHi;
-                        registers[5] = 0; // opts
+                        registers[5] = 0;
 
+                        // Записываем регистры времени
                         conn.Item2.WriteMultipleRegisters(0, 2816, registers);
 
+                        // Небольшая пауза, чтобы устройство успело обработать регистры
+                        System.Threading.Thread.Sleep(200);
+
+                        // Отправляем команду сохранения во Flash с перезагрузкой
                         var commands = new ModBusCommands();
-                        var response = commands.upload_settings(conn.Item2, 0x0100);
-                        if (response?.Data != null && response.Data[0] == 0xFF)
-                        {
-                            MessageBox.Show("Время установлено. Устройство перезагружается.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                            mainForm.Disconnect();
-                            mainForm.RefreshDevicesList();
-                        }
-                        else
-                        {
-                            MessageBox.Show("Ошибка сохранения времени. Возможно, устройство не поддерживает запись времени во flash.",
-                                "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        commands.upload_settings(conn.Item2, 0x0100);
+
+                        SafeInvoke(() => deviceTimeLabel.Text = dialog.SelectedDateTime.ToString("dd.MM.yyyy HH:mm:ss"));
+                        mainForm.Disconnect();
+                        mainForm.RefreshDevicesList();
+
+                        MessageBox.Show("Время установлено. Устройство перезагружается. Подождите несколько секунд и подключитесь заново.",
+                            "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {
-                        // Игнорируем ошибки разрыва соединения при перезагрузке
-                        if (!ex.Message.Contains("transport connection") &&
-                            !ex.Message.Contains("disconnected") &&
-                            (ex.InnerException?.Message?.Contains("transport connection") != true))
+                        if (IsConnectionError(ex))
                         {
-                            MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                            // Соединение разорвано — устройство уже ушло в перезагрузку, считаем успехом
+                            SafeInvoke(() => deviceTimeLabel.Text = dialog.SelectedDateTime.ToString("dd.MM.yyyy HH:mm:ss"));
+                            mainForm.Disconnect();
+                            mainForm.RefreshDevicesList();
+                            MessageBox.Show("Время установлено. Устройство перезагружается.",
+                                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-                        // В любом случае отключаемся
-                        mainForm.Disconnect();
-                        mainForm.RefreshDevicesList();
+                        else
+                        {
+                            MessageBox.Show($"Ошибка установки времени: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        }
                     }
                 }
             }
@@ -379,16 +401,16 @@ namespace Uetm_2_0
                 }
                 catch (Exception ex)
                 {
-                    // Игнорируем ошибки разрыва соединения
-                    if (!ex.Message.Contains("transport connection") &&
-                        !ex.Message.Contains("disconnected") &&
-                        (ex.InnerException?.Message?.Contains("transport connection") != true))
+                    if (IsConnectionError(ex))
+                    {
+                        MessageBox.Show("Устройство перезагружается.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        mainForm.Disconnect();
+                        mainForm.RefreshDevicesList();
+                    }
+                    else
                     {
                         MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
-                    // В любом случае отключаемся
-                    mainForm.Disconnect();
-                    mainForm.RefreshDevicesList();
                 }
             }
             else
@@ -397,7 +419,6 @@ namespace Uetm_2_0
             }
         }
 
-        // Публичные методы для экспорта
         public DataTable GetRmsDataTable() => rmsTable;
         public DataTable GetCntvDataTable() => cntvTable;
         public string GetDeviceStatusText() => deviceStatusLabel.Text;

@@ -91,6 +91,7 @@
             tableLayoutPanelMain.Anchor = AnchorStyles.None;
             tableLayoutPanelMain.AutoScroll = true;
             tableLayoutPanelMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanelMain.BackColor = Color.Transparent;
             tableLayoutPanelMain.ColumnCount = 2;
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
@@ -103,7 +104,7 @@
             tableLayoutPanelMain.Controls.Add(groupBoxDelay, 0, 3);
             tableLayoutPanelMain.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutPanelMain.ForeColor = Color.Black;
-            tableLayoutPanelMain.Location = new Point(9, 17);
+            tableLayoutPanelMain.Location = new Point(10, 17);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 4;
@@ -111,7 +112,7 @@
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(1053, 685);
+            tableLayoutPanelMain.Size = new Size(1053, 644);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // groupBoxBreakerInfo
@@ -120,11 +121,11 @@
             groupBoxBreakerInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxBreakerInfo.Controls.Add(tableLayoutBreakerInfo);
             groupBoxBreakerInfo.Font = new Font("Times New Roman", 14F);
-            groupBoxBreakerInfo.Location = new Point(8, 5);
+            groupBoxBreakerInfo.Location = new Point(8, 4);
             groupBoxBreakerInfo.Margin = new Padding(4);
             groupBoxBreakerInfo.Name = "groupBoxBreakerInfo";
             groupBoxBreakerInfo.Padding = new Padding(4);
-            groupBoxBreakerInfo.Size = new Size(526, 144);
+            groupBoxBreakerInfo.Size = new Size(526, 133);
             groupBoxBreakerInfo.TabIndex = 0;
             groupBoxBreakerInfo.TabStop = false;
             groupBoxBreakerInfo.Text = "Информация о выключателе";
@@ -145,7 +146,7 @@
             tableLayoutBreakerInfo.Controls.Add(maxCurrentTextBox, 1, 4);
             tableLayoutBreakerInfo.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutBreakerInfo.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutBreakerInfo.Location = new Point(16, 30);
+            tableLayoutBreakerInfo.Location = new Point(16, 21);
             tableLayoutBreakerInfo.Margin = new Padding(4);
             tableLayoutBreakerInfo.Name = "tableLayoutBreakerInfo";
             tableLayoutBreakerInfo.RowCount = 5;
@@ -195,6 +196,7 @@
             // nominalCurrentTextBox
             // 
             nominalCurrentTextBox.Anchor = AnchorStyles.None;
+            nominalCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             nominalCurrentTextBox.Location = new Point(314, 39);
             nominalCurrentTextBox.Margin = new Padding(4);
             nominalCurrentTextBox.Name = "nominalCurrentTextBox";
@@ -216,6 +218,7 @@
             // maxCurrentTextBox
             // 
             maxCurrentTextBox.Anchor = AnchorStyles.None;
+            maxCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             maxCurrentTextBox.Location = new Point(314, 73);
             maxCurrentTextBox.Margin = new Padding(4);
             maxCurrentTextBox.Name = "maxCurrentTextBox";
@@ -229,7 +232,7 @@
             groupBoxCoefficients.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxCoefficients.Controls.Add(tableLayoutCoefficients);
             groupBoxCoefficients.Font = new Font("Times New Roman", 14F);
-            groupBoxCoefficients.Location = new Point(554, 171);
+            groupBoxCoefficients.Location = new Point(554, 152);
             groupBoxCoefficients.Margin = new Padding(4);
             groupBoxCoefficients.Name = "groupBoxCoefficients";
             groupBoxCoefficients.Padding = new Padding(4);
@@ -269,6 +272,7 @@
             // c1TextBox
             // 
             c1TextBox.Anchor = AnchorStyles.None;
+            c1TextBox.BorderStyle = BorderStyle.FixedSingle;
             c1TextBox.Location = new Point(3, 22);
             c1TextBox.Name = "c1TextBox";
             c1TextBox.Size = new Size(110, 26);
@@ -278,6 +282,7 @@
             // c4TextBox
             // 
             c4TextBox.Anchor = AnchorStyles.None;
+            c4TextBox.BorderStyle = BorderStyle.FixedSingle;
             c4TextBox.Location = new Point(351, 22);
             c4TextBox.Name = "c4TextBox";
             c4TextBox.Size = new Size(110, 26);
@@ -298,6 +303,7 @@
             // c3TextBox
             // 
             c3TextBox.Anchor = AnchorStyles.None;
+            c3TextBox.BorderStyle = BorderStyle.FixedSingle;
             c3TextBox.Location = new Point(235, 22);
             c3TextBox.Name = "c3TextBox";
             c3TextBox.Size = new Size(110, 26);
@@ -307,6 +313,7 @@
             // c2TextBox
             // 
             c2TextBox.Anchor = AnchorStyles.None;
+            c2TextBox.BorderStyle = BorderStyle.FixedSingle;
             c2TextBox.Location = new Point(119, 22);
             c2TextBox.Name = "c2TextBox";
             c2TextBox.Size = new Size(110, 26);
@@ -352,11 +359,11 @@
             groupBoxAlgorithm.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxAlgorithm.Controls.Add(tableLayoutAlgorithm);
             groupBoxAlgorithm.Font = new Font("Times New Roman", 14F);
-            groupBoxAlgorithm.Location = new Point(4, 158);
+            groupBoxAlgorithm.Location = new Point(4, 145);
             groupBoxAlgorithm.Margin = new Padding(4);
             groupBoxAlgorithm.Name = "groupBoxAlgorithm";
             groupBoxAlgorithm.Padding = new Padding(4);
-            groupBoxAlgorithm.Size = new Size(535, 180);
+            groupBoxAlgorithm.Size = new Size(535, 167);
             groupBoxAlgorithm.TabIndex = 1;
             groupBoxAlgorithm.TabStop = false;
             groupBoxAlgorithm.Text = "Настройка алгоритма расчета";
@@ -378,7 +385,7 @@
             tableLayoutAlgorithm.Controls.Add(alarmThresholdTextBox, 1, 3);
             tableLayoutAlgorithm.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutAlgorithm.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutAlgorithm.Location = new Point(6, 30);
+            tableLayoutAlgorithm.Location = new Point(6, 27);
             tableLayoutAlgorithm.Margin = new Padding(4);
             tableLayoutAlgorithm.Name = "tableLayoutAlgorithm";
             tableLayoutAlgorithm.RowCount = 4;
@@ -392,6 +399,7 @@
             // thresholdCurrentTextBox
             // 
             thresholdCurrentTextBox.Anchor = AnchorStyles.None;
+            thresholdCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             thresholdCurrentTextBox.Location = new Point(404, 4);
             thresholdCurrentTextBox.Margin = new Padding(4);
             thresholdCurrentTextBox.Name = "thresholdCurrentTextBox";
@@ -425,6 +433,7 @@
             // nominalOperationsTextBox
             // 
             nominalOperationsTextBox.Anchor = AnchorStyles.None;
+            nominalOperationsTextBox.BorderStyle = BorderStyle.FixedSingle;
             nominalOperationsTextBox.Location = new Point(404, 38);
             nominalOperationsTextBox.Margin = new Padding(4);
             nominalOperationsTextBox.Name = "nominalOperationsTextBox";
@@ -436,6 +445,7 @@
             // 
             warningThresholdTextBox.Anchor = AnchorStyles.None;
             warningThresholdTextBox.BackColor = SystemColors.Control;
+            warningThresholdTextBox.BorderStyle = BorderStyle.FixedSingle;
             warningThresholdTextBox.Enabled = false;
             warningThresholdTextBox.Location = new Point(403, 72);
             warningThresholdTextBox.Margin = new Padding(4);
@@ -473,6 +483,7 @@
             // alarmThresholdTextBox
             // 
             alarmThresholdTextBox.Anchor = AnchorStyles.None;
+            alarmThresholdTextBox.BorderStyle = BorderStyle.FixedSingle;
             alarmThresholdTextBox.Enabled = false;
             alarmThresholdTextBox.Location = new Point(403, 106);
             alarmThresholdTextBox.Margin = new Padding(4);
@@ -488,11 +499,11 @@
             groupBoxInstallation.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxInstallation.Controls.Add(tableLayoutInstallation);
             groupBoxInstallation.Font = new Font("Times New Roman", 14F);
-            groupBoxInstallation.Location = new Point(549, 4);
+            groupBoxInstallation.Location = new Point(549, 6);
             groupBoxInstallation.Margin = new Padding(4);
             groupBoxInstallation.Name = "groupBoxInstallation";
             groupBoxInstallation.Padding = new Padding(4);
-            groupBoxInstallation.Size = new Size(497, 146);
+            groupBoxInstallation.Size = new Size(497, 129);
             groupBoxInstallation.TabIndex = 2;
             groupBoxInstallation.TabStop = false;
             groupBoxInstallation.Text = "Место установки";
@@ -512,7 +523,7 @@
             tableLayoutInstallation.Controls.Add(label1, 0, 1);
             tableLayoutInstallation.Font = new Font("Times New Roman", 12F);
             tableLayoutInstallation.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutInstallation.Location = new Point(12, 32);
+            tableLayoutInstallation.Location = new Point(12, 22);
             tableLayoutInstallation.Margin = new Padding(4);
             tableLayoutInstallation.Name = "tableLayoutInstallation";
             tableLayoutInstallation.RowCount = 3;
@@ -526,6 +537,7 @@
             // switchModelTextBox
             // 
             switchModelTextBox.Anchor = AnchorStyles.None;
+            switchModelTextBox.BorderStyle = BorderStyle.FixedSingle;
             switchModelTextBox.Location = new Point(265, 37);
             switchModelTextBox.Name = "switchModelTextBox";
             switchModelTextBox.Size = new Size(208, 26);
@@ -568,6 +580,7 @@
             // switchLabelTextBox
             // 
             switchLabelTextBox.Anchor = AnchorStyles.None;
+            switchLabelTextBox.BorderStyle = BorderStyle.FixedSingle;
             switchLabelTextBox.Location = new Point(265, 70);
             switchLabelTextBox.Margin = new Padding(4);
             switchLabelTextBox.Name = "switchLabelTextBox";
@@ -591,7 +604,7 @@
             groupBoxPrimaryCT.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPrimaryCT.Controls.Add(tableLayoutPrimaryCT);
             groupBoxPrimaryCT.Font = new Font("Times New Roman", 14F);
-            groupBoxPrimaryCT.Location = new Point(550, 348);
+            groupBoxPrimaryCT.Location = new Point(550, 322);
             groupBoxPrimaryCT.Margin = new Padding(4);
             groupBoxPrimaryCT.Name = "groupBoxPrimaryCT";
             groupBoxPrimaryCT.Padding = new Padding(4);
@@ -624,6 +637,7 @@
             // secondaryCurrentTextBox
             // 
             secondaryCurrentTextBox.Anchor = AnchorStyles.None;
+            secondaryCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             secondaryCurrentTextBox.Location = new Point(252, 38);
             secondaryCurrentTextBox.Margin = new Padding(4);
             secondaryCurrentTextBox.Name = "secondaryCurrentTextBox";
@@ -645,6 +659,8 @@
             // primaryCurrentTextBox
             // 
             primaryCurrentTextBox.Anchor = AnchorStyles.None;
+            primaryCurrentTextBox.BackColor = Color.White;
+            primaryCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             primaryCurrentTextBox.Location = new Point(252, 4);
             primaryCurrentTextBox.Margin = new Padding(4);
             primaryCurrentTextBox.Name = "primaryCurrentTextBox";
@@ -669,7 +685,7 @@
             groupBoxDebounce.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxDebounce.Controls.Add(tableLayoutDebounce);
             groupBoxDebounce.Font = new Font("Times New Roman", 14F);
-            groupBoxDebounce.Location = new Point(7, 346);
+            groupBoxDebounce.Location = new Point(7, 320);
             groupBoxDebounce.Margin = new Padding(4);
             groupBoxDebounce.Name = "groupBoxDebounce";
             groupBoxDebounce.Padding = new Padding(4);
@@ -696,26 +712,28 @@
             tableLayoutDebounce.RowCount = 2;
             tableLayoutDebounce.RowStyles.Add(new RowStyle());
             tableLayoutDebounce.RowStyles.Add(new RowStyle());
-            tableLayoutDebounce.Size = new Size(240, 68);
+            tableLayoutDebounce.Size = new Size(222, 68);
             tableLayoutDebounce.TabIndex = 0;
             // 
             // debounceOnTextBox
             // 
             debounceOnTextBox.Anchor = AnchorStyles.None;
-            debounceOnTextBox.Location = new Point(136, 38);
+            debounceOnTextBox.BorderStyle = BorderStyle.FixedSingle;
+            debounceOnTextBox.Location = new Point(137, 38);
             debounceOnTextBox.Margin = new Padding(4);
             debounceOnTextBox.Name = "debounceOnTextBox";
-            debounceOnTextBox.Size = new Size(100, 26);
+            debounceOnTextBox.Size = new Size(80, 26);
             debounceOnTextBox.TabIndex = 5;
             debounceOnTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // debounceOffTextBox
             // 
             debounceOffTextBox.Anchor = AnchorStyles.None;
+            debounceOffTextBox.BorderStyle = BorderStyle.FixedSingle;
             debounceOffTextBox.Location = new Point(136, 4);
             debounceOffTextBox.Margin = new Padding(4);
             debounceOffTextBox.Name = "debounceOffTextBox";
-            debounceOffTextBox.Size = new Size(100, 26);
+            debounceOffTextBox.Size = new Size(82, 26);
             debounceOffTextBox.TabIndex = 4;
             debounceOffTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -748,11 +766,11 @@
             tableLayoutPanelMain.SetColumnSpan(groupBoxDelay, 2);
             groupBoxDelay.Controls.Add(delayDataGridView);
             groupBoxDelay.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxDelay.Location = new Point(124, 488);
+            groupBoxDelay.Location = new Point(124, 465);
             groupBoxDelay.Margin = new Padding(4);
             groupBoxDelay.Name = "groupBoxDelay";
             groupBoxDelay.Padding = new Padding(4);
-            groupBoxDelay.Size = new Size(805, 183);
+            groupBoxDelay.Size = new Size(805, 162);
             groupBoxDelay.TabIndex = 6;
             groupBoxDelay.TabStop = false;
             groupBoxDelay.Text = "Запаздывание/опережение срабатывания вспомогательного контакта относительно главного, мс";
@@ -764,8 +782,8 @@
             delayDataGridView.Anchor = AnchorStyles.None;
             delayDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             delayDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            delayDataGridView.BackgroundColor = Color.Gainsboro;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            delayDataGridView.BackgroundColor = SystemColors.Window;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
@@ -774,19 +792,18 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             delayDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             delayDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle2.BackColor = Color.White;
             dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F);
             dataGridViewCellStyle2.ForeColor = Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionForeColor = Color.White;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             delayDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            delayDataGridView.GridColor = Color.Gainsboro;
-            delayDataGridView.Location = new Point(133, 40);
+            delayDataGridView.GridColor = Color.Gray;
+            delayDataGridView.Location = new Point(133, 30);
             delayDataGridView.Margin = new Padding(4);
             delayDataGridView.Name = "delayDataGridView";
-            delayDataGridView.ReadOnly = true;
             dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
             dataGridViewCellStyle3.BackColor = SystemColors.Control;
             dataGridViewCellStyle3.Font = new Font("Times New Roman", 14.25F);
@@ -798,7 +815,7 @@
             delayDataGridView.RowHeadersVisible = false;
             delayDataGridView.RowHeadersWidth = 40;
             delayDataGridView.ScrollBars = ScrollBars.None;
-            delayDataGridView.Size = new Size(513, 123);
+            delayDataGridView.Size = new Size(513, 124);
             delayDataGridView.TabIndex = 0;
             // 
             // UcGeneral
@@ -806,12 +823,12 @@
             AutoScaleDimensions = new SizeF(10F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BorderStyle = BorderStyle.FixedSingle;
+            BackColor = Color.LightBlue;
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4);
             Name = "UcGeneral";
-            Size = new Size(1071, 719);
+            Size = new Size(1073, 670);
             tableLayoutPanelMain.ResumeLayout(false);
             groupBoxBreakerInfo.ResumeLayout(false);
             groupBoxBreakerInfo.PerformLayout();

@@ -42,19 +42,20 @@
             tableLayoutPanelMain.Anchor = AnchorStyles.None;
             tableLayoutPanelMain.AutoScroll = true;
             tableLayoutPanelMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanelMain.BackColor = Color.Transparent;
             tableLayoutPanelMain.ColumnCount = 1;
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelMain.Controls.Add(groupBoxEthernet, 0, 0);
             tableLayoutPanelMain.Controls.Add(groupBoxPTP, 0, 1);
             tableLayoutPanelMain.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutPanelMain.ForeColor = Color.Black;
-            tableLayoutPanelMain.Location = new Point(22, 21);
+            tableLayoutPanelMain.Location = new Point(23, 21);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 2;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(530, 419);
+            tableLayoutPanelMain.Size = new Size(530, 354);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // groupBoxEthernet
@@ -68,7 +69,7 @@
             groupBoxEthernet.Margin = new Padding(4);
             groupBoxEthernet.Name = "groupBoxEthernet";
             groupBoxEthernet.Padding = new Padding(4);
-            groupBoxEthernet.Size = new Size(474, 196);
+            groupBoxEthernet.Size = new Size(474, 161);
             groupBoxEthernet.TabIndex = 0;
             groupBoxEthernet.TabStop = false;
             groupBoxEthernet.Text = "Ethernet";
@@ -85,10 +86,10 @@
             tableLayoutEthernet.Controls.Add(labelIp, 0, 1);
             tableLayoutEthernet.Controls.Add(ipTextBox, 1, 1);
             tableLayoutEthernet.Controls.Add(labelMask, 0, 2);
-            tableLayoutEthernet.Controls.Add(maskTextBox, 1, 2);
             tableLayoutEthernet.Controls.Add(labelMac, 0, 0);
+            tableLayoutEthernet.Controls.Add(maskTextBox, 1, 2);
             tableLayoutEthernet.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutEthernet.Location = new Point(77, 56);
+            tableLayoutEthernet.Location = new Point(77, 38);
             tableLayoutEthernet.Margin = new Padding(4);
             tableLayoutEthernet.Name = "tableLayoutEthernet";
             tableLayoutEthernet.RowCount = 3;
@@ -101,6 +102,7 @@
             // macTextBox
             // 
             macTextBox.Anchor = AnchorStyles.None;
+            macTextBox.BorderStyle = BorderStyle.FixedSingle;
             macTextBox.Location = new Point(123, 4);
             macTextBox.Margin = new Padding(4);
             macTextBox.Name = "macTextBox";
@@ -122,6 +124,7 @@
             // ipTextBox
             // 
             ipTextBox.Anchor = AnchorStyles.None;
+            ipTextBox.BorderStyle = BorderStyle.FixedSingle;
             ipTextBox.Location = new Point(122, 38);
             ipTextBox.Margin = new Padding(4);
             ipTextBox.Name = "ipTextBox";
@@ -144,6 +147,7 @@
             // maskTextBox
             // 
             maskTextBox.Anchor = AnchorStyles.None;
+            maskTextBox.BorderStyle = BorderStyle.FixedSingle;
             maskTextBox.Location = new Point(122, 72);
             maskTextBox.Margin = new Padding(4);
             maskTextBox.Name = "maskTextBox";
@@ -168,11 +172,11 @@
             groupBoxPTP.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPTP.Controls.Add(tableLayoutPTP);
             groupBoxPTP.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxPTP.Location = new Point(27, 219);
+            groupBoxPTP.Location = new Point(27, 185);
             groupBoxPTP.Margin = new Padding(4);
             groupBoxPTP.Name = "groupBoxPTP";
             groupBoxPTP.Padding = new Padding(4);
-            groupBoxPTP.Size = new Size(475, 184);
+            groupBoxPTP.Size = new Size(475, 153);
             groupBoxPTP.TabIndex = 2;
             groupBoxPTP.TabStop = false;
             groupBoxPTP.Text = "PTPv2";
@@ -192,7 +196,7 @@
             tableLayoutPTP.Controls.Add(labelPtpId, 0, 2);
             tableLayoutPTP.Controls.Add(ptpIdTextBox, 1, 2);
             tableLayoutPTP.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutPTP.Location = new Point(58, 50);
+            tableLayoutPTP.Location = new Point(58, 34);
             tableLayoutPTP.Margin = new Padding(4);
             tableLayoutPTP.Name = "tableLayoutPTP";
             tableLayoutPTP.RowCount = 3;
@@ -216,6 +220,7 @@
             // ptpMasterMacTextBox
             // 
             ptpMasterMacTextBox.Anchor = AnchorStyles.None;
+            ptpMasterMacTextBox.BorderStyle = BorderStyle.FixedSingle;
             ptpMasterMacTextBox.Location = new Point(150, 4);
             ptpMasterMacTextBox.Margin = new Padding(4);
             ptpMasterMacTextBox.Name = "ptpMasterMacTextBox";
@@ -238,6 +243,7 @@
             // ptpPortTextBox
             // 
             ptpPortTextBox.Anchor = AnchorStyles.None;
+            ptpPortTextBox.BorderStyle = BorderStyle.FixedSingle;
             ptpPortTextBox.Location = new Point(150, 38);
             ptpPortTextBox.Margin = new Padding(4);
             ptpPortTextBox.Name = "ptpPortTextBox";
@@ -259,6 +265,7 @@
             // ptpIdTextBox
             // 
             ptpIdTextBox.Anchor = AnchorStyles.None;
+            ptpIdTextBox.BorderStyle = BorderStyle.FixedSingle;
             ptpIdTextBox.Location = new Point(149, 72);
             ptpIdTextBox.Margin = new Padding(4);
             ptpIdTextBox.Name = "ptpIdTextBox";
@@ -271,12 +278,12 @@
             AutoScaleDimensions = new SizeF(10F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BorderStyle = BorderStyle.FixedSingle;
+            BackColor = Color.LightBlue;
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4);
             Name = "UcNetwork";
-            Size = new Size(572, 463);
+            Size = new Size(574, 402);
             tableLayoutPanelMain.ResumeLayout(false);
             groupBoxEthernet.ResumeLayout(false);
             groupBoxEthernet.PerformLayout();

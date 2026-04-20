@@ -9,7 +9,8 @@
     ".NETCoreApp,Version=v8.0/win-x64": {
       "Uetm_2_0/1.0.0": {
         "dependencies": {
-          "EPPlus": "8.5.1",
+          "EPPlus": "8.5.3",
+          "Guna.UI2.WinForms": "2.0.4.7",
           "Newtonsoft.Json": "13.0.4",
           "CommonFunctions": "1.0.0.0",
           "ModBusHelper": "1.0.0.0",
@@ -875,10 +876,6 @@
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.2526.11203"
           },
-          "System.Security.Cryptography.Xml.dll": {
-            "assemblyVersion": "8.0.0.0",
-            "fileVersion": "8.0.2526.11203"
-          },
           "System.Security.Permissions.dll": {
             "assemblyVersion": "8.0.0.0",
             "fileVersion": "8.0.2526.11203"
@@ -966,16 +963,17 @@
           }
         }
       },
-      "EPPlus/8.5.1": {
+      "EPPlus/8.5.3": {
         "dependencies": {
           "EPPlus.Interfaces": "8.4.0",
           "Microsoft.Extensions.Configuration.Json": "8.0.1",
-          "Microsoft.IO.RecyclableMemoryStream": "3.0.1"
+          "Microsoft.IO.RecyclableMemoryStream": "3.0.1",
+          "System.Security.Cryptography.Xml": "8.0.3"
         },
         "runtime": {
           "lib/net8.0/EPPlus.dll": {
-            "assemblyVersion": "8.5.1.0",
-            "fileVersion": "8.5.1.0"
+            "assemblyVersion": "8.5.3.0",
+            "fileVersion": "8.5.3.0"
           }
         }
       },
@@ -984,6 +982,17 @@
           "lib/net8.0/EPPlus.Interfaces.dll": {
             "assemblyVersion": "8.4.0.0",
             "fileVersion": "8.4.0.0"
+          }
+        }
+      },
+      "Guna.UI2.WinForms/2.0.4.7": {
+        "dependencies": {
+          "System.Management": "7.0.0"
+        },
+        "runtime": {
+          "lib/net7.0-windows7.0/Guna.UI2.dll": {
+            "assemblyVersion": "2.0.4.7",
+            "fileVersion": "2.0.4.7"
           }
         }
       },
@@ -1095,6 +1104,22 @@
           }
         }
       },
+      "System.Management/7.0.0": {
+        "runtime": {
+          "runtimes/win/lib/net7.0/System.Management.dll": {
+            "assemblyVersion": "4.0.0.0",
+            "fileVersion": "7.0.22.51805"
+          }
+        }
+      },
+      "System.Security.Cryptography.Xml/8.0.3": {
+        "runtime": {
+          "lib/net8.0/System.Security.Cryptography.Xml.dll": {
+            "assemblyVersion": "8.0.0.0",
+            "fileVersion": "8.0.2626.16921"
+          }
+        }
+      },
       "CommonFunctions/1.0.0.0": {
         "runtime": {
           "CommonFunctions.dll": {
@@ -1137,12 +1162,12 @@
       "serviceable": false,
       "sha512": ""
     },
-    "EPPlus/8.5.1": {
+    "EPPlus/8.5.3": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-LhdQjZ7gTJYYMyHVdBTeIq8N+tYQeV1/VZSnOGeopoJFMWFqJ8V81L9h84yH7PkpF4p7LVJX1uakYTwgmf8Siw==",
-      "path": "epplus/8.5.1",
-      "hashPath": "epplus.8.5.1.nupkg.sha512"
+      "sha512": "sha512-wU+ogF8qJTLoAqmD+X7ZCWAj2uUsIV8omXm4SkHhIGS4LPfWxlFDQhLb5FPedNp+0dDEA2S8dEpvtCezpzUgBA==",
+      "path": "epplus/8.5.3",
+      "hashPath": "epplus.8.5.3.nupkg.sha512"
     },
     "EPPlus.Interfaces/8.4.0": {
       "type": "package",
@@ -1150,6 +1175,13 @@
       "sha512": "sha512-QaEzDFG2vcQMPqUmoWv0vBTObtH8hffQmyDr2WkqRYF/nFSn2pkdBB4vudcd/EIv0N8M3P1fzzkPQgEWsFnUmA==",
       "path": "epplus.interfaces/8.4.0",
       "hashPath": "epplus.interfaces.8.4.0.nupkg.sha512"
+    },
+    "Guna.UI2.WinForms/2.0.4.7": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-8BdBYsfnntuICbFMHIZsd5morwURN8Ucsvq7wJeyLV1Z1ze6CAIxVKEirufgjGIiXfF0M0sCr9EVFloZSazWew==",
+      "path": "guna.ui2.winforms/2.0.4.7",
+      "hashPath": "guna.ui2.winforms.2.0.4.7.nupkg.sha512"
     },
     "Microsoft.Extensions.Configuration/8.0.0": {
       "type": "package",
@@ -1220,6 +1252,20 @@
       "sha512": "sha512-pdgNNMai3zv51W5aq268sujXUyx7SNdE2bj1wZcWjAQrKMFZV260lbqYop1d2GM67JI1huLRwxo9ZqnfF/lC6A==",
       "path": "newtonsoft.json/13.0.4",
       "hashPath": "newtonsoft.json.13.0.4.nupkg.sha512"
+    },
+    "System.Management/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-A4jed4QUviDOm7fJNKAJObEAEkEUXmkGL/w0iyCYTzrl1rezTj8LGFHfsVst4Vb9JwFcTpboiDrvdST48avBpw==",
+      "path": "system.management/7.0.0",
+      "hashPath": "system.management.7.0.0.nupkg.sha512"
+    },
+    "System.Security.Cryptography.Xml/8.0.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-1cHAWDYwOyyoRy+nxS7/Ro/Zcio6i5yHoIJ6xUA+fU8lNu4yGQgja5dEovAxBVud3RnfwRVWOl0B2vr+9LP/mg==",
+      "path": "system.security.cryptography.xml/8.0.3",
+      "hashPath": "system.security.cryptography.xml.8.0.3.nupkg.sha512"
     },
     "CommonFunctions/1.0.0.0": {
       "type": "reference",

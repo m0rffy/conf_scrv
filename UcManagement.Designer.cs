@@ -13,12 +13,12 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle11 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle12 = new DataGridViewCellStyle();
             tableLayoutPanelMain = new TableLayoutPanel();
             panelAddDevice = new Panel();
             ipLabel = new Label();
@@ -27,7 +27,7 @@
             portLabel = new Label();
             portTextBox = new TextBox();
             panelButtons = new Panel();
-            clearResourceButton = new Button();
+            SkyBlue = new Button();
             LightSteelBlue = new Button();
             rebootButton = new Button();
             groupBoxInfo = new GroupBox();
@@ -67,6 +67,7 @@
             // 
             tableLayoutPanelMain.Anchor = AnchorStyles.None;
             tableLayoutPanelMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanelMain.BackColor = Color.Transparent;
             tableLayoutPanelMain.ColumnCount = 1;
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelMain.Controls.Add(panelAddDevice, 0, 0);
@@ -75,7 +76,7 @@
             tableLayoutPanelMain.Controls.Add(groupBoxCNTV, 0, 2);
             tableLayoutPanelMain.Controls.Add(groupBoxStatus, 0, 4);
             tableLayoutPanelMain.Controls.Add(groupBoxRMS, 0, 3);
-            tableLayoutPanelMain.Location = new Point(14, 4);
+            tableLayoutPanelMain.Location = new Point(15, 10);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 6;
@@ -85,7 +86,7 @@
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(675, 670);
+            tableLayoutPanelMain.Size = new Size(675, 623);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // panelAddDevice
@@ -103,7 +104,7 @@
             panelAddDevice.Location = new Point(42, 4);
             panelAddDevice.Margin = new Padding(4);
             panelAddDevice.Name = "panelAddDevice";
-            panelAddDevice.Size = new Size(590, 34);
+            panelAddDevice.Size = new Size(590, 41);
             panelAddDevice.TabIndex = 6;
             // 
             // ipLabel
@@ -111,12 +112,12 @@
             ipLabel.Anchor = AnchorStyles.None;
             ipLabel.AutoSize = true;
             ipLabel.Font = new Font("Times New Roman", 12F);
-            ipLabel.Location = new Point(60, 7);
+            ipLabel.Location = new Point(60, 10);
             ipLabel.Margin = new Padding(4, 0, 4, 0);
             ipLabel.Name = "ipLabel";
-            ipLabel.Size = new Size(26, 19);
+            ipLabel.Size = new Size(23, 19);
             ipLabel.TabIndex = 0;
-            ipLabel.Text = "IP:";
+            ipLabel.Text = "IP";
             ipLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ipTextBox
@@ -124,7 +125,7 @@
             ipTextBox.Anchor = AnchorStyles.None;
             ipTextBox.BorderStyle = BorderStyle.FixedSingle;
             ipTextBox.Font = new Font("Times New Roman", 12F);
-            ipTextBox.Location = new Point(91, 4);
+            ipTextBox.Location = new Point(91, 7);
             ipTextBox.Margin = new Padding(4);
             ipTextBox.Name = "ipTextBox";
             ipTextBox.Size = new Size(134, 26);
@@ -135,13 +136,13 @@
             addDeviceButton.Anchor = AnchorStyles.None;
             addDeviceButton.AutoSize = true;
             addDeviceButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            addDeviceButton.BackColor = Color.LightSteelBlue;
-            addDeviceButton.FlatStyle = FlatStyle.Popup;
+            addDeviceButton.BackColor = Color.SkyBlue;
+            addDeviceButton.FlatStyle = FlatStyle.Flat;
             addDeviceButton.Font = new Font("Times New Roman", 12F);
-            addDeviceButton.Location = new Point(400, 3);
+            addDeviceButton.Location = new Point(400, 6);
             addDeviceButton.Margin = new Padding(4);
             addDeviceButton.Name = "addDeviceButton";
-            addDeviceButton.Size = new Size(164, 29);
+            addDeviceButton.Size = new Size(166, 31);
             addDeviceButton.TabIndex = 4;
             addDeviceButton.Text = "Добавить устройство";
             addDeviceButton.UseVisualStyleBackColor = false;
@@ -152,12 +153,12 @@
             portLabel.Anchor = AnchorStyles.None;
             portLabel.AutoSize = true;
             portLabel.Font = new Font("Times New Roman", 12F);
-            portLabel.Location = new Point(263, 6);
+            portLabel.Location = new Point(263, 9);
             portLabel.Margin = new Padding(4, 0, 4, 0);
             portLabel.Name = "portLabel";
-            portLabel.Size = new Size(46, 19);
+            portLabel.Size = new Size(43, 19);
             portLabel.TabIndex = 2;
-            portLabel.Text = "Порт:";
+            portLabel.Text = "Порт";
             portLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // portTextBox
@@ -165,7 +166,7 @@
             portTextBox.Anchor = AnchorStyles.None;
             portTextBox.BorderStyle = BorderStyle.FixedSingle;
             portTextBox.Font = new Font("Times New Roman", 12F);
-            portTextBox.Location = new Point(312, 4);
+            portTextBox.Location = new Point(312, 7);
             portTextBox.Margin = new Padding(4);
             portTextBox.Name = "portTextBox";
             portTextBox.Size = new Size(46, 26);
@@ -176,46 +177,46 @@
             panelButtons.Anchor = AnchorStyles.None;
             panelButtons.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             panelButtons.BackColor = Color.Transparent;
-            panelButtons.Controls.Add(clearResourceButton);
+            panelButtons.Controls.Add(SkyBlue);
             panelButtons.Controls.Add(LightSteelBlue);
             panelButtons.Controls.Add(rebootButton);
             panelButtons.Font = new Font("Times New Roman", 12F);
             panelButtons.ForeColor = Color.Black;
-            panelButtons.Location = new Point(37, 46);
+            panelButtons.Location = new Point(36, 53);
             panelButtons.Margin = new Padding(4);
             panelButtons.Name = "panelButtons";
-            panelButtons.Size = new Size(600, 42);
+            panelButtons.Size = new Size(602, 42);
             panelButtons.TabIndex = 1;
             // 
-            // clearResourceButton
+            // SkyBlue
             // 
-            clearResourceButton.Anchor = AnchorStyles.None;
-            clearResourceButton.AutoSize = true;
-            clearResourceButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            clearResourceButton.BackColor = Color.LightSteelBlue;
-            clearResourceButton.FlatStyle = FlatStyle.Popup;
-            clearResourceButton.Font = new Font("Times New Roman", 12F);
-            clearResourceButton.Location = new Point(4, 7);
-            clearResourceButton.Margin = new Padding(4);
-            clearResourceButton.Name = "clearResourceButton";
-            clearResourceButton.Size = new Size(226, 29);
-            clearResourceButton.TabIndex = 0;
-            clearResourceButton.Text = "Очистить значения по ресурсу";
-            clearResourceButton.UseVisualStyleBackColor = false;
-            clearResourceButton.Click += ClearResourceButton_Click;
+            SkyBlue.Anchor = AnchorStyles.None;
+            SkyBlue.AutoSize = true;
+            SkyBlue.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            SkyBlue.BackColor = Color.SkyBlue;
+            SkyBlue.FlatStyle = FlatStyle.Flat;
+            SkyBlue.Font = new Font("Times New Roman", 12F);
+            SkyBlue.Location = new Point(4, 6);
+            SkyBlue.Margin = new Padding(4);
+            SkyBlue.Name = "SkyBlue";
+            SkyBlue.Size = new Size(228, 31);
+            SkyBlue.TabIndex = 0;
+            SkyBlue.Text = "Очистить значения по ресурсу";
+            SkyBlue.UseVisualStyleBackColor = false;
+            SkyBlue.Click += ClearResourceButton_Click;
             // 
             // LightSteelBlue
             // 
             LightSteelBlue.Anchor = AnchorStyles.None;
             LightSteelBlue.AutoSize = true;
             LightSteelBlue.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            LightSteelBlue.BackColor = Color.LightSteelBlue;
-            LightSteelBlue.FlatStyle = FlatStyle.Popup;
+            LightSteelBlue.BackColor = Color.SkyBlue;
+            LightSteelBlue.FlatStyle = FlatStyle.Flat;
             LightSteelBlue.Font = new Font("Times New Roman", 12F);
-            LightSteelBlue.Location = new Point(238, 7);
+            LightSteelBlue.Location = new Point(238, 6);
             LightSteelBlue.Margin = new Padding(4);
             LightSteelBlue.Name = "LightSteelBlue";
-            LightSteelBlue.Size = new Size(153, 29);
+            LightSteelBlue.Size = new Size(155, 31);
             LightSteelBlue.TabIndex = 1;
             LightSteelBlue.Text = "Задать дату и время";
             LightSteelBlue.UseVisualStyleBackColor = false;
@@ -226,13 +227,13 @@
             rebootButton.Anchor = AnchorStyles.None;
             rebootButton.AutoSize = true;
             rebootButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            rebootButton.BackColor = Color.LightSteelBlue;
-            rebootButton.FlatStyle = FlatStyle.Popup;
+            rebootButton.BackColor = Color.SkyBlue;
+            rebootButton.FlatStyle = FlatStyle.Flat;
             rebootButton.Font = new Font("Times New Roman", 12F);
-            rebootButton.Location = new Point(401, 7);
+            rebootButton.Location = new Point(401, 6);
             rebootButton.Margin = new Padding(4);
             rebootButton.Name = "rebootButton";
-            rebootButton.Size = new Size(195, 29);
+            rebootButton.Size = new Size(197, 31);
             rebootButton.TabIndex = 2;
             rebootButton.Text = "Перезагрузить устройство";
             rebootButton.UseVisualStyleBackColor = false;
@@ -245,11 +246,11 @@
             groupBoxInfo.Controls.Add(tableLayoutInfo);
             groupBoxInfo.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxInfo.ForeColor = Color.Black;
-            groupBoxInfo.Location = new Point(33, 556);
+            groupBoxInfo.Location = new Point(33, 524);
             groupBoxInfo.Margin = new Padding(4);
             groupBoxInfo.Name = "groupBoxInfo";
             groupBoxInfo.Padding = new Padding(4);
-            groupBoxInfo.Size = new Size(608, 96);
+            groupBoxInfo.Size = new Size(608, 91);
             groupBoxInfo.TabIndex = 5;
             groupBoxInfo.TabStop = false;
             groupBoxInfo.Text = "Информация об устройстве";
@@ -270,7 +271,7 @@
             tableLayoutInfo.Controls.Add(deviceTimeLabel, 1, 2);
             tableLayoutInfo.Font = new Font("Times New Roman", 12F);
             tableLayoutInfo.GrowStyle = TableLayoutPanelGrowStyle.AddColumns;
-            tableLayoutInfo.Location = new Point(141, 30);
+            tableLayoutInfo.Location = new Point(141, 27);
             tableLayoutInfo.Margin = new Padding(4);
             tableLayoutInfo.Name = "tableLayoutInfo";
             tableLayoutInfo.RowCount = 3;
@@ -353,11 +354,11 @@
             groupBoxCNTV.Controls.Add(cntvDataGridView);
             groupBoxCNTV.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxCNTV.ForeColor = Color.Black;
-            groupBoxCNTV.Location = new Point(38, 96);
+            groupBoxCNTV.Location = new Point(40, 103);
             groupBoxCNTV.Margin = new Padding(4);
             groupBoxCNTV.Name = "groupBoxCNTV";
             groupBoxCNTV.Padding = new Padding(4);
-            groupBoxCNTV.Size = new Size(599, 174);
+            groupBoxCNTV.Size = new Size(594, 161);
             groupBoxCNTV.TabIndex = 3;
             groupBoxCNTV.TabStop = false;
             groupBoxCNTV.Text = "Значения по ресурсу";
@@ -369,40 +370,40 @@
             cntvDataGridView.Anchor = AnchorStyles.None;
             cntvDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             cntvDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            cntvDataGridView.BackgroundColor = Color.Gainsboro;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            cntvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            cntvDataGridView.BackgroundColor = Color.White;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = Color.White;
+            dataGridViewCellStyle7.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle7.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle7.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle7.SelectionForeColor = Color.LightGray;
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            cntvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             cntvDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle2.BackColor = SystemColors.Window;
-            dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
-            cntvDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            cntvDataGridView.GridColor = Color.Gainsboro;
-            cntvDataGridView.Location = new Point(32, 32);
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = Color.White;
+            dataGridViewCellStyle8.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle8.ForeColor = Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = Color.White;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.False;
+            cntvDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
+            cntvDataGridView.GridColor = Color.Gray;
+            cntvDataGridView.Location = new Point(30, 25);
             cntvDataGridView.Margin = new Padding(4);
             cntvDataGridView.Name = "cntvDataGridView";
             cntvDataGridView.ReadOnly = true;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            cntvDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle9.BackColor = SystemColors.Control;
+            dataGridViewCellStyle9.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle9.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle9.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle9.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            cntvDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             cntvDataGridView.RowHeadersVisible = false;
             cntvDataGridView.ScrollBars = ScrollBars.None;
-            cntvDataGridView.Size = new Size(536, 128);
+            cntvDataGridView.Size = new Size(536, 127);
             cntvDataGridView.TabIndex = 0;
             // 
             // groupBoxStatus
@@ -412,11 +413,11 @@
             groupBoxStatus.Controls.Add(tableLayoutStatus);
             groupBoxStatus.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxStatus.ForeColor = Color.Black;
-            groupBoxStatus.Location = new Point(34, 430);
+            groupBoxStatus.Location = new Point(34, 424);
             groupBoxStatus.Margin = new Padding(4);
             groupBoxStatus.Name = "groupBoxStatus";
             groupBoxStatus.Padding = new Padding(4);
-            groupBoxStatus.Size = new Size(607, 104);
+            groupBoxStatus.Size = new Size(607, 88);
             groupBoxStatus.TabIndex = 4;
             groupBoxStatus.TabStop = false;
             groupBoxStatus.Text = "Статус устройства";
@@ -426,6 +427,7 @@
             tableLayoutStatus.Anchor = AnchorStyles.None;
             tableLayoutStatus.AutoScroll = true;
             tableLayoutStatus.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutStatus.BackColor = Color.Transparent;
             tableLayoutStatus.ColumnCount = 2;
             tableLayoutStatus.ColumnStyles.Add(new ColumnStyle());
             tableLayoutStatus.ColumnStyles.Add(new ColumnStyle());
@@ -437,7 +439,7 @@
             tableLayoutStatus.Controls.Add(rtcStatusLabel, 1, 2);
             tableLayoutStatus.Font = new Font("Times New Roman", 12F);
             tableLayoutStatus.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutStatus.Location = new Point(143, 31);
+            tableLayoutStatus.Location = new Point(143, 23);
             tableLayoutStatus.Margin = new Padding(4);
             tableLayoutStatus.Name = "tableLayoutStatus";
             tableLayoutStatus.RowCount = 3;
@@ -451,6 +453,7 @@
             // 
             labelDeviceStatus.Anchor = AnchorStyles.Left;
             labelDeviceStatus.AutoSize = true;
+            labelDeviceStatus.BackColor = Color.Transparent;
             labelDeviceStatus.Location = new Point(4, 0);
             labelDeviceStatus.Margin = new Padding(4, 0, 4, 0);
             labelDeviceStatus.Name = "labelDeviceStatus";
@@ -525,7 +528,7 @@
             groupBoxRMS.FlatStyle = FlatStyle.Flat;
             groupBoxRMS.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxRMS.ForeColor = Color.Black;
-            groupBoxRMS.Location = new Point(35, 278);
+            groupBoxRMS.Location = new Point(35, 272);
             groupBoxRMS.Margin = new Padding(4);
             groupBoxRMS.Name = "groupBoxRMS";
             groupBoxRMS.Padding = new Padding(4);
@@ -541,40 +544,40 @@
             rmsDataGridView.Anchor = AnchorStyles.None;
             rmsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             rmsDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            rmsDataGridView.BackgroundColor = Color.Gainsboro;
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle4.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle4.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle4.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            rmsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            rmsDataGridView.BackgroundColor = Color.White;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle10.BackColor = SystemColors.Control;
+            dataGridViewCellStyle10.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle10.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle10.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle10.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle10.WrapMode = DataGridViewTriState.True;
+            rmsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle10;
             rmsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle5.BackColor = SystemColors.Window;
-            dataGridViewCellStyle5.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle5.ForeColor = Color.Black;
-            dataGridViewCellStyle5.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle5.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle5.WrapMode = DataGridViewTriState.False;
-            rmsDataGridView.DefaultCellStyle = dataGridViewCellStyle5;
-            rmsDataGridView.GridColor = Color.Gainsboro;
+            dataGridViewCellStyle11.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = Color.White;
+            dataGridViewCellStyle11.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle11.ForeColor = Color.Black;
+            dataGridViewCellStyle11.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle11.SelectionForeColor = Color.White;
+            dataGridViewCellStyle11.WrapMode = DataGridViewTriState.False;
+            rmsDataGridView.DefaultCellStyle = dataGridViewCellStyle11;
+            rmsDataGridView.GridColor = Color.Gray;
             rmsDataGridView.Location = new Point(35, 27);
             rmsDataGridView.Margin = new Padding(4);
             rmsDataGridView.Name = "rmsDataGridView";
             rmsDataGridView.ReadOnly = true;
-            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle6.BackColor = SystemColors.Control;
-            dataGridViewCellStyle6.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle6.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle6.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle6.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle6.WrapMode = DataGridViewTriState.True;
-            rmsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle12.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle12.BackColor = SystemColors.Control;
+            dataGridViewCellStyle12.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle12.ForeColor = SystemColors.WindowText;
+            dataGridViewCellStyle12.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle12.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle12.WrapMode = DataGridViewTriState.True;
+            rmsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle12;
             rmsDataGridView.RowHeadersVisible = false;
             rmsDataGridView.ScrollBars = ScrollBars.None;
-            rmsDataGridView.Size = new Size(536, 107);
+            rmsDataGridView.Size = new Size(536, 106);
             rmsDataGridView.TabIndex = 0;
             // 
             // UcManagement
@@ -582,12 +585,12 @@
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BorderStyle = BorderStyle.FixedSingle;
+            BackColor = Color.LightBlue;
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4);
             Name = "UcManagement";
-            Size = new Size(702, 678);
+            Size = new Size(704, 643);
             tableLayoutPanelMain.ResumeLayout(false);
             panelAddDevice.ResumeLayout(false);
             panelAddDevice.PerformLayout();
@@ -614,7 +617,7 @@
         private Label portLabel;
         private TextBox portTextBox;
         public Panel panelButtons;
-        private Button clearResourceButton;
+        private Button SkyBlue;
         private Button LightSteelBlue;
         private Button rebootButton;
         public GroupBox groupBoxInfo;

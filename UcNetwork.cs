@@ -1,5 +1,4 @@
 ﻿using ModBusHelper;
-using System.Globalization;
 using System.Text;
 using static ModBusHelper.ModBusExporterLinker;
 

@@ -1,7 +1,6 @@
 ﻿using ModBusHelper;
 using OfficeOpenXml;
 using System.Data;
-using System.Globalization;
 
 namespace Uetm_2_0
 {
@@ -107,7 +106,7 @@ namespace Uetm_2_0
                             FileInfo fi = new FileInfo(sfd.FileName);
                             package.SaveAs(fi);
                         }
-                        MessageBox.Show("Экспорт завершён", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        MessageBox.Show("Экспорт завершён", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
                     catch (Exception ex)
                     {

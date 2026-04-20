@@ -46,7 +46,7 @@
             dateTimePicker1.Anchor = AnchorStyles.None;
             dateTimePicker1.CalendarFont = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             dateTimePicker1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            dateTimePicker1.Location = new Point(54, 44);
+            dateTimePicker1.Location = new Point(54, 23);
             dateTimePicker1.Margin = new Padding(4);
             dateTimePicker1.Name = "dateTimePicker1";
             dateTimePicker1.Size = new Size(177, 26);
@@ -57,12 +57,12 @@
             btnOk.Anchor = AnchorStyles.None;
             btnOk.AutoSize = true;
             btnOk.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnOk.BackColor = Color.LightSteelBlue;
+            btnOk.BackColor = Color.SkyBlue;
             btnOk.FlatAppearance.BorderSize = 0;
             btnOk.FlatStyle = FlatStyle.Flat;
             btnOk.Font = new Font("Times New Roman", 12F);
             btnOk.ForeColor = Color.Black;
-            btnOk.Location = new Point(54, 169);
+            btnOk.Location = new Point(54, 154);
             btnOk.Margin = new Padding(4);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(96, 29);
@@ -76,11 +76,11 @@
             btnCancel.Anchor = AnchorStyles.None;
             btnCancel.AutoSize = true;
             btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            btnCancel.BackColor = Color.LightSteelBlue;
+            btnCancel.BackColor = Color.SkyBlue;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Times New Roman", 12F);
             btnCancel.ForeColor = Color.Black;
-            btnCancel.Location = new Point(158, 168);
+            btnCancel.Location = new Point(158, 153);
             btnCancel.Margin = new Padding(4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(73, 31);
@@ -94,7 +94,7 @@
             labelHour.Anchor = AnchorStyles.None;
             labelHour.AutoSize = true;
             labelHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            labelHour.Location = new Point(54, 84);
+            labelHour.Location = new Point(54, 63);
             labelHour.Margin = new Padding(4, 0, 4, 0);
             labelHour.Name = "labelHour";
             labelHour.Size = new Size(44, 19);
@@ -108,7 +108,7 @@
             numericUpDownHour.AutoSize = true;
             numericUpDownHour.BorderStyle = BorderStyle.FixedSingle;
             numericUpDownHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            numericUpDownHour.Location = new Point(181, 81);
+            numericUpDownHour.Location = new Point(181, 60);
             numericUpDownHour.Maximum = new decimal(new int[] { 23, 0, 0, 0 });
             numericUpDownHour.Name = "numericUpDownHour";
             numericUpDownHour.Size = new Size(50, 26);
@@ -120,7 +120,7 @@
             labelMinute.Anchor = AnchorStyles.None;
             labelMinute.AutoSize = true;
             labelMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            labelMinute.Location = new Point(54, 125);
+            labelMinute.Location = new Point(54, 104);
             labelMinute.Margin = new Padding(4, 0, 4, 0);
             labelMinute.Name = "labelMinute";
             labelMinute.Size = new Size(66, 19);
@@ -134,7 +134,7 @@
             numericUpDownMinute.AutoSize = true;
             numericUpDownMinute.BorderStyle = BorderStyle.FixedSingle;
             numericUpDownMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            numericUpDownMinute.Location = new Point(181, 123);
+            numericUpDownMinute.Location = new Point(181, 102);
             numericUpDownMinute.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
             numericUpDownMinute.Name = "numericUpDownMinute";
             numericUpDownMinute.Size = new Size(50, 26);
@@ -147,8 +147,8 @@
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = Color.Gainsboro;
-            ClientSize = new Size(284, 261);
+            BackColor = Color.LightGray;
+            ClientSize = new Size(284, 211);
             Controls.Add(btnCancel);
             Controls.Add(btnOk);
             Controls.Add(numericUpDownMinute);

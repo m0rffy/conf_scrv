@@ -37,7 +37,7 @@
             panelButtons.Controls.Add(updateJournalButton);
             panelButtons.Controls.Add(exportButton);
             panelButtons.FlowDirection = FlowDirection.TopDown;
-            panelButtons.Location = new Point(451, 395);
+            panelButtons.Location = new Point(405, 391);
             panelButtons.Margin = new Padding(4);
             panelButtons.Name = "panelButtons";
             panelButtons.Size = new Size(149, 74);
@@ -48,7 +48,7 @@
             updateJournalButton.Anchor = AnchorStyles.None;
             updateJournalButton.AutoSize = true;
             updateJournalButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            updateJournalButton.BackColor = Color.LightSteelBlue;
+            updateJournalButton.BackColor = Color.SkyBlue;
             updateJournalButton.FlatStyle = FlatStyle.Popup;
             updateJournalButton.Font = new Font("Times New Roman", 12F);
             updateJournalButton.Location = new Point(4, 4);
@@ -65,7 +65,7 @@
             exportButton.Anchor = AnchorStyles.None;
             exportButton.AutoSize = true;
             exportButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            exportButton.BackColor = Color.LightSteelBlue;
+            exportButton.BackColor = Color.SkyBlue;
             exportButton.FlatStyle = FlatStyle.Popup;
             exportButton.Font = new Font("Times New Roman", 12F);
             exportButton.Location = new Point(36, 41);
@@ -81,18 +81,19 @@
             // 
             tableLayoutPanelMain.Anchor = AnchorStyles.None;
             tableLayoutPanelMain.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            tableLayoutPanelMain.BackColor = Color.Transparent;
             tableLayoutPanelMain.ColumnCount = 1;
             tableLayoutPanelMain.ColumnStyles.Add(new ColumnStyle());
             tableLayoutPanelMain.Controls.Add(journalDataGridView, 0, 0);
             tableLayoutPanelMain.Controls.Add(panelButtons, 0, 1);
             tableLayoutPanelMain.ForeColor = Color.Black;
-            tableLayoutPanelMain.Location = new Point(15, 23);
+            tableLayoutPanelMain.Location = new Point(73, 31);
             tableLayoutPanelMain.Margin = new Padding(4);
             tableLayoutPanelMain.Name = "tableLayoutPanelMain";
             tableLayoutPanelMain.RowCount = 2;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(1051, 480);
+            tableLayoutPanelMain.Size = new Size(959, 472);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // journalDataGridView
@@ -102,8 +103,9 @@
             journalDataGridView.Anchor = AnchorStyles.None;
             journalDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             journalDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            journalDataGridView.BackgroundColor = Color.Gainsboro;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            journalDataGridView.BackgroundColor = SystemColors.Window;
+            journalDataGridView.CellBorderStyle = DataGridViewCellBorderStyle.None;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = SystemColors.Control;
             dataGridViewCellStyle1.Font = new Font("Times New Roman", 14.25F);
             dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
@@ -112,16 +114,16 @@
             dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
             journalDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             journalDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = SystemColors.Window;
             dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F);
             dataGridViewCellStyle2.ForeColor = Color.Black;
             dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle2.SelectionForeColor = SystemColors.Window;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.False;
             journalDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
-            journalDataGridView.GridColor = Color.Gainsboro;
-            journalDataGridView.Location = new Point(51, 4);
+            journalDataGridView.GridColor = Color.Gray;
+            journalDataGridView.Location = new Point(4, 4);
             journalDataGridView.Margin = new Padding(4);
             journalDataGridView.Name = "journalDataGridView";
             journalDataGridView.ReadOnly = true;
@@ -134,8 +136,9 @@
             dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
             journalDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
             journalDataGridView.RowHeadersVisible = false;
+            journalDataGridView.RowTemplate.ReadOnly = true;
             journalDataGridView.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
-            journalDataGridView.Size = new Size(949, 377);
+            journalDataGridView.Size = new Size(951, 377);
             journalDataGridView.TabIndex = 0;
             // 
             // UcJournal
@@ -143,12 +146,12 @@
             AutoScaleDimensions = new SizeF(10F, 21F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BorderStyle = BorderStyle.FixedSingle;
+            BackColor = Color.LightBlue;
             Controls.Add(tableLayoutPanelMain);
             Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Margin = new Padding(4);
             Name = "UcJournal";
-            Size = new Size(1104, 547);
+            Size = new Size(1106, 549);
             panelButtons.ResumeLayout(false);
             panelButtons.PerformLayout();
             tableLayoutPanelMain.ResumeLayout(false);

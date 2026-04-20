@@ -1,10 +1,14 @@
-﻿namespace Uetm_2_0
+﻿using System.Drawing.Drawing2D;
+
+namespace Uetm_2_0
 {
     public partial class Auth : Form
     {
         public Auth()
         {
             InitializeComponent();
+
+           
 
         }
 
@@ -47,6 +51,6 @@
             this.Hide();
         }
 
-       
+        
     }
 }

@@ -1,80 +1,110 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <OutputType>WinExe</OutputType>
-    <TargetFramework>net8.0-windows</TargetFramework>
-    <Nullable>enable</Nullable>
-    <UseWindowsForms>true</UseWindowsForms>
+	<PropertyGroup>
+		<OutputType>WinExe</OutputType>
+		<TargetFramework>net8.0-windows8.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<UseWindowsForms>true</UseWindowsForms>
 
-	  <PublishSingleFile>true</PublishSingleFile>
-	  <SelfContained>true</SelfContained>
-	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
-	  <DebugType>None</DebugType>
+		<PublishSingleFile>true</PublishSingleFile>
+		<SelfContained>true</SelfContained>
+		<RuntimeIdentifier>win-x64</RuntimeIdentifier>
+		<IncludeNativeLibrariesForSelfExtract>true</IncludeNativeLibrariesForSelfExtract>
 
-	  <ImplicitUsings>enable</ImplicitUsings>
-    <PackageIcon>logo.png</PackageIcon>
-    <ApplicationIcon>logo\icon_max.ico</ApplicationIcon>
-    <RepositoryUrl>https://github.com/m0rffy/conf_scrv</RepositoryUrl>
-  </PropertyGroup>
+		<DebugType>None</DebugType>
+		<DebugSymbols>false</DebugSymbols>
 
-  <ItemGroup>
-    <None Remove="DeviceCard.resx~RFe293f7.TMP" />
-  </ItemGroup>
+		<AllowedReferenceRelatedFileExtensions>
+			.pdb
+		</AllowedReferenceRelatedFileExtensions>
 
-  <ItemGroup>
-    <Content Include="logo\icon_max.ico" />
-  </ItemGroup>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageIcon>logo.png</PackageIcon>
+		<ApplicationIcon>logo\icon_max.ico</ApplicationIcon>
+		<RepositoryUrl>https://github.com/m0rffy/conf_scrv</RepositoryUrl>
+		<PlatformTarget>AnyCPU</PlatformTarget>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="EPPlus" Version="8.5.1" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-  </ItemGroup>
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	  <Optimize>True</Optimize>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Reference Include="CommonFunctions">
-      <HintPath>bin\Debug\net8.0-windows\CommonFunctions.dll</HintPath>
-    </Reference>
-    <Reference Include="ModBusHelper">
-      <HintPath>bin\Debug\net8.0-windows\ModBusHelper.dll</HintPath>
-    </Reference>
-    <Reference Include="NModbus">
-      <HintPath>bin\Debug\net8.0-windows\NModbus.dll</HintPath>
-    </Reference>
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="EPPlus" Version="8.5.3" />
+		<PackageReference Include="Guna.UI2.WinForms" Version="2.0.4.7" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <Compile Update="Properties\Resources.Designer.cs">
-      <DesignTime>True</DesignTime>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
+	<ItemGroup>
+		<Reference Include="CommonFunctions">
+			<HintPath>bin\Debug\net8.0-windows\CommonFunctions.dll</HintPath>
+		</Reference>
+		<Reference Include="ModBusHelper">
+		  <HintPath>bin\Debug\net8.0-windows\ModBusHelper.dll</HintPath>
+		</Reference>
+		<Reference Include="NModbus">
+			<HintPath>bin\Debug\net8.0-windows\NModbus.dll</HintPath>
+		</Reference>
+	</ItemGroup>
 
-  <ItemGroup>
-    <EmbeddedResource Update="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-    </EmbeddedResource>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="bin\Debug\net8.0-windows\CommonFunctions.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="bin\Debug\net8.0-windows\ModBusHelper.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+		<Content Include="bin\Debug\net8.0-windows\NModbus.dll">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="logo\logo.ico">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Update="logo\logo.png">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="logo\icon_max.ico" />
+	</ItemGroup>
+
+	<ItemGroup>
+		<Compile Update="Properties\Resources.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Resources.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+
+	<ItemGroup>
+		<EmbeddedResource Update="Properties\Resources.resx">
+			<Generator>ResXFileCodeGenerator</Generator>
+			<LastGenOutput>Resources.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+
+	<ItemGroup>
+		<None Update="logo\logo.ico">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="logo\logo.png">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+
+	<!-- Удаление всех .pdb файлов из папки публикации -->
+	<Target Name="DeletePdbFiles" AfterTargets="Publish">
+		<ItemGroup>
+			<PdbFiles Include="$(PublishDir)*.pdb" />
+		</ItemGroup>
+		<Delete Files="@(PdbFiles)" />
+		<Message Text="Deleted .pdb files from publish directory." Importance="high" />
+	</Target>
 
 </Project>

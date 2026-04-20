@@ -29,19 +29,6 @@ namespace Uetm_2_0
         public UcNetwork ucNetwork;
         public UcJournal ucJournal;
 
-        // Элементы интерфейса (создаются в дизайнере)
-        private FlowLayoutPanel Sidebar;
-        private Button btnManagement;
-        private Button btnSettings;
-        private Button btnGeneral;
-        private Button btnNetwork;
-        private Button btnJournal;
-        private Panel topPanel;
-        private Button btnWrite;
-        private FlowLayoutPanel devicesPanel;
-
-
-        private System.Windows.Forms.Timer connectionTimeoutTimer;
 
         // WinAPI для закрытия MessageBox
         [DllImport("user32.dll", SetLastError = true)]
@@ -75,8 +62,19 @@ namespace Uetm_2_0
             ShowControl(ucManagement);
 
             connectionTimeoutTimer = new System.Windows.Forms.Timer();
-            connectionTimeoutTimer.Interval = 5000;
+            connectionTimeoutTimer.Interval = 3000;
             connectionTimeoutTimer.Tick += ConnectionTimeoutTimer_Tick;
+        }
+
+        public void OnConnectionRestored(Tuple<TcpClient, IModbusMaster> newConnection)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => OnConnectionRestored(newConnection)));
+                return;
+            }
+            _connection = newConnection;
+            ConnectionStarted?.Invoke(newConnection);
         }
 
         private void ApplyRoleRestrictions()
@@ -221,12 +219,27 @@ namespace Uetm_2_0
         public void RefreshDevicesList()
         {
             if (InvokeRequired) { Invoke(new Action(RefreshDevicesList)); return; }
+
             devicesPanel.Controls.Clear();
+            devicesPanel.RowCount = 0;
+            devicesPanel.RowStyles.Clear();
+
+            // Добавляем строки для карточек
             foreach (var dev in Database.Devices)
             {
                 var card = CreateDeviceCard(dev);
-                devicesPanel.Controls.Add(card);
+                card.Anchor = AnchorStyles.None;   // центрирование по горизонтали
+                card.Margin = new Padding(5);
+
+                devicesPanel.RowCount++;
+                devicesPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                devicesPanel.Controls.Add(card, 0, devicesPanel.RowCount - 1);
             }
+
+            // Добавляем фиктивную строку, чтобы занять всё оставшееся место
+            devicesPanel.RowCount++;
+            devicesPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            devicesPanel.Controls.Add(new Control(), 0, devicesPanel.RowCount - 1);
         }
 
         private DeviceCard CreateDeviceCard(DeviceInfo dev)
@@ -353,7 +366,6 @@ namespace Uetm_2_0
                 "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
-            // Сохраняем старый IP активного устройства
             DeviceInfo activeDev = null;
             string oldIp = _ip;
             if (_connection?.Item1?.Connected == true)
@@ -367,7 +379,6 @@ namespace Uetm_2_0
                 }
             }
 
-            // Сохраняем данные из активной вкладки
             if (ChildFormPanel.Controls[0] is UcGeneral general)
             {
                 if (!general.SaveToDatabase()) return;
@@ -380,10 +391,9 @@ namespace Uetm_2_0
             btnWrite.Enabled = false;
             var connection = _connection;
 
-            // Показываем MessageBox в отдельном потоке
             string waitCaption = "Применение настроек";
             var msgThread = new Thread(() => MessageBox.Show(
-                "Идёт запись настроек и перезагрузка устройства. Устройство автоматически обновится",
+                "Идёт запись настроек и перезагрузка устройства. Пожалуйста, подождите...",
                 waitCaption, MessageBoxButtons.OK, MessageBoxIcon.Information))
             { IsBackground = true };
             msgThread.Start();
@@ -402,16 +412,19 @@ namespace Uetm_2_0
                 return;
             }
 
-            // Закрываем MessageBox ожидания
             CloseMessageBox(waitCaption);
-
-            // Принудительно закрываем соединение
             Disconnect();
+            await Task.Delay(300); // даём время фоновому потоку остановиться
 
-            // Проверяем, изменился ли IP-адрес
-            string newIp = Database.GeneralSettings_TextFormat.nets.ips.ipAddr != null && Database.GeneralSettings_TextFormat.nets.ips.ipAddr.Length >= 4
-                ? $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[0]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[1]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[2]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[3]}"
-                : null;
+            string newIp;
+            if (Database.GeneralSettings_TextFormat.nets.ips.ipAddr != null && Database.GeneralSettings_TextFormat.nets.ips.ipAddr.Length >= 4)
+            {
+                newIp = $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[0]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[1]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[2]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[3]}";
+            }
+            else
+            {
+                newIp = null;
+            }
 
             if (activeDev != null && !string.IsNullOrEmpty(newIp) && oldIp != newIp)
             {
@@ -469,11 +482,11 @@ namespace Uetm_2_0
                 "- Токи: целые числа в пределах, указанных в ошибках.\n" +
                 "- Коэффициенты C1-C4: ввод с точкой (дробная часть).\n" +
                 "- Установка времени недоступна при PTP-синхронизации.\n" +
-                "- При изменении IP/MAC устройство перезагружается, соединение рвётся.\n" +
+                "- При изменении данных устройство перезагружается, соединение рвётся.\n" +
                 "\nЖурнал:\n" +
                 "- Обновить – чтение с устройства, Экспорт в EXCEL.\n" +
-                "\nКоманды (администратор):\n" +
-                "- Обнулить ресурс, Установить время, Перезагрузить.\n" +
+                "\nКоманды для администратора:\n" +
+                "- Очистить ресурс, Установить время, Перезагрузить.\n" +
                 "\nПрочее:\n" +
                 "- Таймаут подключения, перезагрузки несколько секунд сек.\n" +
                 "- Список устройств хранится в devices.json (рядом с exe).";

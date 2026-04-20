@@ -15,7 +15,7 @@
             ipLabel.Text = ip;
             placeLabel.Text = string.IsNullOrEmpty(place) ? "-" : place;
             switchLabelName.Text = string.IsNullOrEmpty(switchLabel) ? "-" : switchLabel;
-            this.BackColor = isActive ? Color.LightSteelBlue : Color.Gainsboro;
+            this.BackColor = isActive ? Color.LightBlue : Color.LightGray;
             connectButton.Text = isActive ? "Отключиться" : "Подключиться";
         }
 

@@ -16,14 +16,14 @@ namespace Uetm_2_0
             if (!IPAddress.TryParse(ipAddress, out _))
                 throw new ArgumentException("Некорректный IP-адрес.");
 
-            if (modBusPort < 0 || modBusPort > 65000)
-                throw new ArgumentOutOfRangeException(nameof(modBusPort), "Порт должен быть в диапазоне от 0 до 65500.");
+            if (modBusPort < 1 || modBusPort > 65535)
+                throw new ArgumentOutOfRangeException(nameof(modBusPort), "Порт должен быть в диапазоне от 1 до 65535.");
 
             TcpClient tcpClient = new TcpClient();
             try
             {
                 IAsyncResult result = tcpClient.BeginConnect(ipAddress, modBusPort, null, null);
-                bool success = result.AsyncWaitHandle.WaitOne(5000); 
+                bool success = result.AsyncWaitHandle.WaitOne(3000);
                 if (!success)
                 {
                     tcpClient.Close();
@@ -31,8 +31,12 @@ namespace Uetm_2_0
                 }
                 tcpClient.EndConnect(result);
 
+                tcpClient.ReceiveTimeout = 2000;
+                tcpClient.SendTimeout = 2000;
+
                 var factory = new ModbusFactory();
                 IModbusMaster modbusMaster = factory.CreateMaster(tcpClient);
+
                 _connection = new Tuple<TcpClient, IModbusMaster>(tcpClient, modbusMaster);
                 return _connection;
             }
@@ -49,13 +53,17 @@ namespace Uetm_2_0
             {
                 try
                 {
-                    _connection.Item1.Client.Shutdown(SocketShutdown.Both);
+                    if (_connection.Item1?.Client != null)
+                        _connection.Item1.Client.Shutdown(SocketShutdown.Both);
                 }
                 catch { }
-                _connection.Item1.Close();
+                try
+                {
+                    _connection.Item1?.Close();
+                }
+                catch { }
                 _connection = null;
             }
         }
-
     }
 }
