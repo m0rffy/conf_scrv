@@ -18,6 +18,8 @@
             DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
             tableLayoutPanelMain = new TableLayoutPanel();
             groupBoxBreakerInfo = new GroupBox();
             tableLayoutBreakerInfo = new TableLayoutPanel();
@@ -172,7 +174,7 @@
             // switchTypeComboBox
             // 
             switchTypeComboBox.Anchor = AnchorStyles.None;
-            switchTypeComboBox.BackColor = Color.LightGray;
+            switchTypeComboBox.BackColor = Color.Gainsboro;
             switchTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
             switchTypeComboBox.Items.AddRange(new object[] { "ВГТ-35", "ВГТ-110", "ВЭБ-110", "ВГТ-220", "ВГТ-330", "ВГТ-750", "ВГК-500", "ВГТ-1А1-220-40-3150", "ВЭБ-220-50", "ВГБ-35-12,5-С1", "ВГБ-35-12,5-С2", "ВГТ-500-40-3150", "ВГТ-500-50-3150", "Пользовательский" });
             switchTypeComboBox.Location = new Point(314, 4);
@@ -444,7 +446,7 @@
             // warningThresholdTextBox
             // 
             warningThresholdTextBox.Anchor = AnchorStyles.None;
-            warningThresholdTextBox.BackColor = SystemColors.Control;
+            warningThresholdTextBox.BackColor = Color.Gainsboro;
             warningThresholdTextBox.BorderStyle = BorderStyle.FixedSingle;
             warningThresholdTextBox.Enabled = false;
             warningThresholdTextBox.Location = new Point(403, 72);
@@ -483,6 +485,7 @@
             // alarmThresholdTextBox
             // 
             alarmThresholdTextBox.Anchor = AnchorStyles.None;
+            alarmThresholdTextBox.BackColor = Color.Gainsboro;
             alarmThresholdTextBox.BorderStyle = BorderStyle.FixedSingle;
             alarmThresholdTextBox.Enabled = false;
             alarmThresholdTextBox.Location = new Point(403, 106);
@@ -779,41 +782,39 @@
             // 
             delayDataGridView.AllowUserToAddRows = false;
             delayDataGridView.AllowUserToDeleteRows = false;
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            delayDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             delayDataGridView.Anchor = AnchorStyles.None;
             delayDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             delayDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             delayDataGridView.BackgroundColor = SystemColors.Window;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle1.BackColor = SystemColors.Control;
-            dataGridViewCellStyle1.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            dataGridViewCellStyle1.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
-            delayDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
-            delayDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = Color.White;
-            dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle2.ForeColor = Color.Black;
-            dataGridViewCellStyle2.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle2.SelectionForeColor = Color.White;
+            dataGridViewCellStyle2.BackColor = SystemColors.Control;
+            dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            delayDataGridView.DefaultCellStyle = dataGridViewCellStyle2;
+            delayDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            delayDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle3.BackColor = Color.White;
+            dataGridViewCellStyle3.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle3.ForeColor = Color.Black;
+            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
+            delayDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             delayDataGridView.GridColor = Color.Gray;
             delayDataGridView.Location = new Point(133, 30);
             delayDataGridView.Margin = new Padding(4);
             delayDataGridView.Name = "delayDataGridView";
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle3.BackColor = SystemColors.Control;
-            dataGridViewCellStyle3.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle3.ForeColor = SystemColors.WindowText;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            delayDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle4.BackColor = SystemColors.Control;
+            dataGridViewCellStyle4.Font = new Font("Times New Roman", 14.25F);
+            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
+            delayDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             delayDataGridView.RowHeadersVisible = false;
             delayDataGridView.RowHeadersWidth = 40;
+            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            delayDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             delayDataGridView.ScrollBars = ScrollBars.None;
             delayDataGridView.Size = new Size(513, 124);
             delayDataGridView.TabIndex = 0;

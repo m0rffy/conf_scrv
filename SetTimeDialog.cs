@@ -147,7 +147,7 @@
             AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = Color.LightGray;
+            BackColor = Color.LightBlue;
             ClientSize = new Size(284, 211);
             Controls.Add(btnCancel);
             Controls.Add(btnOk);
