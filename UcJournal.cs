@@ -17,13 +17,14 @@ namespace Uetm_2_0
             this.Dock = DockStyle.Fill;
             this.mainForm = mainForm;
 
+            // Таблица журнала (столбцы едины для локальных событий и событий платы)
             journalTable = new DataTable();
             journalTable.Columns.Add("№", typeof(int));
             journalTable.Columns.Add("Тип события", typeof(string));
-            journalTable.Columns.Add("Канал", typeof(string));
+            journalTable.Columns.Add("Канал / IP", typeof(string));   // буква фазы или IP устройства
             journalTable.Columns.Add("Дата и время", typeof(string));
-            journalTable.Columns.Add("Действующее значение тока (А)", typeof(float));
-            journalTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
+            journalTable.Columns.Add("Ток (А)", typeof(float));
+            journalTable.Columns.Add("Ресурс (%)", typeof(float));
 
             journalDataGridView.DataSource = journalTable;
             journalDataGridView.AutoGenerateColumns = true;
@@ -40,38 +41,75 @@ namespace Uetm_2_0
             };
         }
 
+        // ==================== Кнопка "Обновить" ====================
         private void UpdateJournalButton_Click(object sender, EventArgs e)
         {
-            var conn = mainForm.GetCurrentConnection();
-            if (conn?.Item1?.Connected != true)
-            {
-                MessageBox.Show("Нет подключения к устройству.");
-                return;
-            }
+            journalTable.Rows.Clear();
+            int idx = 0;
+
+            // ----- 1. Локальные события (из таблицы ChangeLog) -----
             try
             {
-                records = profileHelper.journal_record_Read(conn.Item2);
-                journalTable.Rows.Clear();
-                int idx = 0;
-                foreach (var rec in records)
+                var localEntries = LocalDatabase.GetLogEntries(1000);   // последние 1000 записей
+                foreach (var entry in localEntries)
                 {
-                    if (rec.hdr.rtype == 1 || rec.hdr.rtype == 2)
-                    {
-                        string eventType = rec.hdr.rtype == 1 ? (rec.hdr.subtype == 0 ? "Отключение" : "Включение") : "Обнуление";
-                        DateTime dt = PtpTimeHelper.PtpToDateTime(rec.hdr.stamp.ns, rec.hdr.stamp.slo);
-                        string channel = (rec.hdr.rtype == 1) ? ChannelNumberToLetter(rec.hdr.udt) : "";
-                        journalTable.Rows.Add(idx, eventType, channel, dt.ToString("dd.MM.yyyy HH:mm:ss"), rec.Ii, rec.Ri);
-                        idx++;
-                    }
+                    journalTable.Rows.Add(
+                        idx,
+                        entry.Description,                              // Тип события (например, «Настройки записаны...»)
+                        entry.DeviceIP ?? "",                           // IP устройства (для локальных событий)
+                        entry.Timestamp.ToString("dd.MM.yyyy HH:mm:ss"),
+                        entry.CurrentA ?? (object)DBNull.Value,         // Ток (если был зафиксирован)
+                        entry.ResourcePercent ?? (object)DBNull.Value   // Ресурс (если был зафиксирован)
+                    );
+                    idx++;
                 }
-                MessageBox.Show($"Загружено {journalTable.Rows.Count} записей");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка чтения журнала: {ex.Message}");
+                MessageBox.Show($"Ошибка чтения локального журнала: {ex.Message}");
             }
+
+            // ----- 2. Журнал с устройства (только при активном подключении) -----
+            var conn = mainForm.GetCurrentConnection();
+            if (conn?.Item1?.Connected == true)
+            {
+                try
+                {
+                    records = profileHelper.journal_record_Read(conn.Item2);
+                    foreach (var rec in records)
+                    {
+                        // Отображаем только значащие типы событий
+                        if (rec.hdr.rtype == 1 || rec.hdr.rtype == 2)
+                        {
+                            string eventType = rec.hdr.rtype == 1
+                                ? (rec.hdr.subtype == 0 ? "Отключение" : "Включение")
+                                : "Обнуление";
+
+                            DateTime dt = PtpTimeHelper.PtpToDateTime(rec.hdr.stamp.ns, rec.hdr.stamp.slo);
+                            string channel = (rec.hdr.rtype == 1) ? ChannelNumberToLetter(rec.hdr.udt) : "";
+
+                            journalTable.Rows.Add(
+                                idx,
+                                eventType,
+                                channel,                                    // буква фазы для событий платы
+                                dt.ToString("dd.MM.yyyy HH:mm:ss"),
+                                rec.Ii,
+                                rec.Ri
+                            );
+                            idx++;
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Ошибка чтения журнала устройства: {ex.Message}");
+                }
+            }
+
+            MessageBox.Show($"Загружено {journalTable.Rows.Count} записей");
         }
 
+        // ==================== Кнопка "Экспорт в Excel" ====================
         private void ExportButton_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog sfd = new SaveFileDialog())
@@ -82,7 +120,7 @@ namespace Uetm_2_0
                 {
                     try
                     {
-                        // Установка лицензии для EPPlus 8 (некоммерческое использование)
+                        // Лицензия EPPlus (некоммерческое использование)
                         ExcelPackage.License.SetNonCommercialPersonal("Пользователь UETM");
 
                         using (var package = new ExcelPackage())
@@ -116,6 +154,7 @@ namespace Uetm_2_0
             }
         }
 
+        // ==================== Вспомогательные методы экспорта ====================
         private void FillStateSheet(ExcelWorksheet ws)
         {
             ws.Cells[1, 1].Value = "Параметр";
@@ -224,9 +263,11 @@ namespace Uetm_2_0
                 ws.Cells[1, 1].Value = "Нет записей в журнале";
                 return;
             }
+            // Заголовки столбцов
             for (int i = 0; i < journalTable.Columns.Count; i++)
                 ws.Cells[1, i + 1].Value = journalTable.Columns[i].ColumnName;
 
+            // Данные
             for (int i = 0; i < journalTable.Rows.Count; i++)
                 for (int j = 0; j < journalTable.Columns.Count; j++)
                     ws.Cells[i + 2, j + 1].Value = journalTable.Rows[i][j]?.ToString();

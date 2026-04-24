@@ -17,9 +17,9 @@ namespace Uetm_2_0
         private ModBusProfile profileHelper = new ModBusProfile();
         private ModBusCommands commandsHelper = new ModBusCommands();
         private Tuple<TcpClient, IModbusMaster> _connection;
-
         private string _lastIp = "";
         private bool _manualTimeSet = false;
+        private float _inom1 = 1.0f; // для пересчёта тока
 
         public UcManagement(ConfiguratorForm mainForm)
         {
@@ -56,8 +56,8 @@ namespace Uetm_2_0
             cntvTable = new DataTable();
             cntvTable.Columns.Add("Канал", typeof(string));
             cntvTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
-            cntvTable.Columns.Add("Количество отключений", typeof(ushort));
-            cntvTable.Columns.Add("Количество включений", typeof(ushort));
+            cntvTable.Columns.Add("Количество отключений", typeof(int));
+            cntvTable.Columns.Add("Количество включений", typeof(int));
             cntvDataGridView.DataSource = cntvTable;
             cntvDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             cntvDataGridView.RowHeadersVisible = false;
@@ -85,12 +85,10 @@ namespace Uetm_2_0
         private void OnConnectionStopped()
         {
             _manualTimeSet = false;
-
             if (backgroundWorker.IsBusy)
             {
                 backgroundWorker.CancelAsync();
             }
-
             SafeInvoke(() =>
             {
                 rmsTable.Rows.Clear();
@@ -124,6 +122,12 @@ namespace Uetm_2_0
 
             TcpClient tcpClient = connection.Item1;
             IModbusMaster modbusMaster = connection.Item2;
+            string deviceIP = null;
+            if (tcpClient?.Client?.RemoteEndPoint is IPEndPoint ep)
+            {
+                deviceIP = ep.Address.ToString();
+                if (deviceIP.StartsWith("::ffff:")) deviceIP = deviceIP.Substring(7);
+            }
 
             while (!backgroundWorker.CancellationPending)
             {
@@ -142,6 +146,13 @@ namespace Uetm_2_0
                     DateTime dt = PtpTimeHelper.PtpToDateTime(timeData.ptpval.ns, timeData.ptpval.slo, timeData.ptsecHi);
                     var cmns = profileHelper.cmns_Read(modbusMaster);
 
+                    // Вычисляем Inom1 для пересчёта тока (единожды или при изменении)
+                    float inom1 = 1.0f;
+                    string inom1Str = Database.GeneralSettings_TextFormat.meas.primct.Inom1;
+                    if (!string.IsNullOrEmpty(inom1Str))
+                        float.TryParse(inom1Str, NumberStyles.Any, CultureInfo.InvariantCulture, out inom1);
+                    _inom1 = inom1;
+
                     SafeInvoke(() =>
                     {
                         UpdateRmsTable(esp.rms);
@@ -153,6 +164,9 @@ namespace Uetm_2_0
                         serialNumberLabel.Text = cmns.SerialNo.ToString();
                         firmwareVersionLabel.Text = cmns.FmwVer.ToString();
                     });
+
+                    // Автоматическое сохранение состояния в локальную БД не выполняется.
+                    // Состояние сохраняется только по явной кнопке «Сохранить состояние» (если добавлена).
 
                     System.Threading.Thread.Sleep(2000);
                 }
@@ -177,15 +191,10 @@ namespace Uetm_2_0
         private void UpdateRmsTable(float[] rms)
         {
             rmsTable.Rows.Clear();
-            float inom1 = 1.0f;
-            string inom1Str = Database.GeneralSettings_TextFormat.meas.primct.Inom1;
-            if (!string.IsNullOrEmpty(inom1Str))
-                float.TryParse(inom1Str, NumberStyles.Any, CultureInfo.InvariantCulture, out inom1);
-
             for (int i = 0; i < Math.Min(3, rms.Length); i++)
             {
-                string channel = i == 0 ? "A" : i == 1 ? "B" : "C";
-                float current = (float)Math.Sqrt(Math.Max(0, rms[i])) * inom1;
+                string channel = i == 0 ? "A" : (i == 1 ? "B" : "C");
+                float current = (float)Math.Sqrt(Math.Max(0, rms[i])) * _inom1;
                 rmsTable.Rows.Add(channel, current);
             }
         }
@@ -195,7 +204,7 @@ namespace Uetm_2_0
             cntvTable.Rows.Clear();
             for (int i = 0; i < Math.Min(3, cntv.Length); i++)
             {
-                string channel = i == 0 ? "A" : i == 1 ? "B" : "C";
+                string channel = i == 0 ? "A" : (i == 1 ? "B" : "C");
                 cntvTable.Rows.Add(channel, cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
             }
         }
@@ -222,6 +231,8 @@ namespace Uetm_2_0
             else action();
         }
 
+        // ======================= Кнопки управления =======================
+
         private void AddDeviceButton_Click(object sender, EventArgs e)
         {
             string ip = ipTextBox.Text.Trim();
@@ -231,9 +242,9 @@ namespace Uetm_2_0
                 return;
             }
             int port;
-            if (!int.TryParse(portTextBox.Text, out port) || port < 1 || port > 6500)
+            if (!int.TryParse(portTextBox.Text, out port) || port < 1 || port > 65535)
             {
-                MessageBox.Show("Некорректный порт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Некорректный порт (1–65535).", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (Database.Devices.Exists(d => d.IP == ip))
@@ -252,7 +263,10 @@ namespace Uetm_2_0
                 SwitchLabel = ""
             };
             Database.Devices.Add(newDev);
-            Database.SaveDevices();
+            Database.SaveAppData();
+
+            // запись в локальный журнал удалена
+
             mainForm.RefreshDevicesList();
             portTextBox.Text = "";
         }
@@ -335,13 +349,9 @@ namespace Uetm_2_0
                         registers[4] = ptsecHi;
                         registers[5] = 0;
 
-                        // Записываем регистры времени
                         conn.Item2.WriteMultipleRegisters(0, 2816, registers);
-
-                        // Небольшая пауза, чтобы устройство успело обработать регистры
                         System.Threading.Thread.Sleep(200);
 
-                        // Отправляем команду сохранения во Flash с перезагрузкой
                         var commands = new ModBusCommands();
                         commands.upload_settings(conn.Item2, 0x0100);
 
@@ -356,7 +366,6 @@ namespace Uetm_2_0
                     {
                         if (IsConnectionError(ex))
                         {
-                            // Соединение разорвано — устройство уже ушло в перезагрузку, считаем успехом
                             SafeInvoke(() => deviceTimeLabel.Text = dialog.SelectedDateTime.ToString("dd.MM.yyyy HH:mm:ss"));
                             mainForm.Disconnect();
                             mainForm.RefreshDevicesList();
@@ -419,6 +428,7 @@ namespace Uetm_2_0
             }
         }
 
+        // Публичные свойства для экспорта в Excel
         public DataTable GetRmsDataTable() => rmsTable;
         public DataTable GetCntvDataTable() => cntvTable;
         public string GetDeviceStatusText() => deviceStatusLabel.Text;

@@ -22,7 +22,7 @@
         private Panel topPanel;
         private Button btnWrite;
         private TableLayoutPanel devicesPanel;
-        private System.Windows.Forms.Timer connectionTimeoutTimer;
+     
 
         private void InitializeComponent()
         {
@@ -34,6 +34,7 @@
             btnNetwork = new Button();
             btnJournal = new Button();
             topPanel = new Panel();
+            btnChangePassword = new Button();
             devicesLabel = new Label();
             btnWrite = new Button();
             menuStrip = new MenuStrip();
@@ -153,6 +154,7 @@
             topPanel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             topPanel.BackColor = Color.LightGray;
             topPanel.BorderStyle = BorderStyle.FixedSingle;
+            topPanel.Controls.Add(btnChangePassword);
             topPanel.Controls.Add(devicesLabel);
             topPanel.Controls.Add(btnWrite);
             topPanel.Controls.Add(menuStrip);
@@ -162,6 +164,20 @@
             topPanel.Name = "topPanel";
             topPanel.Size = new Size(1513, 40);
             topPanel.TabIndex = 2;
+            // 
+            // btnChangePassword
+            // 
+            btnChangePassword.AutoSize = true;
+            btnChangePassword.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnChangePassword.BackColor = Color.SkyBlue;
+            btnChangePassword.FlatStyle = FlatStyle.Flat;
+            btnChangePassword.Location = new Point(740, 2);
+            btnChangePassword.Name = "btnChangePassword";
+            btnChangePassword.Size = new Size(161, 33);
+            btnChangePassword.TabIndex = 87;
+            btnChangePassword.Text = "Изменить пароль";
+            btnChangePassword.UseVisualStyleBackColor = false;
+            btnChangePassword.Click += btnChangePassword_Click;
             // 
             // devicesLabel
             // 
@@ -293,5 +309,6 @@
         public MenuStrip menuStrip;
         private ToolStripMenuItem helpMenu;
         private ToolStripMenuItem UserHelp;
+        private Button btnChangePassword;
     }
 }

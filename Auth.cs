@@ -7,7 +7,9 @@ namespace Uetm_2_0
         public Auth()
         {
             InitializeComponent();
-
+            LoginComboBox.Items.Add("Администратор");
+            LoginComboBox.Items.Add("Пользователь");
+            LoginComboBox.SelectedIndex = 0;
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -26,29 +28,19 @@ namespace Uetm_2_0
             string role = LoginComboBox.Text;
             string password = PasswordTextBox.Text;
 
-            if (role == "Администратор" && password != "admin")
+            // Проверка пароля через базу данных
+            if (!AppData.VerifyPassword(role, password, Database.AppData))
             {
-                MessageBox.Show("Неверный пароль для администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-            if (role == "Пользователь" && password != "user")
-            {
-                MessageBox.Show("Неверный пароль для пользователя", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Неверный пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             Database.CurrentRole = role;
 
             ConfiguratorForm form = new(role);
-            form.FormClosed += (s, args) =>
-            {
-                // После закрытия ConfiguratorForm показываем окно авторизации снова
-                this.Show();
-            };
+            form.FormClosed += (s, args) => { this.Show(); };
             form.Show();
             this.Hide();
         }
-
-        
     }
 }

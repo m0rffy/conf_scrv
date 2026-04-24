@@ -1,5 +1,5 @@
 ﻿using ModBusHelper;
-using Newtonsoft.Json;
+using System.Text.Json;
 
 namespace Uetm_2_0
 {
@@ -9,27 +9,54 @@ namespace Uetm_2_0
         public static List<ModBusProfile.journal_record> Filtered_Journal_Records;
         public static string CurrentRole;
 
-        public static List<DeviceInfo> Devices { get; private set; } = new List<DeviceInfo>();
-
-        private static string devicesFilePath = Path.Combine(Application.StartupPath, "devices.json");
-
-        public static void LoadDevices()
+        private static AppData _appData;
+        public static AppData AppData
         {
-            if (File.Exists(devicesFilePath))
+            get => _appData;
+            private set => _appData = value;
+        }
+
+        public static List<DeviceInfo> Devices => AppData.Devices;
+
+        static Database()
+        {
+            LoadAppData();
+        }
+
+        public static void LoadAppData()
+        {
+            try
             {
-                string json = File.ReadAllText(devicesFilePath);
-                Devices = JsonConvert.DeserializeObject<List<DeviceInfo>>(json) ?? new List<DeviceInfo>();
+                string json = LocalDatabase.LoadSetting("AppData");
+
+                if (string.IsNullOrEmpty(json))
+                {
+                    AppData = new AppData();
+                    SaveAppData();
+                }
+                else
+                {
+                    AppData = JsonSerializer.Deserialize<AppData>(json) ?? new AppData();
+                }
             }
-            else
+            catch (Exception ex)
             {
-                Devices = new List<DeviceInfo>();
+
+                AppData = new AppData();
+                SaveAppData();
             }
         }
 
-        public static void SaveDevices()
+        public static void SaveAppData()
         {
-            string json = JsonConvert.SerializeObject(Devices, Formatting.Indented);
-            File.WriteAllText(devicesFilePath, json);
+            var options = new JsonSerializerOptions { WriteIndented = true };
+            string json = JsonSerializer.Serialize(AppData, options);
+            LocalDatabase.SaveSetting("AppData", json);
         }
+
+        [Obsolete]
+        public static void LoadDevices() { }
+        [Obsolete]
+        public static void SaveDevices() => SaveAppData();
     }
 }

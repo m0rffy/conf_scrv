@@ -4,6 +4,7 @@ using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
 
+
 namespace Uetm_2_0
 {
     public partial class ConfiguratorForm : Form
@@ -18,6 +19,9 @@ namespace Uetm_2_0
         private string _ip;
         private int _port;
 
+        // Таймер для ConnectionTimeout
+        private System.Windows.Forms.Timer connectionTimeoutTimer;
+
         // События для оповещения UserControl'ов
         public event Action<Tuple<TcpClient, IModbusMaster>> ConnectionStarted;
         public event Action ConnectionStopped;
@@ -28,7 +32,6 @@ namespace Uetm_2_0
         public UcGeneral ucGeneral;
         public UcNetwork ucNetwork;
         public UcJournal ucJournal;
-
 
         // WinAPI для закрытия MessageBox
         [DllImport("user32.dll", SetLastError = true)]
@@ -45,7 +48,7 @@ namespace Uetm_2_0
             Database.Filtered_Journal_Records = ExporterLinkerHelper.journal_record_Default;
             CurrentInstance = this;
 
-            Database.LoadDevices();
+            // Устройства уже загружены в статическом конструкторе Database
             RefreshDevicesList();
 
             ConnectionStarted += OnConnectionStarted;
@@ -81,6 +84,7 @@ namespace Uetm_2_0
         {
             bool isAdmin = Database.CurrentRole == "Администратор";
             btnWrite.Enabled = isAdmin;
+            btnChangePassword.Enabled = isAdmin;   // кнопка смены пароля
         }
 
         public void SetConnectionParams(string ip, int port)
@@ -208,7 +212,7 @@ namespace Uetm_2_0
                     {
                         activeDev.InstallationPlace = Database.GeneralSettings_TextFormat.cmns.MntPlce ?? "";
                         activeDev.SwitchLabel = Database.GeneralSettings_TextFormat.swrcs.swnf.label ?? "";
-                        Database.SaveDevices();
+                        Database.SaveAppData();
                         if (InvokeRequired) Invoke(new Action(() => UpdateDeviceCard(activeDev)));
                         else UpdateDeviceCard(activeDev);
                     }
@@ -224,11 +228,10 @@ namespace Uetm_2_0
             devicesPanel.RowCount = 0;
             devicesPanel.RowStyles.Clear();
 
-            // Добавляем строки для карточек
             foreach (var dev in Database.Devices)
             {
                 var card = CreateDeviceCard(dev);
-                card.Anchor = AnchorStyles.None;   // центрирование по горизонтали
+                card.Anchor = AnchorStyles.None;
                 card.Margin = new Padding(5);
 
                 devicesPanel.RowCount++;
@@ -236,7 +239,6 @@ namespace Uetm_2_0
                 devicesPanel.Controls.Add(card, 0, devicesPanel.RowCount - 1);
             }
 
-            // Добавляем фиктивную строку, чтобы занять всё оставшееся место
             devicesPanel.RowCount++;
             devicesPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             devicesPanel.Controls.Add(new Control(), 0, devicesPanel.RowCount - 1);
@@ -310,7 +312,7 @@ namespace Uetm_2_0
             {
                 if (IsDeviceActive(dev)) Disconnect();
                 Database.Devices.Remove(dev);
-                Database.SaveDevices();
+                Database.SaveAppData();     // сохраняем изменения в базу
                 RefreshDevicesList();
             }
         }
@@ -342,7 +344,6 @@ namespace Uetm_2_0
         private void BtnNetwork_Click(object sender, EventArgs e) => ShowControl(ucNetwork);
         private void BtnJournal_Click(object sender, EventArgs e) => ShowControl(ucJournal);
 
-        // Закрытие MessageBox по заголовку
         private void CloseMessageBox(string caption)
         {
             IntPtr hWnd = FindWindow(null, caption);
@@ -352,20 +353,26 @@ namespace Uetm_2_0
 
         private async void BtnWrite_Click(object sender, EventArgs e)
         {
+            // 1. Проверка прав
             if (Database.CurrentRole != "Администратор")
             {
                 MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // 2. Проверка соединения
             if (_connection?.Item1?.Connected != true)
             {
                 MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
+
+            // 3. Подтверждение
             if (MessageBox.Show("Вы уверены, что хотите записать настройки в устройство? После записи устройство перезагрузится, соединение будет разорвано.",
                 "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
                 return;
 
+            // 4. Определяем текущее устройство (для возможного обновления IP после записи)
             DeviceInfo activeDev = null;
             string oldIp = _ip;
             if (_connection?.Item1?.Connected == true)
@@ -374,11 +381,13 @@ namespace Uetm_2_0
                 if (remoteEndPoint != null)
                 {
                     string remoteIP = remoteEndPoint.Address.ToString();
-                    if (remoteIP.StartsWith("::ffff:")) remoteIP = remoteIP.Substring(7);
+                    if (remoteIP.StartsWith("::ffff:"))
+                        remoteIP = remoteIP.Substring(7);
                     activeDev = Database.Devices.Find(d => d.IP == remoteIP);
                 }
             }
 
+            // 5. Сохраняем данные из активной вкладки в Database.GeneralSettings_TextFormat
             if (ChildFormPanel.Controls[0] is UcGeneral general)
             {
                 if (!general.SaveToDatabase()) return;
@@ -391,6 +400,27 @@ namespace Uetm_2_0
             btnWrite.Enabled = false;
             var connection = _connection;
 
+            // 6. Захват показателей ДО начала записи (пока фоновый опрос активен)
+            float? capturedCurrentA = null;
+            float? capturedResource = null;
+            string capturedPhase = null;
+            string capturedDeviceIP = _ip;   // IP, на который выполняется запись
+
+            try
+            {
+                var rmsTable = ucManagement.GetRmsDataTable();
+                var cntvTable = ucManagement.GetCntvDataTable();
+                if (rmsTable.Rows.Count > 0)
+                {
+                    capturedCurrentA = Convert.ToSingle(rmsTable.Rows[0][1]);   // фаза A
+                    capturedPhase = rmsTable.Rows[0][0].ToString();             // "A"
+                }
+                if (cntvTable.Rows.Count > 0)
+                    capturedResource = Convert.ToSingle(cntvTable.Rows[0][1]);  // ресурс фазы A
+            }
+            catch { /* если данные недоступны, останутся null */ }
+
+            // 7. Запускаем сообщение-ожидание в отдельном потоке
             string waitCaption = "Применение настроек";
             var msgThread = new Thread(() => MessageBox.Show(
                 "Идёт запись настроек и перезагрузка устройства. Пожалуйста, подождите...",
@@ -400,38 +430,65 @@ namespace Uetm_2_0
 
             try
             {
-                await Task.Run(() => ExporterLinkerHelper.WriteSettings(Database.GeneralSettings_TextFormat, true, connection));
+                // 8. Выполняем запись в фоне
+                await Task.Run(() =>
+                    ExporterLinkerHelper.WriteSettings(Database.GeneralSettings_TextFormat, true, connection));
+
+                // 9. Закрываем сообщение-ожидание
+                CloseMessageBox(waitCaption);
             }
             catch (Exception ex)
             {
+                // 10. Обработка ошибок во время записи
                 CloseMessageBox(waitCaption);
                 Disconnect();
-                MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                RefreshDevicesList();
                 btnWrite.Enabled = true;
+
+                if (IsConnectionError(ex))
+                    MessageBox.Show("Соединение с устройством потеряно во время записи. Возможно, устройство перезагрузилось.",
+                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                else
+                    MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+
+                RefreshDevicesList();
                 return;
             }
-
-            CloseMessageBox(waitCaption);
-            Disconnect();
-            await Task.Delay(300); // даём время фоновому потоку остановиться
-
-            string newIp;
-            if (Database.GeneralSettings_TextFormat.nets.ips.ipAddr != null && Database.GeneralSettings_TextFormat.nets.ips.ipAddr.Length >= 4)
+            finally
             {
-                newIp = $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[0]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[1]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[2]}.{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[3]}";
+                // 11. Отключаемся и ждём завершения фонового потока
+                Disconnect();
+                await Task.Delay(300);
+                btnWrite.Enabled = true;
             }
-            else
+
+            // 12. Обновляем IP устройства в локальном списке, если он изменился
+            string newIp = null;
+            if (Database.GeneralSettings_TextFormat.nets.ips.ipAddr != null &&
+                Database.GeneralSettings_TextFormat.nets.ips.ipAddr.Length >= 4)
             {
-                newIp = null;
+                newIp = $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[0]}." +
+                        $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[1]}." +
+                        $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[2]}." +
+                        $"{Database.GeneralSettings_TextFormat.nets.ips.ipAddr[3]}";
             }
 
             if (activeDev != null && !string.IsNullOrEmpty(newIp) && oldIp != newIp)
             {
                 activeDev.IP = newIp;
-                Database.SaveDevices();
+                Database.SaveAppData();
             }
 
+            // 13. Запись в журнал изменений (с захваченными ДО записи показателями)
+            LocalDatabase.AddLogEntry(
+                Database.CurrentRole,
+                "Изменение настроек",
+                deviceIP: capturedDeviceIP,
+                currentA: capturedCurrentA,
+                resourcePercent: capturedResource,
+                channel: capturedPhase
+            );
+
+            // 14. Информируем пользователя о результате
             if (ExporterLinkerHelper.WasRebootCommandSent)
             {
                 MessageBox.Show("Настройки успешно записаны. Устройство перезагружается. " +
@@ -449,6 +506,34 @@ namespace Uetm_2_0
             btnWrite.Enabled = true;
         }
 
+        // Смена пароля
+        private void btnChangePassword_Click(object sender, EventArgs e)
+        {
+            if (Database.CurrentRole != "Администратор")
+            {
+                MessageBox.Show("Только администратор может менять пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            using (var dlg = new ChangePasswordDialog())
+            {
+                if (dlg.ShowDialog() != DialogResult.OK) return;
+
+                if (!AppData.VerifyPassword("Администратор", dlg.CurrentPassword, Database.AppData))
+                {
+                    MessageBox.Show("Неверный текущий пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    return;
+                }
+
+                Database.AppData.Passwords["Администратор"] = dlg.NewPassword;
+                Database.SaveAppData();
+
+                // запись в локальный журнал удалена
+
+                MessageBox.Show("Пароль администратора изменён.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+        }
+
         private bool IsConnectionError(Exception ex)
         {
             string msg = ex.Message.ToLower();
@@ -462,7 +547,7 @@ namespace Uetm_2_0
         private void ConfiguratorForm_FormClosing(object sender, FormClosingEventArgs e)
         {
             Disconnect();
-            Database.SaveDevices();
+            Database.SaveAppData();
         }
 
         private void helpMenu_Click(object sender, EventArgs e)
@@ -489,7 +574,7 @@ namespace Uetm_2_0
                 "- Очистить ресурс, Установить время, Перезагрузить.\n" +
                 "\nПрочее:\n" +
                 "- Таймаут подключения, перезагрузки несколько секунд сек.\n" +
-                "- Список устройств хранится в devices.json (рядом с exe).";
+                "- Список устройств и настройки хранятся в файле config.db (LiteDB).";
 
             MessageBox.Show(info, "Руководство", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

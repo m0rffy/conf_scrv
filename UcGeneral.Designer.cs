@@ -199,10 +199,10 @@
             // 
             nominalCurrentTextBox.Anchor = AnchorStyles.None;
             nominalCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
-            nominalCurrentTextBox.Location = new Point(314, 39);
+            nominalCurrentTextBox.Location = new Point(333, 39);
             nominalCurrentTextBox.Margin = new Padding(4);
             nominalCurrentTextBox.Name = "nominalCurrentTextBox";
-            nominalCurrentTextBox.Size = new Size(177, 26);
+            nominalCurrentTextBox.Size = new Size(139, 26);
             nominalCurrentTextBox.TabIndex = 1;
             nominalCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -221,10 +221,10 @@
             // 
             maxCurrentTextBox.Anchor = AnchorStyles.None;
             maxCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
-            maxCurrentTextBox.Location = new Point(314, 73);
+            maxCurrentTextBox.Location = new Point(333, 73);
             maxCurrentTextBox.Margin = new Padding(4);
             maxCurrentTextBox.Name = "maxCurrentTextBox";
-            maxCurrentTextBox.Size = new Size(176, 26);
+            maxCurrentTextBox.Size = new Size(139, 26);
             maxCurrentTextBox.TabIndex = 3;
             maxCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -387,7 +387,7 @@
             tableLayoutAlgorithm.Controls.Add(alarmThresholdTextBox, 1, 3);
             tableLayoutAlgorithm.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             tableLayoutAlgorithm.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutAlgorithm.Location = new Point(6, 27);
+            tableLayoutAlgorithm.Location = new Point(25, 27);
             tableLayoutAlgorithm.Margin = new Padding(4);
             tableLayoutAlgorithm.Name = "tableLayoutAlgorithm";
             tableLayoutAlgorithm.RowCount = 4;
@@ -395,17 +395,17 @@
             tableLayoutAlgorithm.RowStyles.Add(new RowStyle());
             tableLayoutAlgorithm.RowStyles.Add(new RowStyle());
             tableLayoutAlgorithm.RowStyles.Add(new RowStyle());
-            tableLayoutAlgorithm.Size = new Size(521, 136);
+            tableLayoutAlgorithm.Size = new Size(490, 136);
             tableLayoutAlgorithm.TabIndex = 0;
             // 
             // thresholdCurrentTextBox
             // 
             thresholdCurrentTextBox.Anchor = AnchorStyles.None;
             thresholdCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
-            thresholdCurrentTextBox.Location = new Point(404, 4);
+            thresholdCurrentTextBox.Location = new Point(403, 4);
             thresholdCurrentTextBox.Margin = new Padding(4);
             thresholdCurrentTextBox.Name = "thresholdCurrentTextBox";
-            thresholdCurrentTextBox.Size = new Size(112, 26);
+            thresholdCurrentTextBox.Size = new Size(82, 26);
             thresholdCurrentTextBox.TabIndex = 1;
             thresholdCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -436,10 +436,10 @@
             // 
             nominalOperationsTextBox.Anchor = AnchorStyles.None;
             nominalOperationsTextBox.BorderStyle = BorderStyle.FixedSingle;
-            nominalOperationsTextBox.Location = new Point(404, 38);
+            nominalOperationsTextBox.Location = new Point(403, 38);
             nominalOperationsTextBox.Margin = new Padding(4);
             nominalOperationsTextBox.Name = "nominalOperationsTextBox";
-            nominalOperationsTextBox.Size = new Size(112, 26);
+            nominalOperationsTextBox.Size = new Size(82, 26);
             nominalOperationsTextBox.TabIndex = 3;
             nominalOperationsTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -453,7 +453,7 @@
             warningThresholdTextBox.Margin = new Padding(4);
             warningThresholdTextBox.Name = "warningThresholdTextBox";
             warningThresholdTextBox.ReadOnly = true;
-            warningThresholdTextBox.Size = new Size(114, 26);
+            warningThresholdTextBox.Size = new Size(83, 26);
             warningThresholdTextBox.TabIndex = 7;
             warningThresholdTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -492,7 +492,7 @@
             alarmThresholdTextBox.Margin = new Padding(4);
             alarmThresholdTextBox.Name = "alarmThresholdTextBox";
             alarmThresholdTextBox.ReadOnly = true;
-            alarmThresholdTextBox.Size = new Size(114, 26);
+            alarmThresholdTextBox.Size = new Size(83, 26);
             alarmThresholdTextBox.TabIndex = 9;
             alarmThresholdTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -634,7 +634,7 @@
             tableLayoutPrimaryCT.RowCount = 2;
             tableLayoutPrimaryCT.RowStyles.Add(new RowStyle());
             tableLayoutPrimaryCT.RowStyles.Add(new RowStyle());
-            tableLayoutPrimaryCT.Size = new Size(356, 68);
+            tableLayoutPrimaryCT.Size = new Size(342, 68);
             tableLayoutPrimaryCT.TabIndex = 0;
             // 
             // secondaryCurrentTextBox
@@ -644,7 +644,7 @@
             secondaryCurrentTextBox.Location = new Point(252, 38);
             secondaryCurrentTextBox.Margin = new Padding(4);
             secondaryCurrentTextBox.Name = "secondaryCurrentTextBox";
-            secondaryCurrentTextBox.Size = new Size(100, 26);
+            secondaryCurrentTextBox.Size = new Size(86, 26);
             secondaryCurrentTextBox.TabIndex = 7;
             secondaryCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -664,10 +664,10 @@
             primaryCurrentTextBox.Anchor = AnchorStyles.None;
             primaryCurrentTextBox.BackColor = Color.White;
             primaryCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
-            primaryCurrentTextBox.Location = new Point(252, 4);
+            primaryCurrentTextBox.Location = new Point(254, 4);
             primaryCurrentTextBox.Margin = new Padding(4);
             primaryCurrentTextBox.Name = "primaryCurrentTextBox";
-            primaryCurrentTextBox.Size = new Size(100, 26);
+            primaryCurrentTextBox.Size = new Size(82, 26);
             primaryCurrentTextBox.TabIndex = 1;
             primaryCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -715,7 +715,7 @@
             tableLayoutDebounce.RowCount = 2;
             tableLayoutDebounce.RowStyles.Add(new RowStyle());
             tableLayoutDebounce.RowStyles.Add(new RowStyle());
-            tableLayoutDebounce.Size = new Size(222, 68);
+            tableLayoutDebounce.Size = new Size(199, 68);
             tableLayoutDebounce.TabIndex = 0;
             // 
             // debounceOnTextBox
@@ -725,7 +725,7 @@
             debounceOnTextBox.Location = new Point(137, 38);
             debounceOnTextBox.Margin = new Padding(4);
             debounceOnTextBox.Name = "debounceOnTextBox";
-            debounceOnTextBox.Size = new Size(80, 26);
+            debounceOnTextBox.Size = new Size(57, 26);
             debounceOnTextBox.TabIndex = 5;
             debounceOnTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -736,7 +736,7 @@
             debounceOffTextBox.Location = new Point(136, 4);
             debounceOffTextBox.Margin = new Padding(4);
             debounceOffTextBox.Name = "debounceOffTextBox";
-            debounceOffTextBox.Size = new Size(82, 26);
+            debounceOffTextBox.Size = new Size(59, 26);
             debounceOffTextBox.TabIndex = 4;
             debounceOffTextBox.TextAlign = HorizontalAlignment.Center;
             // 

@@ -39,7 +39,7 @@
             panelButtons.Controls.Add(updateJournalButton);
             panelButtons.Controls.Add(exportButton);
             panelButtons.FlowDirection = FlowDirection.TopDown;
-            panelButtons.Location = new Point(405, 388);
+            panelButtons.Location = new Point(405, 404);
             panelButtons.Margin = new Padding(4);
             panelButtons.Name = "panelButtons";
             panelButtons.Size = new Size(149, 74);
@@ -95,7 +95,7 @@
             tableLayoutPanelMain.RowCount = 2;
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(959, 472);
+            tableLayoutPanelMain.Size = new Size(959, 504);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // journalDataGridView

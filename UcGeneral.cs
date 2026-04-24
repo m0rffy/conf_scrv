@@ -142,7 +142,11 @@ namespace Uetm_2_0
         private void SwitchTypeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             string selected = switchTypeComboBox.Text;
-            if (selected == "Пользовательский") return;
+            if (selected == "Пользовательский")
+            {
+                SetFieldsReadOnly(false);
+                return;
+            }
             if (breakerPresets.TryGetValue(selected, out var preset))
             {
                 bool same = nominalCurrentTextBox.Text == preset.Inn &&
@@ -154,10 +158,32 @@ namespace Uetm_2_0
                             c4TextBox.Text == preset.C4;
                 if (same) return;
                 ApplyBreakerPreset(selected);
+                SetFieldsReadOnly(true);
             }
         }
 
-        public void UpdateFromDatabase()
+        private void SetFieldsReadOnly(bool readOnly)
+        {
+            nominalCurrentTextBox.ReadOnly = readOnly;
+            thresholdCurrentTextBox.ReadOnly = readOnly;
+            nominalOperationsTextBox.ReadOnly = readOnly;
+            c1TextBox.ReadOnly = readOnly;
+            c2TextBox.ReadOnly = readOnly;
+            c3TextBox.ReadOnly = readOnly;
+            c4TextBox.ReadOnly = readOnly;
+
+            // Задаём свой цвет фона для заблокированных полей
+            Color lockedColor = Color.Gainsboro;  
+            nominalCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            thresholdCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            nominalOperationsTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            c1TextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            c2TextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            c3TextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            c4TextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+        }
+
+        public new void UpdateFromDatabase()
         {
             if (_updating) return;
             _updating = true;
@@ -206,6 +232,7 @@ namespace Uetm_2_0
 
             string detected = DetectBreakerType();
             switchTypeComboBox.Text = detected;
+            SetFieldsReadOnly(detected != "Пользовательский");
             _updating = false;
         }
 
