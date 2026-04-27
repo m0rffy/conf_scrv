@@ -28,10 +28,11 @@ namespace Uetm_2_0
             string role = LoginComboBox.Text;
             string password = PasswordTextBox.Text;
 
-            // Проверка пароля через базу данных
-            if (!AppData.VerifyPassword(role, password, Database.AppData))
+            // Получаем пароль из базы (или из памяти, если загружен)
+            if (!Database.AppData.Passwords.TryGetValue(role, out string storedPassword) ||
+                storedPassword != password)
             {
-                MessageBox.Show("Неверный пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Неверный пароль.");
                 return;
             }
 

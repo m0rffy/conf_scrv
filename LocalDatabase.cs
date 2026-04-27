@@ -4,11 +4,7 @@ namespace Uetm_2_0
 {
     public static class LocalDatabase
     {
-        internal static readonly string DbPath = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
-            "Uetm_2_0",
-            "config.db");
-        //%LocalAppData%\Uetm_2_0\config.db
+        internal static readonly string DbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.db");
         internal static readonly string ConnectionString = $"Data Source={DbPath};Version=3;";
 
         static LocalDatabase()
@@ -19,25 +15,46 @@ namespace Uetm_2_0
             conn.Open();
             var cmd = conn.CreateCommand();
 
-            // Таблицы
+            // Таблицы устройств и паролей
             cmd.CommandText = @"
-                CREATE TABLE IF NOT EXISTS AppSettings (
-                    Key TEXT PRIMARY KEY,
-                    Value TEXT NOT NULL
+                CREATE TABLE IF NOT EXISTS Passwords (
+                    Role TEXT PRIMARY KEY,
+                    Password TEXT NOT NULL
                 );
+
+                CREATE TABLE IF NOT EXISTS Devices (
+                    IP TEXT PRIMARY KEY,
+                    Port INTEGER NOT NULL,
+                    InstallationPlace TEXT,
+                    SwitchLabel TEXT
+                );
+
                 CREATE TABLE IF NOT EXISTS ChangeLog (
-                    Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                    Id INTEGER PRIMARY KEY,
                     Timestamp TEXT NOT NULL,
                     UserRole TEXT NOT NULL,
-                    Description TEXT NOT NULL
+                    Description TEXT NOT NULL,
+                    DeviceIP TEXT,
+                    CurrentA REAL,
+                    ResourcePercent REAL,
+                    Channel TEXT
                 );";
             cmd.ExecuteNonQuery();
 
-            // Добавляем недостающие столбцы в ChangeLog, если их нет
+            // Добавляем недостающие столбцы в ChangeLog (если таблица уже существовала)
             AddColumnIfMissing(conn, "ChangeLog", "DeviceIP", "TEXT");
             AddColumnIfMissing(conn, "ChangeLog", "CurrentA", "REAL");
             AddColumnIfMissing(conn, "ChangeLog", "ResourcePercent", "REAL");
             AddColumnIfMissing(conn, "ChangeLog", "Channel", "TEXT");
+
+            // Заполняем пароли по умолчанию, если таблица пуста
+            cmd.CommandText = "SELECT COUNT(*) FROM Passwords";
+            long cnt = (long)cmd.ExecuteScalar();
+            if (cnt == 0)
+            {
+                cmd.CommandText = "INSERT INTO Passwords (Role, Password) VALUES ('Администратор', 'admin'), ('Пользователь', 'user')";
+                cmd.ExecuteNonQuery();
+            }
         }
 
         private static void AddColumnIfMissing(SQLiteConnection conn, string table, string column, string type)
@@ -52,30 +69,79 @@ namespace Uetm_2_0
             }
         }
 
-        // --------------------- Настройки ---------------------
-        public static void SaveSetting(string key, string value)
+        // ---------------- Устройства ----------------
+        public static List<DeviceInfo> GetAllDevices()
+        {
+            var list = new List<DeviceInfo>();
+            using var conn = new SQLiteConnection(ConnectionString);
+            conn.Open();
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT IP, Port, InstallationPlace, SwitchLabel FROM Devices";
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                list.Add(new DeviceInfo
+                {
+                    IP = reader.GetString(0),
+                    Port = reader.GetInt32(1),
+                    InstallationPlace = reader.IsDBNull(2) ? "" : reader.GetString(2),
+                    SwitchLabel = reader.IsDBNull(3) ? "" : reader.GetString(3)
+                });
+            }
+            return list;
+        }
+
+        public static void SaveAllDevices(List<DeviceInfo> devices)
         {
             using var conn = new SQLiteConnection(ConnectionString);
             conn.Open();
             var cmd = conn.CreateCommand();
-            cmd.CommandText = "INSERT OR REPLACE INTO AppSettings (Key, Value) VALUES (@k, @v)";
-            cmd.Parameters.AddWithValue("@k", key);
-            cmd.Parameters.AddWithValue("@v", value);
+            // Очищаем старые записи
+            cmd.CommandText = "DELETE FROM Devices";
+            cmd.ExecuteNonQuery();
+
+            if (devices.Count == 0) return;
+
+            cmd.CommandText = "INSERT INTO Devices (IP, Port, InstallationPlace, SwitchLabel) VALUES (@ip, @p, @pl, @sl)";
+            foreach (var d in devices)
+            {
+                cmd.Parameters.Clear();
+                cmd.Parameters.AddWithValue("@ip", d.IP);
+                cmd.Parameters.AddWithValue("@p", d.Port);
+                cmd.Parameters.AddWithValue("@pl", (object?)d.InstallationPlace ?? DBNull.Value);
+                cmd.Parameters.AddWithValue("@sl", (object?)d.SwitchLabel ?? DBNull.Value);
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+        // ---------------- Пароли ----------------
+        public static Dictionary<string, string> GetAllPasswords()
+        {
+            var dict = new Dictionary<string, string>();
+            using var conn = new SQLiteConnection(ConnectionString);
+            conn.Open();
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = "SELECT Role, Password FROM Passwords";
+            using var reader = cmd.ExecuteReader();
+            while (reader.Read())
+            {
+                dict[reader.GetString(0)] = reader.GetString(1);
+            }
+            return dict;
+        }
+
+        public static void SavePassword(string role, string password)
+        {
+            using var conn = new SQLiteConnection(ConnectionString);
+            conn.Open();
+            var cmd = conn.CreateCommand();
+            cmd.CommandText = "INSERT OR REPLACE INTO Passwords (Role, Password) VALUES (@r, @p)";
+            cmd.Parameters.AddWithValue("@r", role);
+            cmd.Parameters.AddWithValue("@p", password);
             cmd.ExecuteNonQuery();
         }
 
-        public static string LoadSetting(string key)
-        {
-            using var conn = new SQLiteConnection(ConnectionString);
-            conn.Open();
-            var cmd = conn.CreateCommand();
-            cmd.CommandText = "SELECT Value FROM AppSettings WHERE Key = @k";
-            cmd.Parameters.AddWithValue("@k", key);
-            var result = cmd.ExecuteScalar();
-            return result?.ToString();
-        }
-
-        // --------------------- Журнал действий ---------------------
+        // ---------------- Журнал действий (без изменений) ----------------
         public static void AddLogEntry(string userRole, string description,
             string deviceIP = null, float? currentA = null,
             float? resourcePercent = null, string channel = null)

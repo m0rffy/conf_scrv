@@ -9,14 +9,17 @@ namespace Uetm_2_0
         public static List<ModBusProfile.journal_record> Filtered_Journal_Records;
         public static string CurrentRole;
 
-        private static AppData _appData;
+        private static AppData _appData = new AppData();
         public static AppData AppData
         {
             get => _appData;
             private set => _appData = value;
         }
 
-        public static List<DeviceInfo> Devices => AppData.Devices;
+        public static List<DeviceInfo> Devices
+        {
+            get => AppData.Devices;
+        }
 
         static Database()
         {
@@ -25,38 +28,16 @@ namespace Uetm_2_0
 
         public static void LoadAppData()
         {
-            try
-            {
-                string json = LocalDatabase.LoadSetting("AppData");
-
-                if (string.IsNullOrEmpty(json))
-                {
-                    AppData = new AppData();
-                    SaveAppData();
-                }
-                else
-                {
-                    AppData = JsonSerializer.Deserialize<AppData>(json) ?? new AppData();
-                }
-            }
-            catch (Exception ex)
-            {
-
-                AppData = new AppData();
-                SaveAppData();
-            }
+            AppData.Passwords = LocalDatabase.GetAllPasswords();
+            AppData.Devices = LocalDatabase.GetAllDevices();
         }
 
         public static void SaveAppData()
         {
-            var options = new JsonSerializerOptions { WriteIndented = true };
-            string json = JsonSerializer.Serialize(AppData, options);
-            LocalDatabase.SaveSetting("AppData", json);
+            LocalDatabase.SaveAllDevices(AppData.Devices);
+          
         }
 
-        [Obsolete]
-        public static void LoadDevices() { }
-        [Obsolete]
-        public static void SaveDevices() => SaveAppData();
+       
     }
 }

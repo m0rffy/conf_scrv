@@ -478,15 +478,24 @@ namespace Uetm_2_0
                 Database.SaveAppData();
             }
 
-            // 13. Запись в журнал изменений (с захваченными ДО записи показателями)
-            LocalDatabase.AddLogEntry(
-                Database.CurrentRole,
-                "Изменение настроек",
-                deviceIP: capturedDeviceIP,
-                currentA: capturedCurrentA,
-                resourcePercent: capturedResource,
-                channel: capturedPhase
-            );
+            // 13. Запись в журнал изменений – вставляйте после строк, где обновляется IP (activeDev.IP = newIp)
+            try
+            {
+                LocalDatabase.AddLogEntry(
+                    Database.CurrentRole,
+                    "Настройки записаны в устройство",
+                    deviceIP: capturedDeviceIP,
+                    currentA: capturedCurrentA,
+                    resourcePercent: capturedResource,
+                    channel: capturedPhase
+                );
+            }
+            catch (Exception ex)
+            {
+                // Если произошла ошибка записи в БД, вы увидите это окно
+                MessageBox.Show($"Ошибка записи в локальный журнал: {ex.Message}",
+                                "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
 
             // 14. Информируем пользователя о результате
             if (ExporterLinkerHelper.WasRebootCommandSent)
@@ -519,18 +528,19 @@ namespace Uetm_2_0
             {
                 if (dlg.ShowDialog() != DialogResult.OK) return;
 
-                if (!AppData.VerifyPassword("Администратор", dlg.CurrentPassword, Database.AppData))
+                // Проверяем текущий пароль
+                if (!Database.AppData.Passwords.TryGetValue("Администратор", out string storedPass) ||
+                    storedPass != dlg.CurrentPassword)
                 {
-                    MessageBox.Show("Неверный текущий пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    MessageBox.Show("Неверный текущий пароль.");
                     return;
                 }
 
+                // Сохраняем новый пароль в БД
+                LocalDatabase.SavePassword("Администратор", dlg.NewPassword);
+                // Обновляем в памяти
                 Database.AppData.Passwords["Администратор"] = dlg.NewPassword;
-                Database.SaveAppData();
-
-                // запись в локальный журнал удалена
-
-                MessageBox.Show("Пароль администратора изменён.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                MessageBox.Show("Пароль изменён.");
             }
         }
 
