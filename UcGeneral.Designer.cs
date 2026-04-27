@@ -201,6 +201,7 @@
             nominalCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             nominalCurrentTextBox.Location = new Point(333, 39);
             nominalCurrentTextBox.Margin = new Padding(4);
+            nominalCurrentTextBox.MaxLength = 10000;
             nominalCurrentTextBox.Name = "nominalCurrentTextBox";
             nominalCurrentTextBox.Size = new Size(139, 26);
             nominalCurrentTextBox.TabIndex = 1;
@@ -223,6 +224,7 @@
             maxCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             maxCurrentTextBox.Location = new Point(333, 73);
             maxCurrentTextBox.Margin = new Padding(4);
+            maxCurrentTextBox.MaxLength = 1000;
             maxCurrentTextBox.Name = "maxCurrentTextBox";
             maxCurrentTextBox.Size = new Size(139, 26);
             maxCurrentTextBox.TabIndex = 3;
@@ -276,6 +278,7 @@
             c1TextBox.Anchor = AnchorStyles.None;
             c1TextBox.BorderStyle = BorderStyle.FixedSingle;
             c1TextBox.Location = new Point(3, 22);
+            c1TextBox.MaxLength = 100;
             c1TextBox.Name = "c1TextBox";
             c1TextBox.Size = new Size(110, 26);
             c1TextBox.TabIndex = 1;
@@ -286,6 +289,7 @@
             c4TextBox.Anchor = AnchorStyles.None;
             c4TextBox.BorderStyle = BorderStyle.FixedSingle;
             c4TextBox.Location = new Point(351, 22);
+            c4TextBox.MaxLength = 100;
             c4TextBox.Name = "c4TextBox";
             c4TextBox.Size = new Size(110, 26);
             c4TextBox.TabIndex = 3;
@@ -307,6 +311,7 @@
             c3TextBox.Anchor = AnchorStyles.None;
             c3TextBox.BorderStyle = BorderStyle.FixedSingle;
             c3TextBox.Location = new Point(235, 22);
+            c3TextBox.MaxLength = 100;
             c3TextBox.Name = "c3TextBox";
             c3TextBox.Size = new Size(110, 26);
             c3TextBox.TabIndex = 2;
@@ -317,6 +322,7 @@
             c2TextBox.Anchor = AnchorStyles.None;
             c2TextBox.BorderStyle = BorderStyle.FixedSingle;
             c2TextBox.Location = new Point(119, 22);
+            c2TextBox.MaxLength = 100;
             c2TextBox.Name = "c2TextBox";
             c2TextBox.Size = new Size(110, 26);
             c2TextBox.TabIndex = 1;
@@ -542,6 +548,7 @@
             switchModelTextBox.Anchor = AnchorStyles.None;
             switchModelTextBox.BorderStyle = BorderStyle.FixedSingle;
             switchModelTextBox.Location = new Point(265, 37);
+            switchModelTextBox.MaxLength = 100;
             switchModelTextBox.Name = "switchModelTextBox";
             switchModelTextBox.Size = new Size(208, 26);
             switchModelTextBox.TabIndex = 1;
@@ -564,6 +571,7 @@
             installationPlaceTextBox.BorderStyle = BorderStyle.FixedSingle;
             installationPlaceTextBox.Location = new Point(265, 4);
             installationPlaceTextBox.Margin = new Padding(4);
+            installationPlaceTextBox.MaxLength = 100;
             installationPlaceTextBox.Name = "installationPlaceTextBox";
             installationPlaceTextBox.Size = new Size(207, 26);
             installationPlaceTextBox.TabIndex = 3;
@@ -586,6 +594,7 @@
             switchLabelTextBox.BorderStyle = BorderStyle.FixedSingle;
             switchLabelTextBox.Location = new Point(265, 70);
             switchLabelTextBox.Margin = new Padding(4);
+            switchLabelTextBox.MaxLength = 100;
             switchLabelTextBox.Name = "switchLabelTextBox";
             switchLabelTextBox.Size = new Size(208, 26);
             switchLabelTextBox.TabIndex = 7;
@@ -643,6 +652,7 @@
             secondaryCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             secondaryCurrentTextBox.Location = new Point(252, 38);
             secondaryCurrentTextBox.Margin = new Padding(4);
+            secondaryCurrentTextBox.MaxLength = 1000;
             secondaryCurrentTextBox.Name = "secondaryCurrentTextBox";
             secondaryCurrentTextBox.Size = new Size(86, 26);
             secondaryCurrentTextBox.TabIndex = 7;
@@ -666,6 +676,7 @@
             primaryCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
             primaryCurrentTextBox.Location = new Point(254, 4);
             primaryCurrentTextBox.Margin = new Padding(4);
+            primaryCurrentTextBox.MaxLength = 10000;
             primaryCurrentTextBox.Name = "primaryCurrentTextBox";
             primaryCurrentTextBox.Size = new Size(82, 26);
             primaryCurrentTextBox.TabIndex = 1;
@@ -724,6 +735,7 @@
             debounceOnTextBox.BorderStyle = BorderStyle.FixedSingle;
             debounceOnTextBox.Location = new Point(137, 38);
             debounceOnTextBox.Margin = new Padding(4);
+            debounceOnTextBox.MaxLength = 100;
             debounceOnTextBox.Name = "debounceOnTextBox";
             debounceOnTextBox.Size = new Size(57, 26);
             debounceOnTextBox.TabIndex = 5;
@@ -735,6 +747,7 @@
             debounceOffTextBox.BorderStyle = BorderStyle.FixedSingle;
             debounceOffTextBox.Location = new Point(136, 4);
             debounceOffTextBox.Margin = new Padding(4);
+            debounceOffTextBox.MaxLength = 100;
             debounceOffTextBox.Name = "debounceOffTextBox";
             debounceOffTextBox.Size = new Size(59, 26);
             debounceOffTextBox.TabIndex = 4;

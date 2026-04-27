@@ -53,11 +53,14 @@
             PasswordTextBox.Anchor = AnchorStyles.None;
             PasswordTextBox.BorderStyle = BorderStyle.FixedSingle;
             PasswordTextBox.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            PasswordTextBox.Location = new Point(40, 103);
+            PasswordTextBox.Location = new Point(45, 103);
             PasswordTextBox.Margin = new Padding(8, 6, 8, 6);
+            PasswordTextBox.MaxLength = 100;
             PasswordTextBox.Name = "PasswordTextBox";
-            PasswordTextBox.Size = new Size(175, 29);
+            PasswordTextBox.PasswordChar = '*';
+            PasswordTextBox.Size = new Size(168, 29);
             PasswordTextBox.TabIndex = 83;
+            PasswordTextBox.UseSystemPasswordChar = true;
             // 
             // LoginLabel
             // 
@@ -77,10 +80,10 @@
             LoginComboBox.Anchor = AnchorStyles.None;
             LoginComboBox.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             LoginComboBox.FormattingEnabled = true;
-            LoginComboBox.Location = new Point(40, 45);
+            LoginComboBox.Location = new Point(45, 45);
             LoginComboBox.Margin = new Padding(8, 6, 8, 6);
             LoginComboBox.Name = "LoginComboBox";
-            LoginComboBox.Size = new Size(175, 29);
+            LoginComboBox.Size = new Size(168, 29);
             LoginComboBox.TabIndex = 81;
             // 
             // button1

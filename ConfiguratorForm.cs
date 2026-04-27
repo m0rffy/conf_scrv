@@ -520,7 +520,7 @@ namespace Uetm_2_0
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Только администратор может менять пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                MessageBox.Show("Только администратор может менять пароли.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
@@ -528,19 +528,19 @@ namespace Uetm_2_0
             {
                 if (dlg.ShowDialog() != DialogResult.OK) return;
 
-                // Проверяем текущий пароль
-                if (!Database.AppData.Passwords.TryGetValue("Администратор", out string storedPass) ||
-                    storedPass != dlg.CurrentPassword)
+                // Проверяем текущий пароль администратора (всегда)
+                if (!Database.AppData.Passwords.TryGetValue("Администратор", out string adminPass) ||
+                    adminPass != dlg.CurrentPassword)
                 {
-                    MessageBox.Show("Неверный текущий пароль.");
+                    MessageBox.Show("Неверный текущий пароль администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
 
-                // Сохраняем новый пароль в БД
-                LocalDatabase.SavePassword("Администратор", dlg.NewPassword);
-                // Обновляем в памяти
-                Database.AppData.Passwords["Администратор"] = dlg.NewPassword;
-                MessageBox.Show("Пароль изменён.");
+                // Меняем пароль выбранной роли
+                string role = dlg.SelectedRole;
+                LocalDatabase.SavePassword(role, dlg.NewPassword);          // пишем в БД
+                Database.AppData.Passwords[role] = dlg.NewPassword;        // обновляем в памяти
+                MessageBox.Show($"Пароль для роли «{role}» изменён.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
 

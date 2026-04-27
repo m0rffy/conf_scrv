@@ -4,7 +4,8 @@ namespace Uetm_2_0
 {
     public static class LocalDatabase
     {
-        internal static readonly string DbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.db");
+        internal static readonly string DbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Uetm_2_0","config.db");
+        // %LocalAppData%\Uetm_2_0
         internal static readonly string ConnectionString = $"Data Source={DbPath};Version=3;";
 
         static LocalDatabase()
@@ -15,45 +16,49 @@ namespace Uetm_2_0
             conn.Open();
             var cmd = conn.CreateCommand();
 
-            // Таблицы устройств и паролей
+            // Таблицы
             cmd.CommandText = @"
-                CREATE TABLE IF NOT EXISTS Passwords (
-                    Role TEXT PRIMARY KEY,
-                    Password TEXT NOT NULL
-                );
-
-                CREATE TABLE IF NOT EXISTS Devices (
-                    IP TEXT PRIMARY KEY,
-                    Port INTEGER NOT NULL,
-                    InstallationPlace TEXT,
-                    SwitchLabel TEXT
-                );
-
-                CREATE TABLE IF NOT EXISTS ChangeLog (
-                    Id INTEGER PRIMARY KEY,
-                    Timestamp TEXT NOT NULL,
-                    UserRole TEXT NOT NULL,
-                    Description TEXT NOT NULL,
-                    DeviceIP TEXT,
-                    CurrentA REAL,
-                    ResourcePercent REAL,
-                    Channel TEXT
-                );";
+        CREATE TABLE IF NOT EXISTS Passwords (
+            Role TEXT PRIMARY KEY,
+            Password TEXT NOT NULL
+        );
+        CREATE TABLE IF NOT EXISTS Devices (
+            IP TEXT PRIMARY KEY,
+            Port INTEGER NOT NULL,
+            InstallationPlace TEXT,
+            SwitchLabel TEXT
+        );
+        CREATE TABLE IF NOT EXISTS ChangeLog (
+            Id INTEGER PRIMARY KEY,
+            Timestamp TEXT NOT NULL,
+            UserRole TEXT NOT NULL,
+            Description TEXT NOT NULL,
+            DeviceIP TEXT,
+            CurrentA REAL,
+            ResourcePercent REAL,
+            Channel TEXT
+        );";
             cmd.ExecuteNonQuery();
 
-            // Добавляем недостающие столбцы в ChangeLog (если таблица уже существовала)
+            // Добавляем недостающие столбцы (если таблица ChangeLog уже существовала)
             AddColumnIfMissing(conn, "ChangeLog", "DeviceIP", "TEXT");
             AddColumnIfMissing(conn, "ChangeLog", "CurrentA", "REAL");
             AddColumnIfMissing(conn, "ChangeLog", "ResourcePercent", "REAL");
             AddColumnIfMissing(conn, "ChangeLog", "Channel", "TEXT");
 
-            // Заполняем пароли по умолчанию, если таблица пуста
+            // Пароли по умолчанию
             cmd.CommandText = "SELECT COUNT(*) FROM Passwords";
             long cnt = (long)cmd.ExecuteScalar();
             if (cnt == 0)
             {
                 cmd.CommandText = "INSERT INTO Passwords (Role, Password) VALUES ('Администратор', 'admin'), ('Пользователь', 'user')";
                 cmd.ExecuteNonQuery();
+            }
+
+            // Делаем файл скрытым (если файл существует, атрибут добавится, если нет – команда будет выполнена позже при создании)
+            if (File.Exists(DbPath))
+            {
+                File.SetAttributes(DbPath, File.GetAttributes(DbPath) | FileAttributes.Hidden);
             }
         }
 

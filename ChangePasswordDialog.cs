@@ -5,8 +5,9 @@ namespace Uetm_2_0
 {
     public partial class ChangePasswordDialog : Form
     {
-        public string CurrentPassword { get; private set; }
-        public string NewPassword { get; private set; }
+        public string SelectedRole => cmbRole.SelectedItem.ToString();
+        public string CurrentPassword => txtCurrent.Text;
+        public string NewPassword => txtNew.Text;
 
         public ChangePasswordDialog()
         {
@@ -27,8 +28,6 @@ namespace Uetm_2_0
                 MessageBox.Show("Новый пароль и подтверждение не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
-            CurrentPassword = txtCurrent.Text;
-            NewPassword = txtNew.Text;
             DialogResult = DialogResult.OK;
             Close();
         }

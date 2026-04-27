@@ -22,7 +22,7 @@
         private Panel topPanel;
         private Button btnWrite;
         private TableLayoutPanel devicesPanel;
-     
+
 
         private void InitializeComponent()
         {
@@ -167,11 +167,12 @@
             // 
             // btnChangePassword
             // 
+            btnChangePassword.Anchor = AnchorStyles.None;
             btnChangePassword.AutoSize = true;
             btnChangePassword.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnChangePassword.BackColor = Color.SkyBlue;
             btnChangePassword.FlatStyle = FlatStyle.Flat;
-            btnChangePassword.Location = new Point(740, 2);
+            btnChangePassword.Location = new Point(655, 3);
             btnChangePassword.Name = "btnChangePassword";
             btnChangePassword.Size = new Size(161, 33);
             btnChangePassword.TabIndex = 87;
@@ -204,7 +205,7 @@
             btnWrite.FlatStyle = FlatStyle.Flat;
             btnWrite.Font = new Font("Times New Roman", 14.25F);
             btnWrite.ForeColor = Color.Black;
-            btnWrite.Location = new Point(605, 3);
+            btnWrite.Location = new Point(554, 3);
             btnWrite.Margin = new Padding(4);
             btnWrite.Name = "btnWrite";
             btnWrite.Size = new Size(94, 33);

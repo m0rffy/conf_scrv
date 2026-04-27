@@ -28,156 +28,145 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(SetTimeDialog));
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
-            this.btnOk = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
-            this.labelHour = new System.Windows.Forms.Label();
-            this.numericUpDownHour = new System.Windows.Forms.NumericUpDown();
-            this.labelMinute = new System.Windows.Forms.Label();
-            this.numericUpDownMinute = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHour)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinute)).BeginInit();
-            this.SuspendLayout();
+            dateTimePicker1 = new DateTimePicker();
+            btnOk = new Button();
+            btnCancel = new Button();
+            labelHour = new Label();
+            numericUpDownHour = new NumericUpDown();
+            labelMinute = new Label();
+            numericUpDownMinute = new NumericUpDown();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownHour).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownMinute).BeginInit();
+            SuspendLayout();
             // 
             // dateTimePicker1
             // 
-            this.dateTimePicker1.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.dateTimePicker1.CalendarFont = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateTimePicker1.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.dateTimePicker1.Location = new System.Drawing.Point(54, 23);
-            this.dateTimePicker1.Margin = new System.Windows.Forms.Padding(4);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(177, 26);
-            this.dateTimePicker1.TabIndex = 0;
+            dateTimePicker1.Anchor = AnchorStyles.None;
+            dateTimePicker1.CalendarFont = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dateTimePicker1.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dateTimePicker1.Location = new Point(54, 27);
+            dateTimePicker1.Margin = new Padding(4);
+            dateTimePicker1.Name = "dateTimePicker1";
+            dateTimePicker1.Size = new Size(177, 26);
+            dateTimePicker1.TabIndex = 0;
             // 
             // btnOk
             // 
-            this.btnOk.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnOk.AutoSize = true;
-            this.btnOk.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnOk.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnOk.FlatAppearance.BorderSize = 0;
-            this.btnOk.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnOk.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.btnOk.ForeColor = System.Drawing.Color.Black;
-            this.btnOk.Location = new System.Drawing.Point(54, 154);
-            this.btnOk.Margin = new System.Windows.Forms.Padding(4);
-            this.btnOk.Name = "btnOk";
-            this.btnOk.Size = new System.Drawing.Size(96, 29);
-            this.btnOk.TabIndex = 5;
-            this.btnOk.Text = "Применить";
-            this.btnOk.UseVisualStyleBackColor = false;
-            this.btnOk.Click += new System.EventHandler(this.btnOk_Click);
+            btnOk.Anchor = AnchorStyles.None;
+            btnOk.AutoSize = true;
+            btnOk.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnOk.BackColor = Color.SkyBlue;
+            btnOk.FlatAppearance.BorderSize = 0;
+            btnOk.FlatStyle = FlatStyle.Flat;
+            btnOk.Font = new Font("Times New Roman", 12F);
+            btnOk.ForeColor = Color.Black;
+            btnOk.Location = new Point(54, 154);
+            btnOk.Margin = new Padding(4);
+            btnOk.Name = "btnOk";
+            btnOk.Size = new Size(96, 29);
+            btnOk.TabIndex = 5;
+            btnOk.Text = "Применить";
+            btnOk.UseVisualStyleBackColor = false;
+            btnOk.Click += btnOk_Click;
             // 
             // btnCancel
             // 
-            this.btnCancel.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.btnCancel.AutoSize = true;
-            this.btnCancel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.btnCancel.BackColor = System.Drawing.Color.SkyBlue;
-            this.btnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.btnCancel.Font = new System.Drawing.Font("Times New Roman", 12F);
-            this.btnCancel.ForeColor = System.Drawing.Color.Black;
-            this.btnCancel.Location = new System.Drawing.Point(158, 153);
-            this.btnCancel.Margin = new System.Windows.Forms.Padding(4);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(73, 31);
-            this.btnCancel.TabIndex = 6;
-            this.btnCancel.Text = "Отмена";
-            this.btnCancel.UseVisualStyleBackColor = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
+            btnCancel.Anchor = AnchorStyles.None;
+            btnCancel.AutoSize = true;
+            btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            btnCancel.BackColor = Color.SkyBlue;
+            btnCancel.FlatStyle = FlatStyle.Flat;
+            btnCancel.Font = new Font("Times New Roman", 12F);
+            btnCancel.ForeColor = Color.Black;
+            btnCancel.Location = new Point(158, 153);
+            btnCancel.Margin = new Padding(4);
+            btnCancel.Name = "btnCancel";
+            btnCancel.Size = new Size(73, 31);
+            btnCancel.TabIndex = 6;
+            btnCancel.Text = "Отмена";
+            btnCancel.UseVisualStyleBackColor = false;
+            btnCancel.Click += btnCancel_Click;
             // 
             // labelHour
             // 
-            this.labelHour.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelHour.AutoSize = true;
-            this.labelHour.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelHour.Location = new System.Drawing.Point(54, 63);
-            this.labelHour.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelHour.Name = "labelHour";
-            this.labelHour.Size = new System.Drawing.Size(44, 19);
-            this.labelHour.TabIndex = 1;
-            this.labelHour.Text = "Часы";
-            this.labelHour.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            labelHour.Anchor = AnchorStyles.None;
+            labelHour.AutoSize = true;
+            labelHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelHour.Location = new Point(54, 63);
+            labelHour.Margin = new Padding(4, 0, 4, 0);
+            labelHour.Name = "labelHour";
+            labelHour.Size = new Size(44, 19);
+            labelHour.TabIndex = 1;
+            labelHour.Text = "Часы";
+            labelHour.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // numericUpDownHour
             // 
-            this.numericUpDownHour.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.numericUpDownHour.AutoSize = true;
-            this.numericUpDownHour.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDownHour.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDownHour.Location = new System.Drawing.Point(181, 60);
-            this.numericUpDownHour.Maximum = new decimal(new int[] {
-            23,
-            0,
-            0,
-            0});
-            this.numericUpDownHour.Name = "numericUpDownHour";
-            this.numericUpDownHour.Size = new System.Drawing.Size(50, 26);
-            this.numericUpDownHour.TabIndex = 2;
-            this.numericUpDownHour.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            numericUpDownHour.Anchor = AnchorStyles.None;
+            numericUpDownHour.AutoSize = true;
+            numericUpDownHour.BorderStyle = BorderStyle.FixedSingle;
+            numericUpDownHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            numericUpDownHour.Location = new Point(181, 60);
+            numericUpDownHour.Maximum = new decimal(new int[] { 23, 0, 0, 0 });
+            numericUpDownHour.Name = "numericUpDownHour";
+            numericUpDownHour.Size = new Size(50, 26);
+            numericUpDownHour.TabIndex = 2;
+            numericUpDownHour.TextAlign = HorizontalAlignment.Center;
             // 
             // labelMinute
             // 
-            this.labelMinute.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.labelMinute.AutoSize = true;
-            this.labelMinute.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.labelMinute.Location = new System.Drawing.Point(54, 104);
-            this.labelMinute.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
-            this.labelMinute.Name = "labelMinute";
-            this.labelMinute.Size = new System.Drawing.Size(66, 19);
-            this.labelMinute.TabIndex = 3;
-            this.labelMinute.Text = "Минуты";
-            this.labelMinute.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            labelMinute.Anchor = AnchorStyles.None;
+            labelMinute.AutoSize = true;
+            labelMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            labelMinute.Location = new Point(54, 104);
+            labelMinute.Margin = new Padding(4, 0, 4, 0);
+            labelMinute.Name = "labelMinute";
+            labelMinute.Size = new Size(66, 19);
+            labelMinute.TabIndex = 3;
+            labelMinute.Text = "Минуты";
+            labelMinute.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // numericUpDownMinute
             // 
-            this.numericUpDownMinute.Anchor = System.Windows.Forms.AnchorStyles.None;
-            this.numericUpDownMinute.AutoSize = true;
-            this.numericUpDownMinute.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.numericUpDownMinute.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.numericUpDownMinute.Location = new System.Drawing.Point(181, 102);
-            this.numericUpDownMinute.Maximum = new decimal(new int[] {
-            59,
-            0,
-            0,
-            0});
-            this.numericUpDownMinute.Name = "numericUpDownMinute";
-            this.numericUpDownMinute.Size = new System.Drawing.Size(50, 26);
-            this.numericUpDownMinute.TabIndex = 4;
-            this.numericUpDownMinute.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            numericUpDownMinute.Anchor = AnchorStyles.None;
+            numericUpDownMinute.AutoSize = true;
+            numericUpDownMinute.BorderStyle = BorderStyle.FixedSingle;
+            numericUpDownMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            numericUpDownMinute.Location = new Point(181, 102);
+            numericUpDownMinute.Maximum = new decimal(new int[] { 59, 0, 0, 0 });
+            numericUpDownMinute.Name = "numericUpDownMinute";
+            numericUpDownMinute.Size = new Size(50, 26);
+            numericUpDownMinute.TabIndex = 4;
+            numericUpDownMinute.TextAlign = HorizontalAlignment.Center;
             // 
             // SetTimeDialog
             // 
-            this.AcceptButton = this.btnOk;
-            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 19F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.BackColor = System.Drawing.Color.LightBlue;
-            this.ClientSize = new System.Drawing.Size(284, 211);
-            this.Controls.Add(this.btnCancel);
-            this.Controls.Add(this.btnOk);
-            this.Controls.Add(this.numericUpDownMinute);
-            this.Controls.Add(this.labelMinute);
-            this.Controls.Add(this.numericUpDownHour);
-            this.Controls.Add(this.labelHour);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Font = new System.Drawing.Font("Times New Roman", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.ForeColor = System.Drawing.Color.Black;
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
-            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Margin = new System.Windows.Forms.Padding(4);
-            this.MaximizeBox = false;
-            this.MinimizeBox = false;
-            this.Name = "SetTimeDialog";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Выберите дату и время";
-           
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownHour)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDownMinute)).EndInit();
-            this.ResumeLayout(false);
-            this.PerformLayout();
+            AcceptButton = btnOk;
+            AutoScaleDimensions = new SizeF(9F, 19F);
+            AutoScaleMode = AutoScaleMode.Font;
+            AutoSizeMode = AutoSizeMode.GrowAndShrink;
+            BackColor = Color.LightBlue;
+            ClientSize = new Size(284, 211);
+            Controls.Add(btnCancel);
+            Controls.Add(btnOk);
+            Controls.Add(numericUpDownMinute);
+            Controls.Add(labelMinute);
+            Controls.Add(numericUpDownHour);
+            Controls.Add(labelHour);
+            Controls.Add(dateTimePicker1);
+            Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            ForeColor = Color.Black;
+            FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4);
+            MaximizeBox = false;
+            MinimizeBox = false;
+            Name = "SetTimeDialog";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Выберите дату и время";
+            ((System.ComponentModel.ISupportInitialize)numericUpDownHour).EndInit();
+            ((System.ComponentModel.ISupportInitialize)numericUpDownMinute).EndInit();
+            ResumeLayout(false);
+            PerformLayout();
 
         }
 
