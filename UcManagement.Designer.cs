@@ -105,10 +105,10 @@
             panelAddDevice.Controls.Add(portTextBox);
             panelAddDevice.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             panelAddDevice.ForeColor = Color.Black;
-            panelAddDevice.Location = new Point(42, 4);
+            panelAddDevice.Location = new Point(79, 4);
             panelAddDevice.Margin = new Padding(4);
             panelAddDevice.Name = "panelAddDevice";
-            panelAddDevice.Size = new Size(590, 41);
+            panelAddDevice.Size = new Size(516, 41);
             panelAddDevice.TabIndex = 6;
             // 
             // ipLabel
@@ -116,12 +116,12 @@
             ipLabel.Anchor = AnchorStyles.None;
             ipLabel.AutoSize = true;
             ipLabel.Font = new Font("Times New Roman", 12F);
-            ipLabel.Location = new Point(60, 10);
+            ipLabel.Location = new Point(7, 10);
             ipLabel.Margin = new Padding(4, 0, 4, 0);
             ipLabel.Name = "ipLabel";
-            ipLabel.Size = new Size(23, 19);
+            ipLabel.Size = new Size(26, 19);
             ipLabel.TabIndex = 0;
-            ipLabel.Text = "IP";
+            ipLabel.Text = "IP:";
             ipLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // ipTextBox
@@ -129,11 +129,12 @@
             ipTextBox.Anchor = AnchorStyles.None;
             ipTextBox.BorderStyle = BorderStyle.FixedSingle;
             ipTextBox.Font = new Font("Times New Roman", 12F);
-            ipTextBox.Location = new Point(91, 7);
+            ipTextBox.Location = new Point(40, 7);
             ipTextBox.Margin = new Padding(4);
             ipTextBox.Name = "ipTextBox";
             ipTextBox.Size = new Size(134, 26);
             ipTextBox.TabIndex = 1;
+            ipTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // addDeviceButton
             // 
@@ -143,7 +144,7 @@
             addDeviceButton.BackColor = Color.SkyBlue;
             addDeviceButton.FlatStyle = FlatStyle.Flat;
             addDeviceButton.Font = new Font("Times New Roman", 12F);
-            addDeviceButton.Location = new Point(400, 6);
+            addDeviceButton.Location = new Point(337, 6);
             addDeviceButton.Margin = new Padding(4);
             addDeviceButton.Name = "addDeviceButton";
             addDeviceButton.Size = new Size(166, 31);
@@ -157,12 +158,12 @@
             portLabel.Anchor = AnchorStyles.None;
             portLabel.AutoSize = true;
             portLabel.Font = new Font("Times New Roman", 12F);
-            portLabel.Location = new Point(263, 9);
+            portLabel.Location = new Point(197, 9);
             portLabel.Margin = new Padding(4, 0, 4, 0);
             portLabel.Name = "portLabel";
-            portLabel.Size = new Size(43, 19);
+            portLabel.Size = new Size(46, 19);
             portLabel.TabIndex = 2;
-            portLabel.Text = "Порт";
+            portLabel.Text = "Порт:";
             portLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // portTextBox
@@ -170,11 +171,12 @@
             portTextBox.Anchor = AnchorStyles.None;
             portTextBox.BorderStyle = BorderStyle.FixedSingle;
             portTextBox.Font = new Font("Times New Roman", 12F);
-            portTextBox.Location = new Point(312, 7);
+            portTextBox.Location = new Point(248, 6);
             portTextBox.Margin = new Padding(4);
             portTextBox.Name = "portTextBox";
             portTextBox.Size = new Size(46, 26);
             portTextBox.TabIndex = 3;
+            portTextBox.TextAlign = HorizontalAlignment.Center;
             // 
             // panelButtons
             // 
@@ -263,6 +265,7 @@
             // 
             tableLayoutInfo.Anchor = AnchorStyles.None;
             tableLayoutInfo.AutoScroll = true;
+            tableLayoutInfo.AutoSize = true;
             tableLayoutInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutInfo.ColumnCount = 2;
             tableLayoutInfo.ColumnStyles.Add(new ColumnStyle());
@@ -275,81 +278,87 @@
             tableLayoutInfo.Controls.Add(deviceTimeLabel, 1, 2);
             tableLayoutInfo.Font = new Font("Times New Roman", 12F);
             tableLayoutInfo.GrowStyle = TableLayoutPanelGrowStyle.AddColumns;
-            tableLayoutInfo.Location = new Point(126, 27);
+            tableLayoutInfo.Location = new Point(151, 26);
             tableLayoutInfo.Margin = new Padding(4);
             tableLayoutInfo.Name = "tableLayoutInfo";
             tableLayoutInfo.RowCount = 3;
             tableLayoutInfo.RowStyles.Add(new RowStyle());
             tableLayoutInfo.RowStyles.Add(new RowStyle());
             tableLayoutInfo.RowStyles.Add(new RowStyle());
-            tableLayoutInfo.Size = new Size(396, 58);
+            tableLayoutInfo.Size = new Size(236, 57);
             tableLayoutInfo.TabIndex = 0;
             // 
             // labelSerialNumber
             // 
-            labelSerialNumber.Anchor = AnchorStyles.Left;
+            labelSerialNumber.Anchor = AnchorStyles.None;
             labelSerialNumber.AutoSize = true;
-            labelSerialNumber.Location = new Point(4, 0);
+            labelSerialNumber.Location = new Point(5, 0);
             labelSerialNumber.Margin = new Padding(4, 0, 4, 0);
             labelSerialNumber.Name = "labelSerialNumber";
-            labelSerialNumber.Size = new Size(128, 19);
+            labelSerialNumber.Size = new Size(139, 19);
             labelSerialNumber.TabIndex = 0;
-            labelSerialNumber.Text = "Серийный номер";
+            labelSerialNumber.Text = "Серийный номер:  ";
+            labelSerialNumber.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // serialNumberLabel
             // 
-            serialNumberLabel.Anchor = AnchorStyles.Left;
+            serialNumberLabel.Anchor = AnchorStyles.None;
             serialNumberLabel.AutoSize = true;
-            serialNumberLabel.Location = new Point(142, 0);
+            serialNumberLabel.Location = new Point(153, 0);
             serialNumberLabel.Margin = new Padding(4, 0, 4, 0);
             serialNumberLabel.Name = "serialNumberLabel";
-            serialNumberLabel.Size = new Size(75, 19);
+            serialNumberLabel.Size = new Size(79, 19);
             serialNumberLabel.TabIndex = 1;
-            serialNumberLabel.Text = "Нет связи";
+            serialNumberLabel.Text = " Нет связи";
+            serialNumberLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelFirmwareVersion
             // 
-            labelFirmwareVersion.Anchor = AnchorStyles.Left;
+            labelFirmwareVersion.Anchor = AnchorStyles.None;
             labelFirmwareVersion.AutoSize = true;
             labelFirmwareVersion.Location = new Point(4, 19);
             labelFirmwareVersion.Margin = new Padding(4, 0, 4, 0);
             labelFirmwareVersion.Name = "labelFirmwareVersion";
-            labelFirmwareVersion.Size = new Size(130, 19);
+            labelFirmwareVersion.Size = new Size(141, 19);
             labelFirmwareVersion.TabIndex = 2;
-            labelFirmwareVersion.Text = "Версия прошивки";
+            labelFirmwareVersion.Text = "Версия прошивки:  ";
+            labelFirmwareVersion.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // firmwareVersionLabel
             // 
-            firmwareVersionLabel.Anchor = AnchorStyles.Left;
+            firmwareVersionLabel.Anchor = AnchorStyles.None;
             firmwareVersionLabel.AutoSize = true;
-            firmwareVersionLabel.Location = new Point(142, 19);
+            firmwareVersionLabel.Location = new Point(153, 19);
             firmwareVersionLabel.Margin = new Padding(4, 0, 4, 0);
             firmwareVersionLabel.Name = "firmwareVersionLabel";
-            firmwareVersionLabel.Size = new Size(75, 19);
+            firmwareVersionLabel.Size = new Size(79, 19);
             firmwareVersionLabel.TabIndex = 3;
-            firmwareVersionLabel.Text = "Нет связи";
+            firmwareVersionLabel.Text = " Нет связи";
+            firmwareVersionLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelDeviceTime
             // 
-            labelDeviceTime.Anchor = AnchorStyles.Left;
+            labelDeviceTime.Anchor = AnchorStyles.None;
             labelDeviceTime.AutoSize = true;
-            labelDeviceTime.Location = new Point(4, 38);
+            labelDeviceTime.Location = new Point(20, 38);
             labelDeviceTime.Margin = new Padding(4, 0, 4, 0);
             labelDeviceTime.Name = "labelDeviceTime";
-            labelDeviceTime.Size = new Size(97, 19);
+            labelDeviceTime.Size = new Size(108, 19);
             labelDeviceTime.TabIndex = 4;
-            labelDeviceTime.Text = "Время платы";
+            labelDeviceTime.Text = "Время платы:  ";
+            labelDeviceTime.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // deviceTimeLabel
             // 
-            deviceTimeLabel.Anchor = AnchorStyles.Left;
+            deviceTimeLabel.Anchor = AnchorStyles.None;
             deviceTimeLabel.AutoSize = true;
-            deviceTimeLabel.Location = new Point(142, 38);
+            deviceTimeLabel.Location = new Point(153, 38);
             deviceTimeLabel.Margin = new Padding(4, 0, 4, 0);
             deviceTimeLabel.Name = "deviceTimeLabel";
-            deviceTimeLabel.Size = new Size(75, 19);
+            deviceTimeLabel.Size = new Size(79, 19);
             deviceTimeLabel.TabIndex = 5;
-            deviceTimeLabel.Text = "Нет связи";
+            deviceTimeLabel.Text = " Нет связи";
+            deviceTimeLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // groupBoxCNTV
             // 
@@ -373,7 +382,6 @@
             cntvDataGridView.AllowUserToDeleteRows = false;
             dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle1.BackColor = Color.Gainsboro;
-            dataGridViewCellStyle1.SelectionBackColor = Color.Empty;
             cntvDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
             cntvDataGridView.Anchor = AnchorStyles.None;
             cntvDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
@@ -382,9 +390,6 @@
             dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle2.BackColor = Color.Gainsboro;
             dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle2.ForeColor = Color.Empty;
-            dataGridViewCellStyle2.SelectionBackColor = Color.Empty;
-            dataGridViewCellStyle2.SelectionForeColor = Color.Empty;
             dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
             cntvDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
             cntvDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -405,9 +410,6 @@
             dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle4.BackColor = Color.Gainsboro;
             dataGridViewCellStyle4.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle4.ForeColor = Color.Empty;
-            dataGridViewCellStyle4.SelectionBackColor = Color.Empty;
-            dataGridViewCellStyle4.SelectionForeColor = Color.Empty;
             dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
             cntvDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
             cntvDataGridView.RowHeadersVisible = false;
@@ -439,6 +441,7 @@
             // 
             tableLayoutStatus.Anchor = AnchorStyles.None;
             tableLayoutStatus.AutoScroll = true;
+            tableLayoutStatus.AutoSize = true;
             tableLayoutStatus.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutStatus.BackColor = Color.Transparent;
             tableLayoutStatus.ColumnCount = 2;
@@ -459,78 +462,81 @@
             tableLayoutStatus.RowStyles.Add(new RowStyle());
             tableLayoutStatus.RowStyles.Add(new RowStyle());
             tableLayoutStatus.RowStyles.Add(new RowStyle());
-            tableLayoutStatus.Size = new Size(393, 61);
+            tableLayoutStatus.Size = new Size(257, 57);
             tableLayoutStatus.TabIndex = 0;
             // 
             // labelDeviceStatus
             // 
-            labelDeviceStatus.Anchor = AnchorStyles.Left;
+            labelDeviceStatus.Anchor = AnchorStyles.None;
             labelDeviceStatus.AutoSize = true;
             labelDeviceStatus.BackColor = Color.Transparent;
-            labelDeviceStatus.Location = new Point(4, 0);
+            labelDeviceStatus.Location = new Point(11, 0);
             labelDeviceStatus.Margin = new Padding(4, 0, 4, 0);
             labelDeviceStatus.Name = "labelDeviceStatus";
-            labelDeviceStatus.Size = new Size(148, 19);
+            labelDeviceStatus.Size = new Size(151, 19);
             labelDeviceStatus.TabIndex = 0;
-            labelDeviceStatus.Text = "Устройство в работе";
+            labelDeviceStatus.Text = "Устройство в работе:";
             labelDeviceStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // deviceStatusLabel
             // 
-            deviceStatusLabel.Anchor = AnchorStyles.Left;
+            deviceStatusLabel.Anchor = AnchorStyles.None;
             deviceStatusLabel.AutoSize = true;
-            deviceStatusLabel.Location = new Point(175, 0);
+            deviceStatusLabel.Location = new Point(178, 0);
             deviceStatusLabel.Margin = new Padding(4, 0, 4, 0);
             deviceStatusLabel.Name = "deviceStatusLabel";
             deviceStatusLabel.Size = new Size(75, 19);
             deviceStatusLabel.TabIndex = 1;
             deviceStatusLabel.Text = "Нет связи";
+            deviceStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelSyncStatus
             // 
-            labelSyncStatus.Anchor = AnchorStyles.Left;
+            labelSyncStatus.Anchor = AnchorStyles.None;
             labelSyncStatus.AutoSize = true;
             labelSyncStatus.Location = new Point(4, 19);
             labelSyncStatus.Margin = new Padding(4, 0, 4, 0);
             labelSyncStatus.Name = "labelSyncStatus";
-            labelSyncStatus.Size = new Size(163, 19);
+            labelSyncStatus.Size = new Size(166, 19);
             labelSyncStatus.TabIndex = 2;
-            labelSyncStatus.Text = "Синхронизация PTPv2";
+            labelSyncStatus.Text = "Синхронизация PTPv2:";
             labelSyncStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // syncStatusLabel
             // 
-            syncStatusLabel.Anchor = AnchorStyles.Left;
+            syncStatusLabel.Anchor = AnchorStyles.None;
             syncStatusLabel.AutoSize = true;
-            syncStatusLabel.Location = new Point(175, 19);
+            syncStatusLabel.Location = new Point(178, 19);
             syncStatusLabel.Margin = new Padding(4, 0, 4, 0);
             syncStatusLabel.Name = "syncStatusLabel";
             syncStatusLabel.Size = new Size(75, 19);
             syncStatusLabel.TabIndex = 3;
             syncStatusLabel.Text = "Нет связи";
+            syncStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // labelRtcStatus
             // 
-            labelRtcStatus.Anchor = AnchorStyles.Left;
+            labelRtcStatus.Anchor = AnchorStyles.None;
             labelRtcStatus.AutoSize = true;
-            labelRtcStatus.Location = new Point(4, 40);
+            labelRtcStatus.Location = new Point(21, 38);
             labelRtcStatus.Margin = new Padding(4, 0, 4, 0);
             labelRtcStatus.Name = "labelRtcStatus";
-            labelRtcStatus.Size = new Size(128, 19);
+            labelRtcStatus.Size = new Size(131, 19);
             labelRtcStatus.TabIndex = 4;
-            labelRtcStatus.Text = "Внутренние часы";
+            labelRtcStatus.Text = "Внутренние часы:";
             labelRtcStatus.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // rtcStatusLabel
             // 
-            rtcStatusLabel.Anchor = AnchorStyles.Left;
+            rtcStatusLabel.Anchor = AnchorStyles.None;
             rtcStatusLabel.AutoSize = true;
-            rtcStatusLabel.Location = new Point(175, 40);
+            rtcStatusLabel.Location = new Point(178, 38);
             rtcStatusLabel.Margin = new Padding(4, 0, 4, 0);
             rtcStatusLabel.Name = "rtcStatusLabel";
             rtcStatusLabel.Size = new Size(75, 19);
             rtcStatusLabel.TabIndex = 5;
             rtcStatusLabel.Text = "Нет связи";
+            rtcStatusLabel.TextAlign = ContentAlignment.MiddleCenter;
             // 
             // groupBoxRMS
             // 
@@ -564,9 +570,6 @@
             dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle7.BackColor = Color.Gainsboro;
             dataGridViewCellStyle7.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle7.ForeColor = Color.Empty;
-            dataGridViewCellStyle7.SelectionBackColor = Color.Empty;
-            dataGridViewCellStyle7.SelectionForeColor = Color.Empty;
             dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
             rmsDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             rmsDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -587,9 +590,6 @@
             dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
             dataGridViewCellStyle9.BackColor = Color.Gainsboro;
             dataGridViewCellStyle9.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle9.ForeColor = Color.Empty;
-            dataGridViewCellStyle9.SelectionBackColor = Color.Empty;
-            dataGridViewCellStyle9.SelectionForeColor = Color.Empty;
             dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
             rmsDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             rmsDataGridView.RowHeadersVisible = false;
@@ -618,11 +618,13 @@
             panelButtons.ResumeLayout(false);
             panelButtons.PerformLayout();
             groupBoxInfo.ResumeLayout(false);
+            groupBoxInfo.PerformLayout();
             tableLayoutInfo.ResumeLayout(false);
             tableLayoutInfo.PerformLayout();
             groupBoxCNTV.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)cntvDataGridView).EndInit();
             groupBoxStatus.ResumeLayout(false);
+            groupBoxStatus.PerformLayout();
             tableLayoutStatus.ResumeLayout(false);
             tableLayoutStatus.PerformLayout();
             groupBoxRMS.ResumeLayout(false);

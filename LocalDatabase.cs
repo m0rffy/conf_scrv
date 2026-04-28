@@ -4,6 +4,7 @@ namespace Uetm_2_0
 {
     public static class LocalDatabase
     {
+       // изменить нижнию строку на: internal static readonly string DbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.db"); чтобы сохранение БД было там же где и exe файл
         internal static readonly string DbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Uetm_2_0","config.db");
         // %LocalAppData%\Uetm_2_0
         internal static readonly string ConnectionString = $"Data Source={DbPath};Version=3;";

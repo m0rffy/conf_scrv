@@ -444,11 +444,12 @@ namespace Uetm_2_0
                 Disconnect();
                 btnWrite.Enabled = true;
 
-                if (IsConnectionError(ex))
-                    MessageBox.Show("Соединение с устройством потеряно во время записи. Возможно, устройство перезагрузилось.",
-                        "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                else
+                // Если ошибка связана с разрывом соединения (ожидаемо при перезагрузке), НЕ показываем сообщение.
+                // Для других ошибок выводим сообщение.
+                if (!IsConnectionError(ex))
+                {
                     MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                }
 
                 RefreshDevicesList();
                 return;
@@ -478,24 +479,15 @@ namespace Uetm_2_0
                 Database.SaveAppData();
             }
 
-            // 13. Запись в журнал изменений – вставляйте после строк, где обновляется IP (activeDev.IP = newIp)
-            try
-            {
-                LocalDatabase.AddLogEntry(
-                    Database.CurrentRole,
-                    "Настройки записаны в устройство",
-                    deviceIP: capturedDeviceIP,
-                    currentA: capturedCurrentA,
-                    resourcePercent: capturedResource,
-                    channel: capturedPhase
-                );
-            }
-            catch (Exception ex)
-            {
-                // Если произошла ошибка записи в БД, вы увидите это окно
-                MessageBox.Show($"Ошибка записи в локальный журнал: {ex.Message}",
-                                "Ошибка БД", MessageBoxButtons.OK, MessageBoxIcon.Error);
-            }
+            // 13. Запись в журнал изменений (с захваченными ДО записи показателями)
+            LocalDatabase.AddLogEntry(
+                Database.CurrentRole,
+                "Настройки записаны в устройство",
+                deviceIP: capturedDeviceIP,
+                currentA: capturedCurrentA,
+                resourcePercent: capturedResource,
+                channel: capturedPhase
+            );
 
             // 14. Информируем пользователя о результате
             if (ExporterLinkerHelper.WasRebootCommandSent)

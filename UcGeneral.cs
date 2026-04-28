@@ -156,15 +156,19 @@ namespace Uetm_2_0
                             c2TextBox.Text == preset.C2 &&
                             c3TextBox.Text == preset.C3 &&
                             c4TextBox.Text == preset.C4;
-                if (same) return;
-                ApplyBreakerPreset(selected);
-                SetFieldsReadOnly(true);
+
+                if (!same)
+                {
+                    ApplyBreakerPreset(selected);   // обновляем поля только если отличаются
+                }
+                SetFieldsReadOnly(true);            // блокируем всегда
             }
         }
 
         private void SetFieldsReadOnly(bool readOnly)
         {
             nominalCurrentTextBox.ReadOnly = readOnly;
+            maxCurrentTextBox.ReadOnly = readOnly;
             thresholdCurrentTextBox.ReadOnly = readOnly;
             nominalOperationsTextBox.ReadOnly = readOnly;
             c1TextBox.ReadOnly = readOnly;
@@ -175,6 +179,7 @@ namespace Uetm_2_0
             // Задаём свой цвет фона для заблокированных полей
             Color lockedColor = Color.Gainsboro;  
             nominalCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
+            maxCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
             thresholdCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
             nominalOperationsTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
             c1TextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;

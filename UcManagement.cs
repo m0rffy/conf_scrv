@@ -133,7 +133,6 @@ namespace Uetm_2_0
             {
                 if (tcpClient == null || !tcpClient.Connected)
                 {
-                    SafeInvoke(() => MessageBox.Show("Соединение с устройством потеряно.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
                     SafeInvoke(() => mainForm.Disconnect());
                     break;
                 }
@@ -174,7 +173,6 @@ namespace Uetm_2_0
                 {
                     if (IsConnectionError(ex))
                     {
-                        SafeInvoke(() => MessageBox.Show("Потеря связи с устройством.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
                         SafeInvoke(() => mainForm.Disconnect());
                         break;
                     }
