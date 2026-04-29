@@ -32,42 +32,46 @@
             cmbRole.Font = new Font("Times New Roman", 12F);
             cmbRole.FormattingEnabled = true;
             cmbRole.Items.AddRange(new object[] { "Администратор", "Пользователь" });
-            cmbRole.Location = new Point(271, 12);
+            cmbRole.Location = new Point(285, 9);
+            cmbRole.Margin = new Padding(4, 4, 4, 4);
             cmbRole.Name = "cmbRole";
-            cmbRole.Size = new Size(135, 27);
+            cmbRole.Size = new Size(172, 27);
             cmbRole.TabIndex = 0;
             // 
             // txtCurrent
             // 
             txtCurrent.Anchor = AnchorStyles.None;
             txtCurrent.Font = new Font("Times New Roman", 12F);
-            txtCurrent.Location = new Point(271, 45);
+            txtCurrent.Location = new Point(285, 51);
+            txtCurrent.Margin = new Padding(4, 4, 4, 4);
             txtCurrent.MaxLength = 15;
             txtCurrent.Name = "txtCurrent";
             txtCurrent.PasswordChar = '*';
-            txtCurrent.Size = new Size(135, 26);
+            txtCurrent.Size = new Size(172, 26);
             txtCurrent.TabIndex = 1;
             // 
             // txtNew
             // 
             txtNew.Anchor = AnchorStyles.None;
             txtNew.Font = new Font("Times New Roman", 12F);
-            txtNew.Location = new Point(271, 82);
+            txtNew.Location = new Point(285, 97);
+            txtNew.Margin = new Padding(4, 4, 4, 4);
             txtNew.MaxLength = 15;
             txtNew.Name = "txtNew";
             txtNew.PasswordChar = '*';
-            txtNew.Size = new Size(135, 26);
+            txtNew.Size = new Size(172, 26);
             txtNew.TabIndex = 2;
             // 
             // txtConfirm
             // 
             txtConfirm.Anchor = AnchorStyles.None;
             txtConfirm.Font = new Font("Times New Roman", 12F);
-            txtConfirm.Location = new Point(271, 116);
+            txtConfirm.Location = new Point(285, 140);
+            txtConfirm.Margin = new Padding(4, 4, 4, 4);
             txtConfirm.MaxLength = 15;
             txtConfirm.Name = "txtConfirm";
             txtConfirm.PasswordChar = '*';
-            txtConfirm.Size = new Size(135, 26);
+            txtConfirm.Size = new Size(172, 26);
             txtConfirm.TabIndex = 3;
             // 
             // btnOk
@@ -78,7 +82,8 @@
             btnOk.BackColor = Color.SkyBlue;
             btnOk.FlatStyle = FlatStyle.Flat;
             btnOk.Font = new Font("Times New Roman", 12F);
-            btnOk.Location = new Point(104, 155);
+            btnOk.Location = new Point(169, 177);
+            btnOk.Margin = new Padding(4, 4, 4, 4);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(98, 31);
             btnOk.TabIndex = 4;
@@ -94,7 +99,8 @@
             btnCancel.BackColor = Color.SkyBlue;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Times New Roman", 12F);
-            btnCancel.Location = new Point(224, 155);
+            btnCancel.Location = new Point(285, 178);
+            btnCancel.Margin = new Padding(4, 4, 4, 4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(73, 31);
             btnCancel.TabIndex = 5;
@@ -108,7 +114,8 @@
             labelRole.AutoSize = true;
             labelRole.BackColor = Color.Transparent;
             labelRole.Font = new Font("Times New Roman", 12F);
-            labelRole.Location = new Point(12, 14);
+            labelRole.Location = new Point(111, 12);
+            labelRole.Margin = new Padding(4, 0, 4, 0);
             labelRole.Name = "labelRole";
             labelRole.Size = new Size(156, 19);
             labelRole.TabIndex = 1;
@@ -120,7 +127,8 @@
             labelCurrent.AutoSize = true;
             labelCurrent.BackColor = Color.Transparent;
             labelCurrent.Font = new Font("Times New Roman", 12F);
-            labelCurrent.Location = new Point(12, 47);
+            labelCurrent.Location = new Point(31, 54);
+            labelCurrent.Margin = new Padding(4, 0, 4, 0);
             labelCurrent.Name = "labelCurrent";
             labelCurrent.Size = new Size(236, 19);
             labelCurrent.TabIndex = 2;
@@ -132,7 +140,8 @@
             labelNew.AutoSize = true;
             labelNew.BackColor = Color.Transparent;
             labelNew.Font = new Font("Times New Roman", 12F);
-            labelNew.Location = new Point(12, 84);
+            labelNew.Location = new Point(12, 99);
+            labelNew.Margin = new Padding(4, 0, 4, 0);
             labelNew.Name = "labelNew";
             labelNew.Size = new Size(255, 19);
             labelNew.TabIndex = 3;
@@ -144,7 +153,8 @@
             labelConfirm.AutoSize = true;
             labelConfirm.BackColor = Color.Transparent;
             labelConfirm.Font = new Font("Times New Roman", 12F);
-            labelConfirm.Location = new Point(12, 118);
+            labelConfirm.Location = new Point(45, 143);
+            labelConfirm.Margin = new Padding(4, 0, 4, 0);
             labelConfirm.Name = "labelConfirm";
             labelConfirm.Size = new Size(222, 19);
             labelConfirm.TabIndex = 4;
@@ -153,9 +163,9 @@
             // ChangePasswordDialog
             // 
             AcceptButton = btnOk;
-            AutoScaleDimensions = new SizeF(7F, 15F);
+            AutoScaleDimensions = new SizeF(9F, 19F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(427, 207);
+            ClientSize = new Size(473, 221);
             Controls.Add(cmbRole);
             Controls.Add(labelRole);
             Controls.Add(txtCurrent);
@@ -166,7 +176,9 @@
             Controls.Add(labelConfirm);
             Controls.Add(btnOk);
             Controls.Add(btnCancel);
+            Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             FormBorderStyle = FormBorderStyle.FixedDialog;
+            Margin = new Padding(4, 4, 4, 4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ChangePasswordDialog";
