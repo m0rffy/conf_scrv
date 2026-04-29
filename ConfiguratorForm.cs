@@ -113,8 +113,13 @@ namespace Uetm_2_0
             {
                 _connection = ConnectionManager.OpenConnection(_ip, _port);
                 connectionTimeoutTimer.Stop();
-                ConnectionStarted?.Invoke(_connection);
+
+                // 1. Чтение всех настроек в основном потоке (без фонового опроса)
                 ReadAllSettings();
+
+                // 2. Только после успешного чтения настроек оповещаем о подключении —
+                //    это запустит BackgroundWorker в UcManagement и обновит карточки устройств.
+                ConnectionStarted?.Invoke(_connection);
             }
             catch (TimeoutException ex)
             {
@@ -137,13 +142,18 @@ namespace Uetm_2_0
                 if (_connection != null)
                 {
                     ConnectionManager.CloseConnection();
-                    ConnectionStopped?.Invoke();
                     _connection = null;
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show($"Ошибка при отключении: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+            finally
+            {
+                // Ожидаем полной остановки фонового опроса
+                ucManagement?.WaitForBackgroundWorkerStop();
+                ConnectionStopped?.Invoke();
             }
         }
 

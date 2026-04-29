@@ -76,6 +76,10 @@ namespace Uetm_2_0
         private void OnConnectionStarted(Tuple<TcpClient, IModbusMaster> connection)
         {
             _connection = connection;
+
+            // Гарантируем, что старый воркер полностью остановлен перед запуском нового
+            WaitForBackgroundWorkerStop();
+
             if (!backgroundWorker.IsBusy)
             {
                 backgroundWorker.RunWorkerAsync(_connection);
@@ -383,6 +387,21 @@ namespace Uetm_2_0
                             MessageBox.Show($"Ошибка установки времени: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                         }
                     }
+                }
+            }
+        }
+
+        public void WaitForBackgroundWorkerStop()
+        {
+            if (backgroundWorker == null) return;
+            if (backgroundWorker.IsBusy)
+            {
+                backgroundWorker.CancelAsync();
+                // Ожидаем завершение с обработкой сообщений UI, чтобы не подвесить форму
+                while (backgroundWorker.IsBusy)
+                {
+                    Application.DoEvents();
+                    System.Threading.Thread.Sleep(20);
                 }
             }
         }
