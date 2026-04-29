@@ -252,11 +252,11 @@
             groupBoxInfo.Controls.Add(tableLayoutInfo);
             groupBoxInfo.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxInfo.ForeColor = Color.Black;
-            groupBoxInfo.Location = new Point(33, 530);
+            groupBoxInfo.Location = new Point(33, 524);
             groupBoxInfo.Margin = new Padding(4);
             groupBoxInfo.Name = "groupBoxInfo";
             groupBoxInfo.Padding = new Padding(4);
-            groupBoxInfo.Size = new Size(608, 103);
+            groupBoxInfo.Size = new Size(608, 114);
             groupBoxInfo.TabIndex = 5;
             groupBoxInfo.TabStop = false;
             groupBoxInfo.Text = "Информация об устройстве";
@@ -264,7 +264,6 @@
             // tableLayoutInfo
             // 
             tableLayoutInfo.Anchor = AnchorStyles.None;
-            tableLayoutInfo.AutoScroll = true;
             tableLayoutInfo.AutoSize = true;
             tableLayoutInfo.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutInfo.ColumnCount = 2;
@@ -278,7 +277,7 @@
             tableLayoutInfo.Controls.Add(deviceTimeLabel, 1, 2);
             tableLayoutInfo.Font = new Font("Times New Roman", 12F);
             tableLayoutInfo.GrowStyle = TableLayoutPanelGrowStyle.AddColumns;
-            tableLayoutInfo.Location = new Point(190, 32);
+            tableLayoutInfo.Location = new Point(190, 38);
             tableLayoutInfo.Margin = new Padding(4);
             tableLayoutInfo.Name = "tableLayoutInfo";
             tableLayoutInfo.RowCount = 3;
@@ -440,7 +439,6 @@
             // tableLayoutStatus
             // 
             tableLayoutStatus.Anchor = AnchorStyles.None;
-            tableLayoutStatus.AutoScroll = true;
             tableLayoutStatus.AutoSize = true;
             tableLayoutStatus.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             tableLayoutStatus.BackColor = Color.Transparent;
