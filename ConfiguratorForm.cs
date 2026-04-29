@@ -151,8 +151,7 @@ namespace Uetm_2_0
             }
             finally
             {
-                // Ожидаем полной остановки фонового опроса
-                ucManagement?.WaitForBackgroundWorkerStop();
+                // Фоновый опрос остановится сам при следующей проверке tcpClient.Connected
                 ConnectionStopped?.Invoke();
             }
         }

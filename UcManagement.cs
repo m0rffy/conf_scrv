@@ -109,6 +109,12 @@ namespace Uetm_2_0
         private bool IsConnectionError(Exception ex)
         {
             if (ex == null) return false;
+            if (ex is AggregateException agg)
+                return agg.InnerExceptions.Any(IsConnectionError);
+            if (ex is SocketException || ex is IOException)
+                return true;
+            if (ex is InvalidOperationException && ex.Message.Contains("connected"))
+                return true;
             string msg = ex.Message.ToLower();
             return msg.Contains("socket") ||
                    msg.Contains("connection") ||
@@ -116,6 +122,7 @@ namespace Uetm_2_0
                    msg.Contains("transport") ||
                    msg.Contains("disposed") ||
                    msg.Contains("timeout") ||
+                   msg.Contains("broken pipe") ||
                    (ex.InnerException != null && IsConnectionError(ex.InnerException));
         }
 
@@ -149,7 +156,7 @@ namespace Uetm_2_0
                     DateTime dt = PtpTimeHelper.PtpToDateTime(timeData.ptpval.ns, timeData.ptpval.slo, timeData.ptsecHi);
                     var cmns = profileHelper.cmns_Read(modbusMaster);
 
-                    // Вычисляем Inom1 для пересчёта тока (единожды или при изменении)
+                    // Вычисляем Inom1 для пересчёта тока
                     float inom1 = 1.0f;
                     string inom1Str = Database.GeneralSettings_TextFormat.meas.primct.Inom1;
                     if (!string.IsNullOrEmpty(inom1Str))
@@ -167,11 +174,6 @@ namespace Uetm_2_0
                         serialNumberLabel.Text = cmns.SerialNo.ToString();
                         firmwareVersionLabel.Text = cmns.FmwVer.ToString();
                     });
-
-                    // Автоматическое сохранение состояния в локальную БД не выполняется.
-                    // Состояние сохраняется только по явной кнопке «Сохранить состояние» (если добавлена).
-
-                    System.Threading.Thread.Sleep(2000);
                 }
                 catch (Exception ex)
                 {
@@ -182,11 +184,14 @@ namespace Uetm_2_0
                     }
                     else
                     {
-                        SafeInvoke(() => MessageBox.Show($"Ошибка чтения: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error));
-                        SafeInvoke(() => mainForm.Disconnect());
+                        SafeInvoke(() => MessageBox.Show($"Ошибка чтения: {ex.Message}", "Ошибка",
+                            MessageBoxButtons.OK, MessageBoxIcon.Error));
                         break;
                     }
                 }
+
+                // Интервал между опросами
+                System.Threading.Thread.Sleep(2000);
             }
         }
 
