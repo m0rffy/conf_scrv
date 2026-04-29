@@ -32,12 +32,13 @@ namespace Uetm_2_0
 
         private string ChannelNumberToLetter(int number)
         {
+            // Реальная нумерация контактов: 0=A, 1=B, 2=C, 3=N
             return number switch
             {
-                0 => "N",
-                1 => "A",
-                2 => "B",
-                3 => "C",
+                0 => "A",
+                1 => "B",
+                2 => "C",
+                3 => "N",   // не используется, т.к. N скрыт
                 _ => "-"
             };
         }
@@ -79,11 +80,10 @@ namespace Uetm_2_0
                     records = profileHelper.journal_record_Read(conn.Item2);
                     foreach (var rec in records)
                     {
-                        // Отображаем только значащие типы событий
                         if (rec.hdr.rtype == 1 || rec.hdr.rtype == 2)
                         {
-                            // Пропускаем события по каналу N (udt == 0)
-                            if (rec.hdr.rtype == 1 && rec.hdr.udt == 0)
+                            // Скрываем события по каналу N (udt == 3)
+                            if (rec.hdr.rtype == 1 && rec.hdr.udt == 3)
                                 continue;
 
                             string eventType = rec.hdr.rtype == 1
@@ -96,7 +96,7 @@ namespace Uetm_2_0
                             journalTable.Rows.Add(
                                 idx,
                                 eventType,
-                                channel,                                    // буква фазы для событий платы
+                                channel,
                                 dt.ToString("dd.MM.yyyy HH:mm:ss"),
                                 rec.Ii,
                                 rec.Ri

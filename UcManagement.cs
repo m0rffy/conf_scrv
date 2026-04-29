@@ -189,14 +189,14 @@ namespace Uetm_2_0
         private void UpdateRmsTable(float[] rms)
         {
             rmsTable.Rows.Clear();
-            // Пропускаем индекс 0 (N), отображаем только A(1), B(2), C(3)
+            // Реальный порядок в устройстве: 0=A, 1=B, 2=C, 3=N
+            // Отображаем только A(0), B(1), C(2)
             string[] labels = { "A", "B", "C" };
             for (int i = 0; i < labels.Length; i++)
             {
-                int deviceIndex = i + 1; // 1,2,3
-                if (deviceIndex < rms.Length)
+                if (i < rms.Length)
                 {
-                    float current = (float)Math.Sqrt(Math.Max(0, rms[deviceIndex])) * _inom1;
+                    float current = (float)Math.Sqrt(Math.Max(0, rms[i])) * _inom1;
                     rmsTable.Rows.Add(labels[i], current);
                 }
             }
@@ -208,10 +208,9 @@ namespace Uetm_2_0
             string[] labels = { "A", "B", "C" };
             for (int i = 0; i < labels.Length; i++)
             {
-                int deviceIndex = i + 1; // A=1, B=2, C=3
-                if (deviceIndex < cntv.Length)
+                if (i < cntv.Length)
                 {
-                    cntvTable.Rows.Add(labels[i], cntv[deviceIndex].Racc, cntv[deviceIndex].ofcnt, cntv[deviceIndex].oNacnt);
+                    cntvTable.Rows.Add(labels[i], cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
                 }
             }
         }

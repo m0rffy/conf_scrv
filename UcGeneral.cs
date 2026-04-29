@@ -223,11 +223,10 @@ namespace Uetm_2_0
 
             delayTable.Rows.Clear();
             var cdly = settings.swrcs.contacts.cdly ?? new SCDLY_cdly_TextFormat[0];
-            // Интерфейсные метки: A (из cdly[1]), B (из cdly[2]), C (из cdly[3])
             string[] uiChannels = { "A", "B", "C" };
             for (int i = 0; i < uiChannels.Length; i++)
             {
-                int cdlyIndex = i + 1; // 0 = N пропускаем
+                int cdlyIndex = i;  // 0=A, 1=B, 2=C
                 if (cdlyIndex < cdly.Length)
                 {
                     delayTable.Rows.Add(uiChannels[i],
@@ -400,8 +399,8 @@ namespace Uetm_2_0
             newSettings.swrcs.contacts.ajtr.offd = ((int)(offdMs * 10)).ToString(CultureInfo.InvariantCulture);
             newSettings.swrcs.contacts.ajtr.ond = ((int)(ondMs * 10)).ToString(CultureInfo.InvariantCulture);
 
-            // cdly
-            // cdly – пишем в индексы 1,2,3 (A,B,C)
+            
+            // cdly – пишем в индексы 0,1,2 (A,B,C), N(3) не трогаем
             string[] uiChannels = { "A", "B", "C" };
             for (int i = 0; i < delayTable.Rows.Count && i < uiChannels.Length; i++)
             {
@@ -415,8 +414,7 @@ namespace Uetm_2_0
                     _updating = false;
                     return false;
                 }
-                int cdlyIndex = i + 1; // 0 = N
-                                       // Гарантируем, что массив cdly имеет достаточный размер (он должен быть >=4 при nDichan=4)
+                int cdlyIndex = i; // 0=A,1=B,2=C
                 if (newSettings.swrcs.contacts.cdly.Length <= cdlyIndex)
                 {
                     Array.Resize(ref newSettings.swrcs.contacts.cdly, cdlyIndex + 1);
