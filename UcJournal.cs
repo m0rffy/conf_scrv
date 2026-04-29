@@ -32,14 +32,12 @@ namespace Uetm_2_0
 
         private string ChannelNumberToLetter(int number)
         {
-            // number – это udt из заголовка записи (1..nDichan)
-            // Реальный порядок контактов: 1 = N, 2 = A, 3 = B, 4 = C
             return number switch
             {
-                1 => "N",
-                2 => "A",
-                3 => "B",
-                4 => "C",
+                0 => "N",
+                1 => "A",
+                2 => "B",
+                3 => "C",
                 _ => "-"
             };
         }
@@ -84,6 +82,10 @@ namespace Uetm_2_0
                         // Отображаем только значащие типы событий
                         if (rec.hdr.rtype == 1 || rec.hdr.rtype == 2)
                         {
+                            // Пропускаем события по каналу N (udt == 0)
+                            if (rec.hdr.rtype == 1 && rec.hdr.udt == 0)
+                                continue;
+
                             string eventType = rec.hdr.rtype == 1
                                 ? (rec.hdr.subtype == 0 ? "Отключение" : "Включение")
                                 : "Обнуление";

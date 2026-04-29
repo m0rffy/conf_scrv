@@ -252,11 +252,11 @@
             groupBoxInfo.Controls.Add(tableLayoutInfo);
             groupBoxInfo.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxInfo.ForeColor = Color.Black;
-            groupBoxInfo.Location = new Point(33, 548);
+            groupBoxInfo.Location = new Point(33, 530);
             groupBoxInfo.Margin = new Padding(4);
             groupBoxInfo.Name = "groupBoxInfo";
             groupBoxInfo.Padding = new Padding(4);
-            groupBoxInfo.Size = new Size(608, 91);
+            groupBoxInfo.Size = new Size(608, 103);
             groupBoxInfo.TabIndex = 5;
             groupBoxInfo.TabStop = false;
             groupBoxInfo.Text = "Информация об устройстве";
@@ -278,7 +278,7 @@
             tableLayoutInfo.Controls.Add(deviceTimeLabel, 1, 2);
             tableLayoutInfo.Font = new Font("Times New Roman", 12F);
             tableLayoutInfo.GrowStyle = TableLayoutPanelGrowStyle.AddColumns;
-            tableLayoutInfo.Location = new Point(190, 26);
+            tableLayoutInfo.Location = new Point(190, 32);
             tableLayoutInfo.Margin = new Padding(4);
             tableLayoutInfo.Name = "tableLayoutInfo";
             tableLayoutInfo.RowCount = 3;
@@ -371,7 +371,7 @@
             groupBoxCNTV.Margin = new Padding(4);
             groupBoxCNTV.Name = "groupBoxCNTV";
             groupBoxCNTV.Padding = new Padding(4);
-            groupBoxCNTV.Size = new Size(594, 180);
+            groupBoxCNTV.Size = new Size(594, 159);
             groupBoxCNTV.TabIndex = 3;
             groupBoxCNTV.TabStop = false;
             groupBoxCNTV.Text = "Значения по ресурсу";
@@ -403,7 +403,7 @@
             cntvDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
             cntvDataGridView.EnableHeadersVisualStyles = false;
             cntvDataGridView.GridColor = Color.Gray;
-            cntvDataGridView.Location = new Point(30, 21);
+            cntvDataGridView.Location = new Point(30, 25);
             cntvDataGridView.Margin = new Padding(4);
             cntvDataGridView.Name = "cntvDataGridView";
             cntvDataGridView.ReadOnly = true;
@@ -418,7 +418,7 @@
             dataGridViewCellStyle5.BackColor = Color.Gainsboro;
             cntvDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
             cntvDataGridView.ScrollBars = ScrollBars.None;
-            cntvDataGridView.Size = new Size(535, 149);
+            cntvDataGridView.Size = new Size(535, 123);
             cntvDataGridView.TabIndex = 0;
             // 
             // groupBoxStatus
@@ -428,11 +428,11 @@
             groupBoxStatus.Controls.Add(tableLayoutStatus);
             groupBoxStatus.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxStatus.ForeColor = Color.Black;
-            groupBoxStatus.Location = new Point(34, 458);
+            groupBoxStatus.Location = new Point(34, 421);
             groupBoxStatus.Margin = new Padding(4);
             groupBoxStatus.Name = "groupBoxStatus";
             groupBoxStatus.Padding = new Padding(4);
-            groupBoxStatus.Size = new Size(607, 81);
+            groupBoxStatus.Size = new Size(607, 94);
             groupBoxStatus.TabIndex = 4;
             groupBoxStatus.TabStop = false;
             groupBoxStatus.Text = "Статус устройства";
@@ -455,7 +455,7 @@
             tableLayoutStatus.Controls.Add(rtcStatusLabel, 1, 2);
             tableLayoutStatus.Font = new Font("Times New Roman", 12F);
             tableLayoutStatus.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            tableLayoutStatus.Location = new Point(178, 18);
+            tableLayoutStatus.Location = new Point(178, 25);
             tableLayoutStatus.Margin = new Padding(4);
             tableLayoutStatus.Name = "tableLayoutStatus";
             tableLayoutStatus.RowCount = 3;
@@ -547,11 +547,11 @@
             groupBoxRMS.FlatStyle = FlatStyle.Flat;
             groupBoxRMS.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             groupBoxRMS.ForeColor = Color.Black;
-            groupBoxRMS.Location = new Point(35, 291);
+            groupBoxRMS.Location = new Point(35, 270);
             groupBoxRMS.Margin = new Padding(4);
             groupBoxRMS.Name = "groupBoxRMS";
             groupBoxRMS.Padding = new Padding(4);
-            groupBoxRMS.Size = new Size(604, 159);
+            groupBoxRMS.Size = new Size(604, 143);
             groupBoxRMS.TabIndex = 2;
             groupBoxRMS.TabStop = false;
             groupBoxRMS.Text = "Действующее значение тока (А)";
@@ -583,7 +583,7 @@
             rmsDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
             rmsDataGridView.EnableHeadersVisualStyles = false;
             rmsDataGridView.GridColor = Color.Gray;
-            rmsDataGridView.Location = new Point(35, 23);
+            rmsDataGridView.Location = new Point(35, 27);
             rmsDataGridView.Margin = new Padding(4);
             rmsDataGridView.Name = "rmsDataGridView";
             rmsDataGridView.ReadOnly = true;
@@ -598,7 +598,7 @@
             dataGridViewCellStyle10.BackColor = Color.Gainsboro;
             rmsDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
             rmsDataGridView.ScrollBars = ScrollBars.None;
-            rmsDataGridView.Size = new Size(535, 128);
+            rmsDataGridView.Size = new Size(535, 103);
             rmsDataGridView.TabIndex = 0;
             // 
             // UcManagement

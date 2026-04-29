@@ -189,24 +189,30 @@ namespace Uetm_2_0
         private void UpdateRmsTable(float[] rms)
         {
             rmsTable.Rows.Clear();
-            // Порядок в прошивке: 0 = N, 1 = A, 2 = B, 3 = C
-            string[] labels = { "N", "A", "B", "C" };
-            int count = Math.Min(labels.Length, rms.Length);
-            for (int i = 0; i < count; i++)
+            // Пропускаем индекс 0 (N), отображаем только A(1), B(2), C(3)
+            string[] labels = { "A", "B", "C" };
+            for (int i = 0; i < labels.Length; i++)
             {
-                float current = (float)Math.Sqrt(Math.Max(0, rms[i])) * _inom1;
-                rmsTable.Rows.Add(labels[i], current);
+                int deviceIndex = i + 1; // 1,2,3
+                if (deviceIndex < rms.Length)
+                {
+                    float current = (float)Math.Sqrt(Math.Max(0, rms[deviceIndex])) * _inom1;
+                    rmsTable.Rows.Add(labels[i], current);
+                }
             }
         }
 
         private void UpdateCntvTable(ModBusProfile.SWCNT[] cntv)
         {
             cntvTable.Rows.Clear();
-            string[] labels = { "N", "A", "B", "C" };
-            int count = Math.Min(labels.Length, cntv.Length);
-            for (int i = 0; i < count; i++)
+            string[] labels = { "A", "B", "C" };
+            for (int i = 0; i < labels.Length; i++)
             {
-                cntvTable.Rows.Add(labels[i], cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
+                int deviceIndex = i + 1; // A=1, B=2, C=3
+                if (deviceIndex < cntv.Length)
+                {
+                    cntvTable.Rows.Add(labels[i], cntv[deviceIndex].Racc, cntv[deviceIndex].ofcnt, cntv[deviceIndex].oNacnt);
+                }
             }
         }
 
