@@ -189,21 +189,24 @@ namespace Uetm_2_0
         private void UpdateRmsTable(float[] rms)
         {
             rmsTable.Rows.Clear();
-            for (int i = 0; i < Math.Min(3, rms.Length); i++)
+            // Порядок в прошивке: 0 = N, 1 = A, 2 = B, 3 = C
+            string[] labels = { "N", "A", "B", "C" };
+            int count = Math.Min(labels.Length, rms.Length);
+            for (int i = 0; i < count; i++)
             {
-                string channel = i == 0 ? "A" : (i == 1 ? "B" : "C");
                 float current = (float)Math.Sqrt(Math.Max(0, rms[i])) * _inom1;
-                rmsTable.Rows.Add(channel, current);
+                rmsTable.Rows.Add(labels[i], current);
             }
         }
 
         private void UpdateCntvTable(ModBusProfile.SWCNT[] cntv)
         {
             cntvTable.Rows.Clear();
-            for (int i = 0; i < Math.Min(3, cntv.Length); i++)
+            string[] labels = { "N", "A", "B", "C" };
+            int count = Math.Min(labels.Length, cntv.Length);
+            for (int i = 0; i < count; i++)
             {
-                string channel = i == 0 ? "A" : (i == 1 ? "B" : "C");
-                cntvTable.Rows.Add(channel, cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
+                cntvTable.Rows.Add(labels[i], cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
             }
         }
 

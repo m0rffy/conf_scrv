@@ -15,11 +15,11 @@
 
         private void InitializeComponent()
         {
-            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle2 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
-            DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle6 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle7 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle8 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle9 = new DataGridViewCellStyle();
+            DataGridViewCellStyle dataGridViewCellStyle10 = new DataGridViewCellStyle();
             tableLayoutPanelMain = new TableLayoutPanel();
             groupBoxBreakerInfo = new GroupBox();
             tableLayoutBreakerInfo = new TableLayoutPanel();
@@ -114,7 +114,7 @@
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
             tableLayoutPanelMain.RowStyles.Add(new RowStyle());
-            tableLayoutPanelMain.Size = new Size(1053, 644);
+            tableLayoutPanelMain.Size = new Size(1053, 640);
             tableLayoutPanelMain.TabIndex = 0;
             // 
             // groupBoxBreakerInfo
@@ -199,11 +199,11 @@
             // 
             nominalCurrentTextBox.Anchor = AnchorStyles.None;
             nominalCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
-            nominalCurrentTextBox.Location = new Point(333, 39);
+            nominalCurrentTextBox.Location = new Point(340, 39);
             nominalCurrentTextBox.Margin = new Padding(4);
             nominalCurrentTextBox.MaxLength = 10000;
             nominalCurrentTextBox.Name = "nominalCurrentTextBox";
-            nominalCurrentTextBox.Size = new Size(139, 26);
+            nominalCurrentTextBox.Size = new Size(125, 26);
             nominalCurrentTextBox.TabIndex = 1;
             nominalCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -222,11 +222,11 @@
             // 
             maxCurrentTextBox.Anchor = AnchorStyles.None;
             maxCurrentTextBox.BorderStyle = BorderStyle.FixedSingle;
-            maxCurrentTextBox.Location = new Point(333, 73);
+            maxCurrentTextBox.Location = new Point(336, 73);
             maxCurrentTextBox.Margin = new Padding(4);
             maxCurrentTextBox.MaxLength = 1000;
             maxCurrentTextBox.Name = "maxCurrentTextBox";
-            maxCurrentTextBox.Size = new Size(139, 26);
+            maxCurrentTextBox.Size = new Size(132, 26);
             maxCurrentTextBox.TabIndex = 3;
             maxCurrentTextBox.TextAlign = HorizontalAlignment.Center;
             // 
@@ -782,11 +782,11 @@
             tableLayoutPanelMain.SetColumnSpan(groupBoxDelay, 2);
             groupBoxDelay.Controls.Add(delayDataGridView);
             groupBoxDelay.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxDelay.Location = new Point(124, 465);
+            groupBoxDelay.Location = new Point(124, 461);
             groupBoxDelay.Margin = new Padding(4);
             groupBoxDelay.Name = "groupBoxDelay";
             groupBoxDelay.Padding = new Padding(4);
-            groupBoxDelay.Size = new Size(805, 162);
+            groupBoxDelay.Size = new Size(805, 166);
             groupBoxDelay.TabIndex = 6;
             groupBoxDelay.TabStop = false;
             groupBoxDelay.Text = "Запаздывание/опережение срабатывания вспомогательного контакта относительно главного, мс";
@@ -795,39 +795,39 @@
             // 
             delayDataGridView.AllowUserToAddRows = false;
             delayDataGridView.AllowUserToDeleteRows = false;
-            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            delayDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle6.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            delayDataGridView.AlternatingRowsDefaultCellStyle = dataGridViewCellStyle6;
             delayDataGridView.Anchor = AnchorStyles.None;
             delayDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             delayDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             delayDataGridView.BackgroundColor = SystemColors.Window;
-            dataGridViewCellStyle2.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = SystemColors.Control;
-            dataGridViewCellStyle2.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            dataGridViewCellStyle2.WrapMode = DataGridViewTriState.True;
-            delayDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle7.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle7.BackColor = SystemColors.Control;
+            dataGridViewCellStyle7.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dataGridViewCellStyle7.WrapMode = DataGridViewTriState.True;
+            delayDataGridView.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle7;
             delayDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dataGridViewCellStyle3.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle3.BackColor = Color.White;
-            dataGridViewCellStyle3.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle3.ForeColor = Color.Black;
-            dataGridViewCellStyle3.SelectionBackColor = SystemColors.Highlight;
-            dataGridViewCellStyle3.SelectionForeColor = SystemColors.HighlightText;
-            dataGridViewCellStyle3.WrapMode = DataGridViewTriState.True;
-            delayDataGridView.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle8.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle8.BackColor = Color.White;
+            dataGridViewCellStyle8.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dataGridViewCellStyle8.ForeColor = Color.Black;
+            dataGridViewCellStyle8.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle8.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle8.WrapMode = DataGridViewTriState.True;
+            delayDataGridView.DefaultCellStyle = dataGridViewCellStyle8;
             delayDataGridView.GridColor = Color.Gray;
-            delayDataGridView.Location = new Point(133, 30);
+            delayDataGridView.Location = new Point(133, 31);
             delayDataGridView.Margin = new Padding(4);
             delayDataGridView.Name = "delayDataGridView";
-            dataGridViewCellStyle4.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle4.BackColor = SystemColors.Control;
-            dataGridViewCellStyle4.Font = new Font("Times New Roman", 14.25F);
-            dataGridViewCellStyle4.WrapMode = DataGridViewTriState.True;
-            delayDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle9.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle9.BackColor = SystemColors.Control;
+            dataGridViewCellStyle9.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
+            dataGridViewCellStyle9.WrapMode = DataGridViewTriState.True;
+            delayDataGridView.RowHeadersDefaultCellStyle = dataGridViewCellStyle9;
             delayDataGridView.RowHeadersVisible = false;
             delayDataGridView.RowHeadersWidth = 40;
-            dataGridViewCellStyle5.Alignment = DataGridViewContentAlignment.MiddleCenter;
-            delayDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle10.Alignment = DataGridViewContentAlignment.MiddleCenter;
+            delayDataGridView.RowsDefaultCellStyle = dataGridViewCellStyle10;
             delayDataGridView.ScrollBars = ScrollBars.None;
             delayDataGridView.Size = new Size(513, 124);
             delayDataGridView.TabIndex = 0;

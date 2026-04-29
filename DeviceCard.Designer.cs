@@ -24,13 +24,13 @@
             // 
             // deleteButton
             // 
-            deleteButton.Anchor = AnchorStyles.None;
+            deleteButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             deleteButton.AutoSize = true;
             deleteButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             deleteButton.BackColor = Color.SkyBlue;
             deleteButton.FlatStyle = FlatStyle.Flat;
             deleteButton.Font = new Font("Times New Roman", 12F);
-            deleteButton.Location = new Point(24, 112);
+            deleteButton.Location = new Point(14, 102);
             deleteButton.Name = "deleteButton";
             deleteButton.Size = new Size(76, 31);
             deleteButton.TabIndex = 5;
@@ -40,13 +40,13 @@
             // 
             // connectButton
             // 
-            connectButton.Anchor = AnchorStyles.None;
+            connectButton.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             connectButton.AutoSize = true;
             connectButton.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             connectButton.BackColor = Color.SkyBlue;
             connectButton.FlatStyle = FlatStyle.Flat;
             connectButton.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            connectButton.Location = new Point(127, 112);
+            connectButton.Location = new Point(117, 102);
             connectButton.Name = "connectButton";
             connectButton.Size = new Size(119, 31);
             connectButton.TabIndex = 6;
@@ -56,11 +56,11 @@
             // 
             // ipLabel
             // 
-            ipLabel.Anchor = AnchorStyles.None;
+            ipLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             ipLabel.AutoSize = true;
             ipLabel.FlatStyle = FlatStyle.System;
             ipLabel.Font = new Font("Times New Roman", 12F);
-            ipLabel.Location = new Point(22, 45);
+            ipLabel.Location = new Point(12, 41);
             ipLabel.Name = "ipLabel";
             ipLabel.Size = new Size(23, 19);
             ipLabel.TabIndex = 0;
@@ -69,10 +69,10 @@
             // 
             // placeLabel
             // 
-            placeLabel.Anchor = AnchorStyles.None;
+            placeLabel.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             placeLabel.AutoSize = true;
             placeLabel.FlatStyle = FlatStyle.System;
-            placeLabel.Location = new Point(22, 76);
+            placeLabel.Location = new Point(12, 71);
             placeLabel.Name = "placeLabel";
             placeLabel.Size = new Size(75, 19);
             placeLabel.TabIndex = 7;
@@ -81,10 +81,10 @@
             // 
             // switchLabelName
             // 
-            switchLabelName.Anchor = AnchorStyles.None;
+            switchLabelName.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             switchLabelName.AutoSize = true;
             switchLabelName.FlatStyle = FlatStyle.System;
-            switchLabelName.Location = new Point(22, 12);
+            switchLabelName.Location = new Point(12, 11);
             switchLabelName.Name = "switchLabelName";
             switchLabelName.Size = new Size(118, 19);
             switchLabelName.TabIndex = 8;
@@ -94,7 +94,6 @@
             // DeviceCard
             // 
             AutoScaleMode = AutoScaleMode.None;
-            AutoScroll = true;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.LightGray;
             BorderStyle = BorderStyle.FixedSingle;
@@ -106,7 +105,7 @@
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             ForeColor = Color.Black;
             Name = "DeviceCard";
-            Size = new Size(270, 152);
+            Size = new Size(250, 145);
             ResumeLayout(false);
             PerformLayout();
         }

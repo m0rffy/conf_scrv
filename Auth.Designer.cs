@@ -40,6 +40,7 @@
             // 
             PasswordLabel.Anchor = AnchorStyles.None;
             PasswordLabel.AutoSize = true;
+            PasswordLabel.BackColor = Color.Transparent;
             PasswordLabel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             PasswordLabel.Location = new Point(90, 78);
             PasswordLabel.Margin = new Padding(8, 0, 8, 0);
@@ -66,6 +67,7 @@
             // 
             LoginLabel.Anchor = AnchorStyles.None;
             LoginLabel.AutoSize = true;
+            LoginLabel.BackColor = Color.Transparent;
             LoginLabel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             LoginLabel.Location = new Point(53, 18);
             LoginLabel.Margin = new Padding(8, 0, 8, 0);

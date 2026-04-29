@@ -223,16 +223,21 @@ namespace Uetm_2_0
 
             delayTable.Rows.Clear();
             var cdly = settings.swrcs.contacts.cdly ?? new SCDLY_cdly_TextFormat[0];
-            int channelsCount = Math.Min(3, cdly.Length);
-            for (int i = 0; i < channelsCount; i++)
+            // Интерфейсные метки: A (из cdly[1]), B (из cdly[2]), C (из cdly[3])
+            string[] uiChannels = { "A", "B", "C" };
+            for (int i = 0; i < uiChannels.Length; i++)
             {
-                string channelName = i switch { 0 => "A", 1 => "B", 2 => "C", _ => i.ToString() };
-                delayTable.Rows.Add(channelName, (cdly[i].offd / 10.0).ToString(CultureInfo.InvariantCulture), (cdly[i].ond / 10.0).ToString(CultureInfo.InvariantCulture));
-            }
-            for (int i = channelsCount; i < 3; i++)
-            {
-                string channelName = i switch { 0 => "A", 1 => "B", 2 => "C", _ => i.ToString() };
-                delayTable.Rows.Add(channelName, "0", "0");
+                int cdlyIndex = i + 1; // 0 = N пропускаем
+                if (cdlyIndex < cdly.Length)
+                {
+                    delayTable.Rows.Add(uiChannels[i],
+                        (cdly[cdlyIndex].offd / 10.0).ToString(CultureInfo.InvariantCulture),
+                        (cdly[cdlyIndex].ond / 10.0).ToString(CultureInfo.InvariantCulture));
+                }
+                else
+                {
+                    delayTable.Rows.Add(uiChannels[i], "0", "0");
+                }
             }
 
             string detected = DetectBreakerType();
@@ -396,7 +401,9 @@ namespace Uetm_2_0
             newSettings.swrcs.contacts.ajtr.ond = ((int)(ondMs * 10)).ToString(CultureInfo.InvariantCulture);
 
             // cdly
-            for (int i = 0; i < delayTable.Rows.Count && i < 3 && i < newSettings.swrcs.contacts.cdly.Length; i++)
+            // cdly – пишем в индексы 1,2,3 (A,B,C)
+            string[] uiChannels = { "A", "B", "C" };
+            for (int i = 0; i < delayTable.Rows.Count && i < uiChannels.Length; i++)
             {
                 DataRow row = delayTable.Rows[i];
                 if (!TryParseFloat(row[1]?.ToString(), out float offdVal) ||
@@ -408,8 +415,14 @@ namespace Uetm_2_0
                     _updating = false;
                     return false;
                 }
-                newSettings.swrcs.contacts.cdly[i].offd = (short)(offdVal * 10);
-                newSettings.swrcs.contacts.cdly[i].ond = (short)(ondVal * 10);
+                int cdlyIndex = i + 1; // 0 = N
+                                       // Гарантируем, что массив cdly имеет достаточный размер (он должен быть >=4 при nDichan=4)
+                if (newSettings.swrcs.contacts.cdly.Length <= cdlyIndex)
+                {
+                    Array.Resize(ref newSettings.swrcs.contacts.cdly, cdlyIndex + 1);
+                }
+                newSettings.swrcs.contacts.cdly[cdlyIndex].offd = (short)(offdVal * 10);
+                newSettings.swrcs.contacts.cdly[cdlyIndex].ond = (short)(ondVal * 10);
             }
 
             Database.GeneralSettings_TextFormat = newSettings;

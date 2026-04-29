@@ -60,10 +60,10 @@
             Sidebar.Controls.Add(btnJournal);
             Sidebar.FlowDirection = FlowDirection.TopDown;
             Sidebar.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            Sidebar.Location = new Point(4, 48);
+            Sidebar.Location = new Point(4, 46);
             Sidebar.Margin = new Padding(4);
             Sidebar.Name = "Sidebar";
-            Sidebar.Size = new Size(143, 639);
+            Sidebar.Size = new Size(143, 640);
             Sidebar.TabIndex = 0;
             // 
             // btnManagement
@@ -159,10 +159,10 @@
             topPanel.Controls.Add(btnWrite);
             topPanel.Controls.Add(menuStrip);
             topPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            topPanel.Location = new Point(4, 3);
+            topPanel.Location = new Point(4, 5);
             topPanel.Margin = new Padding(4);
             topPanel.Name = "topPanel";
-            topPanel.Size = new Size(1513, 40);
+            topPanel.Size = new Size(1512, 40);
             topPanel.TabIndex = 2;
             // 
             // btnChangePassword
@@ -188,7 +188,7 @@
             devicesLabel.FlatStyle = FlatStyle.Flat;
             devicesLabel.Font = new Font("Times New Roman", 14.25F);
             devicesLabel.ForeColor = Color.Black;
-            devicesLabel.Location = new Point(1320, 10);
+            devicesLabel.Location = new Point(1316, 8);
             devicesLabel.Margin = new Padding(4, 0, 4, 0);
             devicesLabel.Name = "devicesLabel";
             devicesLabel.Size = new Size(102, 21);
@@ -256,12 +256,12 @@
             devicesPanel.ColumnStyles.Add(new ColumnStyle());
             devicesPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
             devicesPanel.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            devicesPanel.Location = new Point(1231, 48);
+            devicesPanel.Location = new Point(1216, 46);
             devicesPanel.Margin = new Padding(4);
             devicesPanel.Name = "devicesPanel";
             devicesPanel.RowCount = 1;
             devicesPanel.RowStyles.Add(new RowStyle());
-            devicesPanel.Size = new Size(287, 639);
+            devicesPanel.Size = new Size(300, 640);
             devicesPanel.TabIndex = 1;
             // 
             // ChildFormPanel
@@ -271,10 +271,10 @@
             ChildFormPanel.BackColor = Color.Transparent;
             ChildFormPanel.BorderStyle = BorderStyle.FixedSingle;
             ChildFormPanel.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            ChildFormPanel.Location = new Point(150, 48);
+            ChildFormPanel.Location = new Point(149, 46);
             ChildFormPanel.Margin = new Padding(4);
             ChildFormPanel.Name = "ChildFormPanel";
-            ChildFormPanel.Size = new Size(1077, 639);
+            ChildFormPanel.Size = new Size(1064, 640);
             ChildFormPanel.TabIndex = 4;
             // 
             // ConfiguratorForm
@@ -283,7 +283,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             AutoSizeMode = AutoSizeMode.GrowAndShrink;
             BackColor = Color.LightBlue;
-            ClientSize = new Size(1520, 690);
+            ClientSize = new Size(1520, 686);
             Controls.Add(devicesPanel);
             Controls.Add(Sidebar);
             Controls.Add(topPanel);

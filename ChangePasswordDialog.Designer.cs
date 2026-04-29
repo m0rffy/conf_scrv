@@ -106,6 +106,7 @@
             // 
             labelRole.Anchor = AnchorStyles.None;
             labelRole.AutoSize = true;
+            labelRole.BackColor = Color.Transparent;
             labelRole.Font = new Font("Times New Roman", 12F);
             labelRole.Location = new Point(12, 14);
             labelRole.Name = "labelRole";
@@ -117,6 +118,7 @@
             // 
             labelCurrent.Anchor = AnchorStyles.None;
             labelCurrent.AutoSize = true;
+            labelCurrent.BackColor = Color.Transparent;
             labelCurrent.Font = new Font("Times New Roman", 12F);
             labelCurrent.Location = new Point(12, 47);
             labelCurrent.Name = "labelCurrent";
@@ -128,6 +130,7 @@
             // 
             labelNew.Anchor = AnchorStyles.None;
             labelNew.AutoSize = true;
+            labelNew.BackColor = Color.Transparent;
             labelNew.Font = new Font("Times New Roman", 12F);
             labelNew.Location = new Point(12, 84);
             labelNew.Name = "labelNew";
@@ -139,6 +142,7 @@
             // 
             labelConfirm.Anchor = AnchorStyles.None;
             labelConfirm.AutoSize = true;
+            labelConfirm.BackColor = Color.Transparent;
             labelConfirm.Font = new Font("Times New Roman", 12F);
             labelConfirm.Location = new Point(12, 118);
             labelConfirm.Name = "labelConfirm";

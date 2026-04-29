@@ -91,6 +91,7 @@
             // 
             labelHour.Anchor = AnchorStyles.None;
             labelHour.AutoSize = true;
+            labelHour.BackColor = Color.Transparent;
             labelHour.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             labelHour.Location = new Point(54, 63);
             labelHour.Margin = new Padding(4, 0, 4, 0);
@@ -117,6 +118,7 @@
             // 
             labelMinute.Anchor = AnchorStyles.None;
             labelMinute.AutoSize = true;
+            labelMinute.BackColor = Color.Transparent;
             labelMinute.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             labelMinute.Location = new Point(54, 104);
             labelMinute.Margin = new Padding(4, 0, 4, 0);

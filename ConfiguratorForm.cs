@@ -353,12 +353,7 @@ namespace Uetm_2_0
 
         private async void BtnWrite_Click(object sender, EventArgs e)
         {
-            // 1. Проверка прав
-            if (Database.CurrentRole != "Администратор")
-            {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
 
             // 2. Проверка соединения
             if (_connection?.Item1?.Connected != true)
@@ -510,11 +505,7 @@ namespace Uetm_2_0
         // Смена пароля
         private void btnChangePassword_Click(object sender, EventArgs e)
         {
-            if (Database.CurrentRole != "Администратор")
-            {
-                MessageBox.Show("Только администратор может менять пароли.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
+            
 
             using (var dlg = new ChangePasswordDialog())
             {
@@ -562,9 +553,9 @@ namespace Uetm_2_0
         {
             string info =
                 "Порядок работы:\n" +
-                "1. Управление - ввод IP и порта (502) - Добавить - Подключиться.\n" +
+                "1. Управление - ввод IP и порта (502) - Добавить.\n" +
                 "2. Подключиться – загрузка настроек с устройства.\n" +
-                "3. Записать – отправка настроек (требует подтверждения).\n" +
+                "3. Записать – отправка настроек.\n" +
                 "\nОграничения:\n" +
                 "- Токи: целые числа в пределах, указанных в ошибках.\n" +
                 "- Коэффициенты C1-C4: ввод с точкой (дробная часть).\n" +
@@ -573,10 +564,10 @@ namespace Uetm_2_0
                 "\nЖурнал:\n" +
                 "- Обновить – чтение с устройства, Экспорт в EXCEL.\n" +
                 "\nКоманды для администратора:\n" +
-                "- Очистить ресурс, Установить время, Перезагрузить.\n" +
+                "- Очистить ресурс, Установить время, Перезагрузить, Изменить пароль\n" +
                 "\nПрочее:\n" +
                 "- Таймаут подключения, перезагрузки несколько секунд сек.\n" +
-                "- Список устройств и настройки хранятся в файле config.db (LiteDB).";
+                "- Список устройств и настройки хранятся в файле config.db.";
 
             MessageBox.Show(info, "Руководство", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }

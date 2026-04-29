@@ -32,11 +32,14 @@ namespace Uetm_2_0
 
         private string ChannelNumberToLetter(int number)
         {
+            // number – это udt из заголовка записи (1..nDichan)
+            // Реальный порядок контактов: 1 = N, 2 = A, 3 = B, 4 = C
             return number switch
             {
-                1 => "A",
-                2 => "B",
-                3 => "C",
+                1 => "N",
+                2 => "A",
+                3 => "B",
+                4 => "C",
                 _ => "-"
             };
         }
