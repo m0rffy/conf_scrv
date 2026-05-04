@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             dateTimePicker1 = new DateTimePicker();
-            btnOk = new Button();
-            btnCancel = new Button();
+            btnOk = new RoundedButton();
+            btnCancel = new RoundedButton();
             labelHour = new Label();
             numericUpDownHour = new NumericUpDown();
             labelMinute = new Label();

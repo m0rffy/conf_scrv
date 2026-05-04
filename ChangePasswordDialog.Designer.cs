@@ -17,8 +17,8 @@
             txtCurrent = new TextBox();
             txtNew = new TextBox();
             txtConfirm = new TextBox();
-            btnOk = new Button();
-            btnCancel = new Button();
+            btnOk = new RoundedButton();
+            btnCancel = new RoundedButton();
             labelRole = new Label();
             labelCurrent = new Label();
             labelNew = new Label();
@@ -33,7 +33,7 @@
             cmbRole.FormattingEnabled = true;
             cmbRole.Items.AddRange(new object[] { "Администратор", "Пользователь" });
             cmbRole.Location = new Point(285, 9);
-            cmbRole.Margin = new Padding(4, 4, 4, 4);
+            cmbRole.Margin = new Padding(4);
             cmbRole.Name = "cmbRole";
             cmbRole.Size = new Size(172, 27);
             cmbRole.TabIndex = 0;
@@ -43,7 +43,7 @@
             txtCurrent.Anchor = AnchorStyles.None;
             txtCurrent.Font = new Font("Times New Roman", 12F);
             txtCurrent.Location = new Point(285, 51);
-            txtCurrent.Margin = new Padding(4, 4, 4, 4);
+            txtCurrent.Margin = new Padding(4);
             txtCurrent.MaxLength = 15;
             txtCurrent.Name = "txtCurrent";
             txtCurrent.PasswordChar = '*';
@@ -55,7 +55,7 @@
             txtNew.Anchor = AnchorStyles.None;
             txtNew.Font = new Font("Times New Roman", 12F);
             txtNew.Location = new Point(285, 97);
-            txtNew.Margin = new Padding(4, 4, 4, 4);
+            txtNew.Margin = new Padding(4);
             txtNew.MaxLength = 15;
             txtNew.Name = "txtNew";
             txtNew.PasswordChar = '*';
@@ -67,7 +67,7 @@
             txtConfirm.Anchor = AnchorStyles.None;
             txtConfirm.Font = new Font("Times New Roman", 12F);
             txtConfirm.Location = new Point(285, 140);
-            txtConfirm.Margin = new Padding(4, 4, 4, 4);
+            txtConfirm.Margin = new Padding(4);
             txtConfirm.MaxLength = 15;
             txtConfirm.Name = "txtConfirm";
             txtConfirm.PasswordChar = '*';
@@ -80,13 +80,17 @@
             btnOk.AutoSize = true;
             btnOk.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnOk.BackColor = Color.SkyBlue;
+            btnOk.BorderColor = Color.Black;
+            btnOk.BorderRadius = 11;
+            btnOk.BorderWidth = 1F;
             btnOk.FlatStyle = FlatStyle.Flat;
             btnOk.Font = new Font("Times New Roman", 12F);
             btnOk.Location = new Point(169, 177);
-            btnOk.Margin = new Padding(4, 4, 4, 4);
+            btnOk.Margin = new Padding(4);
             btnOk.Name = "btnOk";
             btnOk.Size = new Size(98, 31);
             btnOk.TabIndex = 4;
+            btnOk.TabStop = false;
             btnOk.Text = "Применить";
             btnOk.UseVisualStyleBackColor = false;
             btnOk.Click += btnOk_Click;
@@ -97,13 +101,17 @@
             btnCancel.AutoSize = true;
             btnCancel.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             btnCancel.BackColor = Color.SkyBlue;
+            btnCancel.BorderColor = Color.Black;
+            btnCancel.BorderRadius = 11;
+            btnCancel.BorderWidth = 1F;
             btnCancel.FlatStyle = FlatStyle.Flat;
             btnCancel.Font = new Font("Times New Roman", 12F);
             btnCancel.Location = new Point(285, 178);
-            btnCancel.Margin = new Padding(4, 4, 4, 4);
+            btnCancel.Margin = new Padding(4);
             btnCancel.Name = "btnCancel";
             btnCancel.Size = new Size(73, 31);
             btnCancel.TabIndex = 5;
+            btnCancel.TabStop = false;
             btnCancel.Text = "Отмена";
             btnCancel.UseVisualStyleBackColor = false;
             btnCancel.Click += btnCancel_Click;
@@ -178,7 +186,7 @@
             Controls.Add(btnCancel);
             Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
             FormBorderStyle = FormBorderStyle.FixedDialog;
-            Margin = new Padding(4, 4, 4, 4);
+            Margin = new Padding(4);
             MaximizeBox = false;
             MinimizeBox = false;
             Name = "ChangePasswordDialog";
@@ -192,11 +200,11 @@
         private System.Windows.Forms.TextBox txtCurrent;
         private System.Windows.Forms.TextBox txtNew;
         private System.Windows.Forms.TextBox txtConfirm;
-        private System.Windows.Forms.Button btnOk;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.Label labelRole;
         private System.Windows.Forms.Label labelCurrent;
         private System.Windows.Forms.Label labelNew;
         private System.Windows.Forms.Label labelConfirm;
+        private RoundedButton btnOk;
+        private RoundedButton btnCancel;
     }
 }

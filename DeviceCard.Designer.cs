@@ -15,8 +15,8 @@
 
         private void InitializeComponent()
         {
-            deleteButton = new Button();
-            connectButton = new Button();
+            deleteButton = new RoundedButton();
+            connectButton = new RoundedButton();
             ipLabel = new Label();
             placeLabel = new Label();
             switchLabelName = new Label();

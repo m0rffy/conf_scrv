@@ -21,8 +21,8 @@
             DataGridViewCellStyle dataGridViewCellStyle3 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle4 = new DataGridViewCellStyle();
             DataGridViewCellStyle dataGridViewCellStyle5 = new DataGridViewCellStyle();
-            updateJournalButton = new Button();
-            exportButton = new Button();
+            updateJournalButton = new RoundedButton();
+            exportButton = new RoundedButton();
             tableLayoutPanelMain = new TableLayoutPanel();
             journalDataGridView = new DataGridView();
             panelButtons = new FlowLayoutPanel();

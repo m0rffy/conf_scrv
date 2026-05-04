@@ -33,7 +33,7 @@
             PasswordTextBox = new TextBox();
             LoginLabel = new Label();
             LoginComboBox = new ComboBox();
-            button1 = new Button();
+            button1 = new RoundedButton();
             SuspendLayout();
             // 
             // PasswordLabel
@@ -94,11 +94,15 @@
             button1.AutoSize = true;
             button1.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             button1.BackColor = Color.SkyBlue;
+            button1.BorderColor = Color.Black;
+            button1.BorderRadius = 11;
+            button1.BorderWidth = 1F;
             button1.FlatStyle = FlatStyle.Flat;
             button1.Location = new Point(90, 155);
             button1.Name = "button1";
             button1.Size = new Size(64, 31);
             button1.TabIndex = 85;
+            button1.TabStop = false;
             button1.Text = "Войти";
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
@@ -134,6 +138,6 @@
         private TextBox PasswordTextBox;
         private Label LoginLabel;
         private ComboBox LoginComboBox;
-        private Button button1;
+        private RoundedButton button1;
     }
 }

@@ -20,8 +20,8 @@
             labelIp = new Label();
             ipTextBox = new TextBox();
             labelMask = new Label();
-            maskTextBox = new TextBox();
             labelMac = new Label();
+            maskTextBox = new TextBox();
             groupBoxPTP = new GroupBox();
             tableLayoutPTP = new TableLayoutPanel();
             labelPtpMasterMac = new Label();
@@ -65,11 +65,11 @@
             groupBoxEthernet.BackColor = Color.Transparent;
             groupBoxEthernet.Controls.Add(tableLayoutEthernet);
             groupBoxEthernet.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxEthernet.Location = new Point(28, 4);
+            groupBoxEthernet.Location = new Point(56, 4);
             groupBoxEthernet.Margin = new Padding(4);
             groupBoxEthernet.Name = "groupBoxEthernet";
             groupBoxEthernet.Padding = new Padding(4);
-            groupBoxEthernet.Size = new Size(474, 161);
+            groupBoxEthernet.Size = new Size(417, 161);
             groupBoxEthernet.TabIndex = 0;
             groupBoxEthernet.TabStop = false;
             groupBoxEthernet.Text = "Ethernet";
@@ -89,7 +89,7 @@
             tableLayoutEthernet.Controls.Add(labelMac, 0, 0);
             tableLayoutEthernet.Controls.Add(maskTextBox, 1, 2);
             tableLayoutEthernet.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutEthernet.Location = new Point(77, 38);
+            tableLayoutEthernet.Location = new Point(48, 38);
             tableLayoutEthernet.Margin = new Padding(4);
             tableLayoutEthernet.Name = "tableLayoutEthernet";
             tableLayoutEthernet.RowCount = 3;
@@ -144,17 +144,6 @@
             labelMask.Text = "Маска подсети";
             labelMask.TextAlign = ContentAlignment.MiddleCenter;
             // 
-            // maskTextBox
-            // 
-            maskTextBox.Anchor = AnchorStyles.None;
-            maskTextBox.BorderStyle = BorderStyle.FixedSingle;
-            maskTextBox.Location = new Point(122, 72);
-            maskTextBox.Margin = new Padding(4);
-            maskTextBox.Name = "maskTextBox";
-            maskTextBox.Size = new Size(210, 26);
-            maskTextBox.TabIndex = 5;
-            maskTextBox.TextAlign = HorizontalAlignment.Center;
-            // 
             // labelMac
             // 
             labelMac.Anchor = AnchorStyles.Left;
@@ -166,17 +155,28 @@
             labelMac.TabIndex = 0;
             labelMac.Text = "MAC адрес";
             // 
+            // maskTextBox
+            // 
+            maskTextBox.Anchor = AnchorStyles.None;
+            maskTextBox.BorderStyle = BorderStyle.FixedSingle;
+            maskTextBox.Location = new Point(122, 72);
+            maskTextBox.Margin = new Padding(4);
+            maskTextBox.Name = "maskTextBox";
+            maskTextBox.Size = new Size(210, 26);
+            maskTextBox.TabIndex = 5;
+            maskTextBox.TextAlign = HorizontalAlignment.Center;
+            // 
             // groupBoxPTP
             // 
             groupBoxPTP.Anchor = AnchorStyles.None;
             groupBoxPTP.AutoSizeMode = AutoSizeMode.GrowAndShrink;
             groupBoxPTP.Controls.Add(tableLayoutPTP);
             groupBoxPTP.Font = new Font("Times New Roman", 14.25F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            groupBoxPTP.Location = new Point(27, 185);
+            groupBoxPTP.Location = new Point(52, 185);
             groupBoxPTP.Margin = new Padding(4);
             groupBoxPTP.Name = "groupBoxPTP";
             groupBoxPTP.Padding = new Padding(4);
-            groupBoxPTP.Size = new Size(475, 153);
+            groupBoxPTP.Size = new Size(425, 153);
             groupBoxPTP.TabIndex = 2;
             groupBoxPTP.TabStop = false;
             groupBoxPTP.Text = "PTPv2";
@@ -196,7 +196,7 @@
             tableLayoutPTP.Controls.Add(labelPtpId, 0, 2);
             tableLayoutPTP.Controls.Add(ptpIdTextBox, 1, 2);
             tableLayoutPTP.Font = new Font("Times New Roman", 12F, FontStyle.Regular, GraphicsUnit.Point, 204);
-            tableLayoutPTP.Location = new Point(58, 34);
+            tableLayoutPTP.Location = new Point(33, 34);
             tableLayoutPTP.Margin = new Padding(4);
             tableLayoutPTP.Name = "tableLayoutPTP";
             tableLayoutPTP.RowCount = 3;
