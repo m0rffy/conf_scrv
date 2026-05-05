@@ -100,10 +100,13 @@
             button1.FlatStyle = FlatStyle.Flat;
             button1.Location = new Point(90, 155);
             button1.Name = "button1";
+            button1.PressedBackColor = Color.SteelBlue;
             button1.Size = new Size(64, 31);
             button1.TabIndex = 85;
             button1.TabStop = false;
             button1.Text = "Войти";
+            button1.TextShiftAmount = 1;
+            button1.TextShiftOnPress = true;
             button1.UseVisualStyleBackColor = false;
             button1.Click += button1_Click;
             // 

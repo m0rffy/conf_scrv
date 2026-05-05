@@ -12,10 +12,15 @@ namespace Uetm_2_0
         private float _borderWidth = 1f;
 
         private Color _normalBackColor = Color.SkyBlue;
-        private Color _hoverBackColor = Color.LightBlue;
+        private Color _hoverBackColor = Color.SteelBlue;
+        private Color _pressedBackColor = Color.DeepSkyBlue;   
 
         private bool _isHovered = false;
+        private bool _isPressed = false;
 
+        // Сдвиг текста (эффект вдавливания) – теперь включён по умолчанию
+        private bool _textShiftOnPress = true;  
+        private int _textShiftAmount = 1;        // сдвиг при нажатии
         public int BorderRadius
         {
             get => _borderRadius;
@@ -32,6 +37,24 @@ namespace Uetm_2_0
         {
             get => _borderWidth;
             set { _borderWidth = value; Invalidate(); }
+        }
+
+        public bool TextShiftOnPress
+        {
+            get => _textShiftOnPress;
+            set { _textShiftOnPress = value; Invalidate(); }
+        }
+
+        public int TextShiftAmount
+        {
+            get => _textShiftAmount;
+            set { _textShiftAmount = value; Invalidate(); }
+        }
+
+        public Color PressedBackColor
+        {
+            get => _pressedBackColor;
+            set { _pressedBackColor = value; Invalidate(); }
         }
 
         public RoundedButton()
@@ -53,8 +76,15 @@ namespace Uetm_2_0
             if (!DesignMode)
             {
                 MouseEnter += (s, e) => { _isHovered = true; Invalidate(); };
-                MouseLeave += (s, e) => { _isHovered = false; Invalidate(); };
-                this.HandleCreated += (s, e) => Invalidate();
+                MouseLeave += (s, e) => { _isHovered = false; _isPressed = false; Invalidate(); };
+                MouseDown += (s, e) => { _isPressed = true; Invalidate(); };
+                MouseUp += (s, e) =>
+                {
+                    _isPressed = false;
+                    _isHovered = ClientRectangle.Contains(PointToClient(MousePosition));
+                    Invalidate();
+                };
+                HandleCreated += (s, e) => Invalidate();
             }
         }
 
@@ -66,19 +96,26 @@ namespace Uetm_2_0
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            Color currentBack = _isHovered ? _hoverBackColor : _normalBackColor;
+            Color currentBack;
+            if (_isPressed)
+                currentBack = _pressedBackColor;
+            else if (_isHovered)
+                currentBack = _hoverBackColor;
+            else
+                currentBack = _normalBackColor;
+
             Color parentBack = GetActualParentBackColor();
 
-            // 1. Заливаем всё родительским цветом (скрываем любые «углы»)
+            // 1. Заливка родительским цветом
             using (SolidBrush br = new SolidBrush(parentBack))
                 g.FillRectangle(br, ClientRectangle);
 
-            // 2. Чёрная рамка — внешний закруглённый прямоугольник
+            // 2. Чёрная рамка
             using (GraphicsPath outerPath = GetRoundedPath(ClientRectangle, _borderRadius))
             using (SolidBrush borderBrush = new SolidBrush(_borderColor))
                 g.FillPath(borderBrush, outerPath);
 
-            // 3. Внутренний фон (отступ на толщину рамки)
+            // 3. Внутренний фон
             float inset = _borderWidth;
             Rectangle innerRect = new Rectangle(
                 (int)(ClientRectangle.X + inset),
@@ -91,20 +128,23 @@ namespace Uetm_2_0
             using (SolidBrush fillBrush = new SolidBrush(currentBack))
                 g.FillPath(fillBrush, innerPath);
 
-            // 4. Текст без фона
+            // 4. Текст с возможным сдвигом при нажатии
+            Rectangle textRect = ClientRectangle;
+            if (_isPressed && _textShiftOnPress)
+            {
+                textRect.X += _textShiftAmount;
+                textRect.Y += _textShiftAmount;
+            }
+
             using (StringFormat sf = new StringFormat())
             {
                 sf.Alignment = StringAlignment.Center;
                 sf.LineAlignment = StringAlignment.Center;
                 using (SolidBrush textBrush = new SolidBrush(ForeColor))
-                    g.DrawString(Text, Font, textBrush, ClientRectangle, sf);
+                    g.DrawString(Text, Font, textBrush, textRect, sf);
             }
         }
 
-        /// <summary>
-        /// Получает реальный цвет фона родителя, рекурсивно поднимаясь вверх,
-        /// если у родителя указан Transparent.
-        /// </summary>
         private Color GetActualParentBackColor()
         {
             Control parent = this.Parent;
