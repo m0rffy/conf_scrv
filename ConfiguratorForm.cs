@@ -479,7 +479,22 @@ namespace Uetm_2_0
 
             if (activeDev != null && !string.IsNullOrEmpty(newIp) && oldIp != newIp)
             {
+                // Проверяем, нет ли уже устройства с таким новым IP
+                DeviceInfo existing = Database.Devices.Find(d => d.IP == newIp && d != activeDev);
+                if (existing != null)
+                {
+                    // Удаляем конфликтующее устройство (оставляем только одно)
+                    Database.Devices.Remove(existing);
+                }
+                // Обновляем IP текущего активного устройства
                 activeDev.IP = newIp;
+
+                // Также обновляем InstallationPlace и SwitchLabel, если они были считаны ранее
+                string place = Database.GeneralSettings_TextFormat.cmns.MntPlce ?? "";
+                string label = Database.GeneralSettings_TextFormat.swrcs.swnf.label ?? "";
+                activeDev.InstallationPlace = place;
+                activeDev.SwitchLabel = label;
+
                 Database.SaveAppData();
             }
 
