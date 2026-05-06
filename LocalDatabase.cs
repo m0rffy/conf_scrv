@@ -4,18 +4,18 @@ namespace Uetm_2_0
 {
     public static class LocalDatabase
     {
-       // изменить нижнию строку на: internal static readonly string DbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.db"); чтобы сохранение БД было там же где и exe файл
-        internal static readonly string DbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),"Uetm_2_0","config.db");
+        // изменить нижнию строку на: internal static readonly string DbPath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "config.db"); чтобы сохранение БД было там же где и exe файл
+        internal static readonly string DbPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "Uetm_2_0", "config.db");
         // %LocalAppData%\Uetm_2_0
         internal static readonly string ConnectionString = $"Data Source={DbPath};Version=3;";
 
         static LocalDatabase()
         {
-            Directory.CreateDirectory(Path.GetDirectoryName(DbPath) ?? "");
+            _ = Directory.CreateDirectory(Path.GetDirectoryName(DbPath) ?? "");
 
-            using var conn = new SQLiteConnection(ConnectionString);
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
 
             // Таблицы
             cmd.CommandText = @"
@@ -39,7 +39,7 @@ namespace Uetm_2_0
             ResourcePercent REAL,
             Channel TEXT
         );";
-            cmd.ExecuteNonQuery();
+            _ = cmd.ExecuteNonQuery();
 
             // Добавляем недостающие столбцы (если таблица ChangeLog уже существовала)
             AddColumnIfMissing(conn, "ChangeLog", "DeviceIP", "TEXT");
@@ -53,7 +53,7 @@ namespace Uetm_2_0
             if (cnt == 0)
             {
                 cmd.CommandText = "INSERT INTO Passwords (Role, Password) VALUES ('Администратор', 'admin'), ('Пользователь', 'user')";
-                cmd.ExecuteNonQuery();
+                _ = cmd.ExecuteNonQuery();
             }
 
             // Делаем файл скрытым (если файл существует, атрибут добавится, если нет – команда будет выполнена позже при создании)
@@ -65,25 +65,25 @@ namespace Uetm_2_0
 
         private static void AddColumnIfMissing(SQLiteConnection conn, string table, string column, string type)
         {
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = $"SELECT COUNT(*) FROM pragma_table_info('{table}') WHERE name='{column}'";
             long count = (long)cmd.ExecuteScalar();
             if (count == 0)
             {
                 cmd.CommandText = $"ALTER TABLE {table} ADD COLUMN {column} {type}";
-                cmd.ExecuteNonQuery();
+                _ = cmd.ExecuteNonQuery();
             }
         }
 
         // ---------------- Устройства ----------------
         public static List<DeviceInfo> GetAllDevices()
         {
-            var list = new List<DeviceInfo>();
-            using var conn = new SQLiteConnection(ConnectionString);
+            List<DeviceInfo> list = [];
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT IP, Port, InstallationPlace, SwitchLabel FROM Devices";
-            using var reader = cmd.ExecuteReader();
+            using SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 list.Add(new DeviceInfo
@@ -99,36 +99,39 @@ namespace Uetm_2_0
 
         public static void SaveAllDevices(List<DeviceInfo> devices)
         {
-            using var conn = new SQLiteConnection(ConnectionString);
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             // Очищаем старые записи
             cmd.CommandText = "DELETE FROM Devices";
-            cmd.ExecuteNonQuery();
+            _ = cmd.ExecuteNonQuery();
 
-            if (devices.Count == 0) return;
+            if (devices.Count == 0)
+            {
+                return;
+            }
 
             cmd.CommandText = "INSERT INTO Devices (IP, Port, InstallationPlace, SwitchLabel) VALUES (@ip, @p, @pl, @sl)";
-            foreach (var d in devices)
+            foreach (DeviceInfo d in devices)
             {
                 cmd.Parameters.Clear();
-                cmd.Parameters.AddWithValue("@ip", d.IP);
-                cmd.Parameters.AddWithValue("@p", d.Port);
-                cmd.Parameters.AddWithValue("@pl", (object?)d.InstallationPlace ?? DBNull.Value);
-                cmd.Parameters.AddWithValue("@sl", (object?)d.SwitchLabel ?? DBNull.Value);
-                cmd.ExecuteNonQuery();
+                _ = cmd.Parameters.AddWithValue("@ip", d.IP);
+                _ = cmd.Parameters.AddWithValue("@p", d.Port);
+                _ = cmd.Parameters.AddWithValue("@pl", (object?)d.InstallationPlace ?? DBNull.Value);
+                _ = cmd.Parameters.AddWithValue("@sl", (object?)d.SwitchLabel ?? DBNull.Value);
+                _ = cmd.ExecuteNonQuery();
             }
         }
 
         // ---------------- Пароли ----------------
         public static Dictionary<string, string> GetAllPasswords()
         {
-            var dict = new Dictionary<string, string>();
-            using var conn = new SQLiteConnection(ConnectionString);
+            Dictionary<string, string> dict = [];
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = "SELECT Role, Password FROM Passwords";
-            using var reader = cmd.ExecuteReader();
+            using SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 dict[reader.GetString(0)] = reader.GetString(1);
@@ -138,46 +141,46 @@ namespace Uetm_2_0
 
         public static void SavePassword(string role, string password)
         {
-            using var conn = new SQLiteConnection(ConnectionString);
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = "INSERT OR REPLACE INTO Passwords (Role, Password) VALUES (@r, @p)";
-            cmd.Parameters.AddWithValue("@r", role);
-            cmd.Parameters.AddWithValue("@p", password);
-            cmd.ExecuteNonQuery();
+            _ = cmd.Parameters.AddWithValue("@r", role);
+            _ = cmd.Parameters.AddWithValue("@p", password);
+            _ = cmd.ExecuteNonQuery();
         }
 
         // ---------------- Журнал действий (без изменений) ----------------
         public static void AddLogEntry(string userRole, string description,
-            string deviceIP = null, float? currentA = null,
-            float? resourcePercent = null, string channel = null)
+            string? deviceIP = null, float? currentA = null,
+            float? resourcePercent = null, string? channel = null)
         {
-            using var conn = new SQLiteConnection(ConnectionString);
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"INSERT INTO ChangeLog 
                 (Timestamp, UserRole, Description, DeviceIP, CurrentA, ResourcePercent, Channel)
                 VALUES (@t, @r, @d, @ip, @ca, @rp, @ch)";
-            cmd.Parameters.AddWithValue("@t", DateTime.Now.ToString("o"));
-            cmd.Parameters.AddWithValue("@r", userRole);
-            cmd.Parameters.AddWithValue("@d", description);
-            cmd.Parameters.AddWithValue("@ip", (object?)deviceIP ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@ca", (object?)currentA ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@rp", (object?)resourcePercent ?? DBNull.Value);
-            cmd.Parameters.AddWithValue("@ch", (object?)channel ?? DBNull.Value);
-            cmd.ExecuteNonQuery();
+            _ = cmd.Parameters.AddWithValue("@t", DateTime.Now.ToString("o"));
+            _ = cmd.Parameters.AddWithValue("@r", userRole);
+            _ = cmd.Parameters.AddWithValue("@d", description);
+            _ = cmd.Parameters.AddWithValue("@ip", (object?)deviceIP ?? DBNull.Value);
+            _ = cmd.Parameters.AddWithValue("@ca", (object?)currentA ?? DBNull.Value);
+            _ = cmd.Parameters.AddWithValue("@rp", (object?)resourcePercent ?? DBNull.Value);
+            _ = cmd.Parameters.AddWithValue("@ch", (object?)channel ?? DBNull.Value);
+            _ = cmd.ExecuteNonQuery();
         }
 
         public static List<ChangeLogEntry> GetLogEntries(int limit = 500)
         {
-            var list = new List<ChangeLogEntry>();
-            using var conn = new SQLiteConnection(ConnectionString);
+            List<ChangeLogEntry> list = [];
+            using SQLiteConnection conn = new(ConnectionString);
             conn.Open();
-            var cmd = conn.CreateCommand();
+            SQLiteCommand cmd = conn.CreateCommand();
             cmd.CommandText = @"SELECT Timestamp, UserRole, Description, DeviceIP, CurrentA, ResourcePercent, Channel
                                FROM ChangeLog ORDER BY Id DESC LIMIT @lim";
-            cmd.Parameters.AddWithValue("@lim", limit);
-            using var reader = cmd.ExecuteReader();
+            _ = cmd.Parameters.AddWithValue("@lim", limit);
+            using SQLiteDataReader reader = cmd.ExecuteReader();
             while (reader.Read())
             {
                 list.Add(new ChangeLogEntry
@@ -186,8 +189,8 @@ namespace Uetm_2_0
                     UserRole = reader.GetString(1),
                     Description = reader.GetString(2),
                     DeviceIP = reader.IsDBNull(3) ? null : reader.GetString(3),
-                    CurrentA = reader.IsDBNull(4) ? null : (float?)reader.GetFloat(4),
-                    ResourcePercent = reader.IsDBNull(5) ? null : (float?)reader.GetFloat(5),
+                    CurrentA = reader.IsDBNull(4) ? null : reader.GetFloat(4),
+                    ResourcePercent = reader.IsDBNull(5) ? null : reader.GetFloat(5),
                     Channel = reader.IsDBNull(6) ? null : reader.GetString(6)
                 });
             }
@@ -198,11 +201,11 @@ namespace Uetm_2_0
     public class ChangeLogEntry
     {
         public DateTime Timestamp { get; set; }
-        public string UserRole { get; set; }
-        public string Description { get; set; }
-        public string DeviceIP { get; set; }
+        public required string UserRole { get; set; }
+        public required string Description { get; set; }
+        public required string DeviceIP { get; set; }
         public float? CurrentA { get; set; }
         public float? ResourcePercent { get; set; }
-        public string Channel { get; set; }
+        public required string Channel { get; set; }
     }
 }

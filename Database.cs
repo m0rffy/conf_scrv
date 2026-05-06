@@ -1,5 +1,4 @@
 ﻿using ModBusHelper;
-using System.Text.Json;
 
 namespace Uetm_2_0
 {
@@ -9,17 +8,9 @@ namespace Uetm_2_0
         public static List<ModBusProfile.journal_record> Filtered_Journal_Records;
         public static string CurrentRole;
 
-        private static AppData _appData = new AppData();
-        public static AppData AppData
-        {
-            get => _appData;
-            private set => _appData = value;
-        }
+        public static AppData AppData { get; private set; } = new AppData();
 
-        public static List<DeviceInfo> Devices
-        {
-            get => AppData.Devices;
-        }
+        public static List<DeviceInfo> Devices => AppData.Devices;
 
         static Database()
         {
@@ -35,9 +26,9 @@ namespace Uetm_2_0
         public static void SaveAppData()
         {
             LocalDatabase.SaveAllDevices(AppData.Devices);
-          
+
         }
 
-       
+
     }
 }

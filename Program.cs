@@ -1,7 +1,5 @@
 using OfficeOpenXml;
-using System.Threading;
 using System.Text;
-using System.Drawing.Text;
 
 namespace Uetm_2_0
 {
@@ -16,7 +14,7 @@ namespace Uetm_2_0
         private static void Main()
         {
             // Более надёжный способ: создаём мьютекс и сразу узнаём, создан ли он впервые
-            using Mutex mutex = new Mutex(true, MutexName, out bool createdNew);
+            using Mutex mutex = new(true, MutexName, out bool createdNew);
 
             if (createdNew)
             {
@@ -31,7 +29,7 @@ namespace Uetm_2_0
             }
             else
             {
-                MessageBox.Show("Программа уже запущена!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Программа уже запущена!", "Внимание", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 // Принудительно завершаем процесс
                 Environment.Exit(0);
             }

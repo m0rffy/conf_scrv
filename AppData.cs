@@ -2,6 +2,6 @@
 
 public class AppData
 {
-    public Dictionary<string, string> Passwords { get; set; } = new();
-    public List<DeviceInfo> Devices { get; set; } = new();
+    public Dictionary<string, string> Passwords { get; set; } = [];
+    public List<DeviceInfo> Devices { get; set; } = [];
 }

@@ -1,14 +1,12 @@
-﻿using System.Drawing.Drawing2D;
-
-namespace Uetm_2_0
+﻿namespace Uetm_2_0
 {
     public partial class Auth : Form
     {
         public Auth()
         {
             InitializeComponent();
-            LoginComboBox.Items.Add("Администратор");
-            LoginComboBox.Items.Add("Пользователь");
+            _ = LoginComboBox.Items.Add("Администратор");
+            _ = LoginComboBox.Items.Add("Пользователь");
             LoginComboBox.SelectedIndex = 0;
         }
 
@@ -16,12 +14,12 @@ namespace Uetm_2_0
         {
             if (LoginComboBox.SelectedItem == null || string.IsNullOrWhiteSpace(LoginComboBox.Text))
             {
-                MessageBox.Show("Выберите уровень доступа.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Выберите уровень доступа.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (string.IsNullOrWhiteSpace(PasswordTextBox.Text))
             {
-                MessageBox.Show("Введите пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Введите пароль.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -32,16 +30,16 @@ namespace Uetm_2_0
             if (!Database.AppData.Passwords.TryGetValue(role, out string storedPassword) ||
                 storedPassword != password)
             {
-                MessageBox.Show("Неверный пароль.");
+                _ = MessageBox.Show("Неверный пароль.");
                 return;
             }
 
             Database.CurrentRole = role;
 
             ConfiguratorForm form = new(role);
-            form.FormClosed += (s, args) => { this.Show(); };
+            form.FormClosed += (s, args) => { Show(); };
             form.Show();
-            this.Hide();
+            Hide();
         }
     }
 }

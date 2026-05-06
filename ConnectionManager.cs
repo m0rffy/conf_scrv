@@ -11,15 +11,21 @@ namespace Uetm_2_0
         public static Tuple<TcpClient, IModbusMaster> OpenConnection(string ipAddress, int modBusPort)
         {
             if (_connection != null)
+            {
                 throw new InvalidOperationException("Соединение уже открыто.");
+            }
 
             if (!IPAddress.TryParse(ipAddress, out _))
+            {
                 throw new ArgumentException("Некорректный IP-адрес.");
+            }
 
-            if (modBusPort < 1 || modBusPort > 65535)
+            if (modBusPort is < 1 or > 65535)
+            {
                 throw new ArgumentOutOfRangeException(nameof(modBusPort), "Порт должен быть в диапазоне от 1 до 65535.");
+            }
 
-            TcpClient tcpClient = new TcpClient();
+            TcpClient tcpClient = new();
             try
             {
                 IAsyncResult result = tcpClient.BeginConnect(ipAddress, modBusPort, null, null);
@@ -34,7 +40,7 @@ namespace Uetm_2_0
                 tcpClient.ReceiveTimeout = 2000;
                 tcpClient.SendTimeout = 2000;
 
-                var factory = new ModbusFactory();
+                ModbusFactory factory = new();
                 IModbusMaster modbusMaster = factory.CreateMaster(tcpClient);
 
                 _connection = new Tuple<TcpClient, IModbusMaster>(tcpClient, modbusMaster);
@@ -54,7 +60,9 @@ namespace Uetm_2_0
                 try
                 {
                     if (_connection.Item1?.Client != null)
+                    {
                         _connection.Item1.Client.Shutdown(SocketShutdown.Both);
+                    }
                 }
                 catch { }
                 try

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace Uetm_2_0
+﻿namespace Uetm_2_0
 {
     public partial class ChangePasswordDialog : Form
     {
@@ -20,12 +17,12 @@ namespace Uetm_2_0
                 string.IsNullOrWhiteSpace(txtNew.Text) ||
                 string.IsNullOrWhiteSpace(txtConfirm.Text))
             {
-                MessageBox.Show("Заполните все поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Заполните все поля.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (txtNew.Text != txtConfirm.Text)
             {
-                MessageBox.Show("Новый пароль и подтверждение не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Новый пароль и подтверждение не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             DialogResult = DialogResult.OK;

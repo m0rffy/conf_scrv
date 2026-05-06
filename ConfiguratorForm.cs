@@ -1,5 +1,6 @@
 ﻿using ModBusHelper;
 using NModbus;
+using System.Data;
 using System.Net;
 using System.Net.Sockets;
 using System.Runtime.InteropServices;
@@ -9,18 +10,18 @@ namespace Uetm_2_0
 {
     public partial class ConfiguratorForm : Form
     {
-        private ModBusExporterLinker ExporterLinkerHelper = new ModBusExporterLinker();
+        private readonly ModBusExporterLinker ExporterLinkerHelper = new();
         public static ConfiguratorForm CurrentInstance;
-        private string userRole;
+        private readonly string userRole;
         private bool settingsExpanded = false;
 
         // Управление подключением
-        private Tuple<TcpClient, IModbusMaster> _connection;
+        private Tuple<TcpClient, IModbusMaster>? _connection;
         private string _ip;
         private int _port;
 
         // Таймер для ConnectionTimeout
-        private System.Windows.Forms.Timer connectionTimeoutTimer;
+        private readonly System.Windows.Forms.Timer connectionTimeoutTimer;
 
         // События для оповещения UserControl'ов
         public event Action<Tuple<TcpClient, IModbusMaster>> ConnectionStarted;
@@ -35,7 +36,7 @@ namespace Uetm_2_0
 
         // WinAPI для закрытия MessageBox
         [DllImport("user32.dll", SetLastError = true)]
-        private static extern IntPtr FindWindow(string lpClassName, string lpWindowName);
+        private static extern IntPtr FindWindow(string? lpClassName, string lpWindowName);
         [DllImport("user32.dll", SetLastError = true)]
         private static extern bool PostMessage(IntPtr hWnd, uint Msg, IntPtr wParam, IntPtr lParam);
         private const uint WM_CLOSE = 0x0010;
@@ -54,7 +55,7 @@ namespace Uetm_2_0
             ConnectionStarted += OnConnectionStarted;
             ConnectionStopped += OnConnectionStopped;
             SettingsRead += OnSettingsRead;
-            this.FormClosing += ConfiguratorForm_FormClosing;
+            FormClosing += ConfiguratorForm_FormClosing;
 
             ucManagement = new UcManagement(this);
             ucGeneral = new UcGeneral(this);
@@ -64,8 +65,10 @@ namespace Uetm_2_0
             ApplyRoleRestrictions();
             ShowControl(ucManagement);
 
-            connectionTimeoutTimer = new System.Windows.Forms.Timer();
-            connectionTimeoutTimer.Interval = 3000;
+            connectionTimeoutTimer = new System.Windows.Forms.Timer
+            {
+                Interval = 3000
+            };
             connectionTimeoutTimer.Tick += ConnectionTimeoutTimer_Tick;
         }
 
@@ -93,18 +96,21 @@ namespace Uetm_2_0
             _port = port;
         }
 
-        public Tuple<TcpClient, IModbusMaster> GetCurrentConnection() => _connection;
+        public Tuple<TcpClient, IModbusMaster> GetCurrentConnection()
+        {
+            return _connection;
+        }
 
         public void Connect()
         {
             if (string.IsNullOrEmpty(_ip) || !IPAddress.TryParse(_ip, out _))
             {
-                MessageBox.Show("IP-адрес не задан или некорректен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("IP-адрес не задан или некорректен.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            if (_port < 1 || _port > 65535)
+            if (_port is < 1 or > 65535)
             {
-                MessageBox.Show("Некорректный порт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Некорректный порт.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -124,13 +130,13 @@ namespace Uetm_2_0
             catch (TimeoutException ex)
             {
                 connectionTimeoutTimer.Stop();
-                MessageBox.Show(ex.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show(ex.Message, "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Disconnect();
             }
             catch (Exception ex)
             {
                 connectionTimeoutTimer.Stop();
-                MessageBox.Show($"Ошибка подключения: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Ошибка подключения: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 Disconnect();
             }
         }
@@ -147,7 +153,7 @@ namespace Uetm_2_0
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка при отключении: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Ошибка при отключении: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
             finally
             {
@@ -161,7 +167,7 @@ namespace Uetm_2_0
             connectionTimeoutTimer.Stop();
             if (_connection == null || !_connection.Item1.Connected)
             {
-                MessageBox.Show("Не удалось подключиться к устройству.", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Не удалось подключиться к устройству.", "Ошибка подключения", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 Disconnect();
             }
         }
@@ -177,53 +183,82 @@ namespace Uetm_2_0
                 ucNetwork.UpdateFromDatabase();
 
                 if (ChildFormPanel.Controls[0] is UcGeneral general)
+                {
                     general.UpdateFromDatabase();
+                }
                 else if (ChildFormPanel.Controls[0] is UcNetwork network)
+                {
                     network.UpdateFromDatabase();
+                }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка чтения настроек: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Ошибка чтения настроек: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         public void RefreshSettings()
         {
             if (_connection?.Item1?.Connected == true)
+            {
                 ReadAllSettings();
+            }
             else
-                MessageBox.Show("Нет активного подключения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            {
+                _ = MessageBox.Show("Нет активного подключения.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            }
         }
 
         private void OnConnectionStarted(Tuple<TcpClient, IModbusMaster> connection)
         {
-            if (InvokeRequired) Invoke(new Action(UpdateAllCards));
-            else UpdateAllCards();
+            if (InvokeRequired)
+            {
+                Invoke(new Action(UpdateAllCards));
+            }
+            else
+            {
+                UpdateAllCards();
+            }
         }
 
         private void OnConnectionStopped()
         {
-            if (InvokeRequired) Invoke(new Action(UpdateAllCards));
-            else UpdateAllCards();
+            if (InvokeRequired)
+            {
+                Invoke(new Action(UpdateAllCards));
+            }
+            else
+            {
+                UpdateAllCards();
+            }
         }
 
         private void OnSettingsRead()
         {
             if (_connection?.Item1?.Connected == true)
             {
-                var remoteEndPoint = _connection.Item1.Client.RemoteEndPoint as IPEndPoint;
-                if (remoteEndPoint != null)
+                if (_connection.Item1.Client.RemoteEndPoint is IPEndPoint remoteEndPoint)
                 {
                     string activeIP = remoteEndPoint.Address.ToString();
-                    if (activeIP.StartsWith("::ffff:")) activeIP = activeIP.Substring(7);
+                    if (activeIP.StartsWith("::ffff:"))
+                    {
+                        activeIP = activeIP[7..];
+                    }
+
                     DeviceInfo activeDev = Database.Devices.Find(d => d.IP == activeIP);
                     if (activeDev != null)
                     {
                         activeDev.InstallationPlace = Database.GeneralSettings_TextFormat.cmns.MntPlce ?? "";
                         activeDev.SwitchLabel = Database.GeneralSettings_TextFormat.swrcs.swnf.label ?? "";
                         Database.SaveAppData();
-                        if (InvokeRequired) Invoke(new Action(() => UpdateDeviceCard(activeDev)));
-                        else UpdateDeviceCard(activeDev);
+                        if (InvokeRequired)
+                        {
+                            Invoke(new Action(() => UpdateDeviceCard(activeDev)));
+                        }
+                        else
+                        {
+                            UpdateDeviceCard(activeDev);
+                        }
                     }
                 }
             }
@@ -237,25 +272,25 @@ namespace Uetm_2_0
             devicesPanel.RowCount = 0;
             devicesPanel.RowStyles.Clear();
 
-            foreach (var dev in Database.Devices)
+            foreach (DeviceInfo dev in Database.Devices)
             {
-                var card = CreateDeviceCard(dev);
+                DeviceCard card = CreateDeviceCard(dev);
                 card.Anchor = AnchorStyles.None;
                 card.Margin = new Padding(5);
 
                 devicesPanel.RowCount++;
-                devicesPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
+                _ = devicesPanel.RowStyles.Add(new RowStyle(SizeType.AutoSize));
                 devicesPanel.Controls.Add(card, 0, devicesPanel.RowCount - 1);
             }
 
             devicesPanel.RowCount++;
-            devicesPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
+            _ = devicesPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
             devicesPanel.Controls.Add(new Control(), 0, devicesPanel.RowCount - 1);
         }
 
         private DeviceCard CreateDeviceCard(DeviceInfo dev)
         {
-            var card = new DeviceCard();
+            DeviceCard card = new();
             bool isActive = IsDeviceActive(dev);
             card.SetData(dev.IP, dev.InstallationPlace, dev.SwitchLabel, isActive);
             card.Tag = dev;
@@ -268,11 +303,14 @@ namespace Uetm_2_0
         {
             if (_connection?.Item1?.Connected == true)
             {
-                var remoteEndPoint = _connection.Item1.Client.RemoteEndPoint as IPEndPoint;
-                if (remoteEndPoint != null)
+                if (_connection.Item1.Client.RemoteEndPoint is IPEndPoint remoteEndPoint)
                 {
                     string remoteIP = remoteEndPoint.Address.ToString();
-                    if (remoteIP.StartsWith("::ffff:")) remoteIP = remoteIP.Substring(7);
+                    if (remoteIP.StartsWith("::ffff:"))
+                    {
+                        remoteIP = remoteIP[7..];
+                    }
+
                     return remoteIP == dev.IP;
                 }
             }
@@ -284,18 +322,20 @@ namespace Uetm_2_0
             string activeIP = null;
             if (_connection?.Item1?.Connected == true)
             {
-                var remoteEndPoint = _connection.Item1.Client.RemoteEndPoint as IPEndPoint;
-                if (remoteEndPoint != null)
+                if (_connection.Item1.Client.RemoteEndPoint is IPEndPoint remoteEndPoint)
                 {
                     activeIP = remoteEndPoint.Address.ToString();
-                    if (activeIP.StartsWith("::ffff:")) activeIP = activeIP.Substring(7);
+                    if (activeIP.StartsWith("::ffff:"))
+                    {
+                        activeIP = activeIP[7..];
+                    }
                 }
             }
             foreach (Control c in devicesPanel.Controls)
             {
                 if (c is DeviceCard card && card.Tag is DeviceInfo dev)
                 {
-                    bool isActive = (dev.IP == activeIP);
+                    bool isActive = dev.IP == activeIP;
                     card.SetData(dev.IP, dev.InstallationPlace, dev.SwitchLabel, isActive);
                 }
             }
@@ -316,11 +356,19 @@ namespace Uetm_2_0
 
         private void BtnDelete_Click(DeviceInfo dev)
         {
-            if (dev == null) return;
+            if (dev == null)
+            {
+                return;
+            }
+
             if (MessageBox.Show($"Удалить устройство {dev.IP}?", "Подтверждение", MessageBoxButtons.YesNo) == DialogResult.Yes)
             {
-                if (IsDeviceActive(dev)) Disconnect();
-                Database.Devices.Remove(dev);
+                if (IsDeviceActive(dev))
+                {
+                    Disconnect();
+                }
+
+                _ = Database.Devices.Remove(dev);
                 Database.SaveAppData();     // сохраняем изменения в базу
                 RefreshDevicesList();
             }
@@ -329,7 +377,11 @@ namespace Uetm_2_0
         private void BtnConnect_Click(DeviceInfo dev)
         {
             if (IsDeviceActive(dev)) { Disconnect(); return; }
-            if (_connection?.Item1?.Connected == true) Disconnect();
+            if (_connection?.Item1?.Connected == true)
+            {
+                Disconnect();
+            }
+
             SetConnectionParams(dev.IP, dev.Port);
             Connect();
         }
@@ -341,7 +393,11 @@ namespace Uetm_2_0
             ChildFormPanel.Controls.Add(control);
         }
 
-        private void BtnManagement_Click(object sender, EventArgs e) => ShowControl(ucManagement);
+        private void BtnManagement_Click(object sender, EventArgs e)
+        {
+            ShowControl(ucManagement);
+        }
+
         private void BtnSettings_Click(object sender, EventArgs e)
         {
             settingsExpanded = !settingsExpanded;
@@ -349,44 +405,61 @@ namespace Uetm_2_0
             btnNetwork.Visible = settingsExpanded;
             btnSettings.Text = settingsExpanded ? "Настройки -" : "Настройки +";
         }
-        private void BtnGeneral_Click(object sender, EventArgs e) => ShowControl(ucGeneral);
-        private void BtnNetwork_Click(object sender, EventArgs e) => ShowControl(ucNetwork);
-        private void BtnJournal_Click(object sender, EventArgs e) => ShowControl(ucJournal);
+        private void BtnGeneral_Click(object sender, EventArgs e)
+        {
+            ShowControl(ucGeneral);
+        }
+
+        private void BtnNetwork_Click(object sender, EventArgs e)
+        {
+            ShowControl(ucNetwork);
+        }
+
+        private void BtnJournal_Click(object sender, EventArgs e)
+        {
+            ShowControl(ucJournal);
+        }
 
         private void CloseMessageBox(string caption)
         {
             IntPtr hWnd = FindWindow(null, caption);
             if (hWnd != IntPtr.Zero)
-                PostMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+            {
+                _ = PostMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+            }
         }
 
         private async void BtnWrite_Click(object sender, EventArgs e)
         {
-            
+
 
             // 2. Проверка соединения
             if (_connection?.Item1?.Connected != true)
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             // 3. Подтверждение
             if (MessageBox.Show("Вы уверены, что хотите записать настройки в устройство? После записи устройство перезагрузится, соединение будет разорвано.",
                 "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
                 return;
+            }
 
             // 4. Определяем текущее устройство (для возможного обновления IP после записи)
             DeviceInfo activeDev = null;
             string oldIp = _ip;
             if (_connection?.Item1?.Connected == true)
             {
-                var remoteEndPoint = _connection.Item1.Client.RemoteEndPoint as IPEndPoint;
-                if (remoteEndPoint != null)
+                if (_connection.Item1.Client.RemoteEndPoint is IPEndPoint remoteEndPoint)
                 {
                     string remoteIP = remoteEndPoint.Address.ToString();
                     if (remoteIP.StartsWith("::ffff:"))
-                        remoteIP = remoteIP.Substring(7);
+                    {
+                        remoteIP = remoteIP[7..];
+                    }
+
                     activeDev = Database.Devices.Find(d => d.IP == remoteIP);
                 }
             }
@@ -394,15 +467,21 @@ namespace Uetm_2_0
             // 5. Сохраняем данные из активной вкладки в Database.GeneralSettings_TextFormat
             if (ChildFormPanel.Controls[0] is UcGeneral general)
             {
-                if (!general.SaveToDatabase()) return;
+                if (!general.SaveToDatabase())
+                {
+                    return;
+                }
             }
             else if (ChildFormPanel.Controls[0] is UcNetwork network)
             {
-                if (!network.SaveToDatabase()) return;
+                if (!network.SaveToDatabase())
+                {
+                    return;
+                }
             }
 
             btnWrite.Enabled = false;
-            var connection = _connection;
+            Tuple<TcpClient, IModbusMaster>? connection = _connection;
 
             // 6. Захват показателей ДО начала записи (пока фоновый опрос активен)
             float? capturedCurrentA = null;
@@ -412,21 +491,23 @@ namespace Uetm_2_0
 
             try
             {
-                var rmsTable = ucManagement.GetRmsDataTable();
-                var cntvTable = ucManagement.GetCntvDataTable();
+                DataTable rmsTable = ucManagement.GetRmsDataTable();
+                DataTable cntvTable = ucManagement.GetCntvDataTable();
                 if (rmsTable.Rows.Count > 0)
                 {
                     capturedCurrentA = Convert.ToSingle(rmsTable.Rows[0][1]);   // фаза A
                     capturedPhase = rmsTable.Rows[0][0].ToString();             // "A"
                 }
                 if (cntvTable.Rows.Count > 0)
+                {
                     capturedResource = Convert.ToSingle(cntvTable.Rows[0][1]);  // ресурс фазы A
+                }
             }
             catch { /* если данные недоступны, останутся null */ }
 
             // 7. Запускаем сообщение-ожидание в отдельном потоке
             string waitCaption = "Применение настроек";
-            var msgThread = new Thread(() => MessageBox.Show(
+            Thread msgThread = new(() => MessageBox.Show(
                 "Идёт запись настроек и перезагрузка устройства. Пожалуйста, подождите...",
                 waitCaption, MessageBoxButtons.OK, MessageBoxIcon.Information))
             { IsBackground = true };
@@ -452,7 +533,7 @@ namespace Uetm_2_0
                 // Для других ошибок выводим сообщение.
                 if (!IsConnectionError(ex))
                 {
-                    MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Ошибка записи: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
 
                 RefreshDevicesList();
@@ -484,7 +565,7 @@ namespace Uetm_2_0
                 if (existing != null)
                 {
                     // Удаляем конфликтующее устройство (оставляем только одно)
-                    Database.Devices.Remove(existing);
+                    _ = Database.Devices.Remove(existing);
                 }
                 // Обновляем IP текущего активного устройства
                 activeDev.IP = newIp;
@@ -509,18 +590,13 @@ namespace Uetm_2_0
             );
 
             // 14. Информируем пользователя о результате
-            if (ExporterLinkerHelper.WasRebootCommandSent)
-            {
-                MessageBox.Show("Настройки успешно записаны. Устройство перезагружается. " +
+            _ = ExporterLinkerHelper.WasRebootCommandSent
+                ? MessageBox.Show("Настройки успешно записаны. Устройство перезагружается. " +
                                 "Подождите несколько секунд и подключитесь заново.",
-                                "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
-            }
-            else
-            {
-                MessageBox.Show("Настройки записаны в буфер, но команда перезагрузки не была подтверждена. " +
+                                "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                : MessageBox.Show("Настройки записаны в буфер, но команда перезагрузки не была подтверждена. " +
                                 "Возможно, потребуется перезагрузить устройство вручную.",
                                 "Предупреждение", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-            }
 
             RefreshDevicesList();
             btnWrite.Enabled = true;
@@ -529,26 +605,27 @@ namespace Uetm_2_0
         // Смена пароля
         private void btnChangePassword_Click(object sender, EventArgs e)
         {
-            
 
-            using (var dlg = new ChangePasswordDialog())
+
+            using ChangePasswordDialog dlg = new();
+            if (dlg.ShowDialog() != DialogResult.OK)
             {
-                if (dlg.ShowDialog() != DialogResult.OK) return;
-
-                // Проверяем текущий пароль администратора (всегда)
-                if (!Database.AppData.Passwords.TryGetValue("Администратор", out string adminPass) ||
-                    adminPass != dlg.CurrentPassword)
-                {
-                    MessageBox.Show("Неверный текущий пароль администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                    return;
-                }
-
-                // Меняем пароль выбранной роли
-                string role = dlg.SelectedRole;
-                LocalDatabase.SavePassword(role, dlg.NewPassword);          // пишем в БД
-                Database.AppData.Passwords[role] = dlg.NewPassword;        // обновляем в памяти
-                MessageBox.Show($"Пароль для роли «{role}» изменён.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                return;
             }
+
+            // Проверяем текущий пароль администратора (всегда)
+            if (!Database.AppData.Passwords.TryGetValue("Администратор", out string adminPass) ||
+                adminPass != dlg.CurrentPassword)
+            {
+                _ = MessageBox.Show("Неверный текущий пароль администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+            // Меняем пароль выбранной роли
+            string role = dlg.SelectedRole;
+            LocalDatabase.SavePassword(role, dlg.NewPassword);          // пишем в БД
+            Database.AppData.Passwords[role] = dlg.NewPassword;        // обновляем в памяти
+            _ = MessageBox.Show($"Пароль для роли «{role}» изменён.", "Успех", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private bool IsConnectionError(Exception ex)
@@ -570,7 +647,7 @@ namespace Uetm_2_0
         private void helpMenu_Click(object sender, EventArgs e)
         {
             string info = "АО «Уралэлектротяжмаш»\nАдрес: ул. Фронтовых бригад, 22, Екатеринбург\nВерсия: 2.0";
-            MessageBox.Show(info, "О предприятии", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            _ = MessageBox.Show(info, "О предприятии", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void UserHelp_Click(object sender, EventArgs e)
@@ -593,7 +670,7 @@ namespace Uetm_2_0
                 "- Таймаут подключения, перезагрузки несколько секунд сек.\n" +
                 "- Список устройств и настройки хранятся в файле config.db.";
 
-            MessageBox.Show(info, "Руководство", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            _ = MessageBox.Show(info, "Руководство", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
     }
 }

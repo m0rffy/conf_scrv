@@ -7,20 +7,20 @@ namespace Uetm_2_0
 {
     public partial class UcGeneral : UserControl
     {
-        private ConfiguratorForm mainForm;
+        private readonly ConfiguratorForm mainForm;
         private DataTable delayTable;
         private bool _updating;
 
         private class BreakerPreset
         {
-            public string Name { get; set; }
-            public string Inn { get; set; }
-            public string Iotc { get; set; }
-            public string Nn { get; set; }
-            public string C1 { get; set; }
-            public string C2 { get; set; }
-            public string C3 { get; set; }
-            public string C4 { get; set; }
+            public required string Name { get; set; }
+            public required string Inn { get; set; }
+            public required string Iotc { get; set; }
+            public required string Nn { get; set; }
+            public required string C1 { get; set; }
+            public required string C2 { get; set; }
+            public required string C3 { get; set; }
+            public required string C4 { get; set; }
         }
 
         private Dictionary<string, BreakerPreset> breakerPresets;
@@ -28,7 +28,11 @@ namespace Uetm_2_0
         private static bool TryParseFloat(string s, out float result)
         {
             result = 0;
-            if (string.IsNullOrWhiteSpace(s)) return false;
+            if (string.IsNullOrWhiteSpace(s))
+            {
+                return false;
+            }
+
             s = s.Replace(',', '.');
             return float.TryParse(s, NumberStyles.Any, CultureInfo.InvariantCulture, out result);
         }
@@ -36,14 +40,13 @@ namespace Uetm_2_0
         private static bool TryParseInt(string s, out int result)
         {
             result = 0;
-            if (string.IsNullOrWhiteSpace(s)) return false;
-            return int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
+            return !string.IsNullOrWhiteSpace(s) && int.TryParse(s, NumberStyles.Integer, CultureInfo.InvariantCulture, out result);
         }
 
         public UcGeneral(ConfiguratorForm mainForm)
         {
             InitializeComponent();
-            this.Dock = DockStyle.Fill;
+            Dock = DockStyle.Fill;
             this.mainForm = mainForm;
             _updating = false;
             InitializeDelayTable();
@@ -53,7 +56,9 @@ namespace Uetm_2_0
             UpdateFromDatabase();
 
             if (switchTypeComboBox != null)
+            {
                 switchTypeComboBox.SelectedIndexChanged += SwitchTypeComboBox_SelectedIndexChanged;
+            }
 
             Validation.NumericOnly(debounceOffTextBox);
             Validation.NumericOnly(debounceOnTextBox);
@@ -77,9 +82,9 @@ namespace Uetm_2_0
         private void InitializeDelayTable()
         {
             delayTable = new DataTable();
-            delayTable.Columns.Add("Канал", typeof(string));
-            delayTable.Columns.Add("Задержка отключения (мс)", typeof(string));
-            delayTable.Columns.Add("Задержка включения (мс)", typeof(string));
+            _ = delayTable.Columns.Add("Канал", typeof(string));
+            _ = delayTable.Columns.Add("Задержка отключения (мс)", typeof(string));
+            _ = delayTable.Columns.Add("Задержка включения (мс)", typeof(string));
             delayDataGridView.DataSource = delayTable;
             delayDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             delayDataGridView.ReadOnly = true;
@@ -108,7 +113,7 @@ namespace Uetm_2_0
 
         private void ApplyBreakerPreset(string selectedName)
         {
-            if (breakerPresets.TryGetValue(selectedName, out var preset))
+            if (breakerPresets.TryGetValue(selectedName, out BreakerPreset? preset))
             {
                 nominalCurrentTextBox.Text = preset.Inn;
                 thresholdCurrentTextBox.Text = preset.Iotc;
@@ -130,11 +135,13 @@ namespace Uetm_2_0
             string c3 = c3TextBox.Text;
             string c4 = c4TextBox.Text;
 
-            foreach (var kvp in breakerPresets)
+            foreach (KeyValuePair<string, BreakerPreset> kvp in breakerPresets)
             {
-                var p = kvp.Value;
+                BreakerPreset p = kvp.Value;
                 if (p.Inn == inn && p.Iotc == iotc && p.Nn == nn && p.C1 == c1 && p.C2 == c2 && p.C3 == c3 && p.C4 == c4)
+                {
                     return kvp.Key;
+                }
             }
             return "Пользовательский";
         }
@@ -147,7 +154,7 @@ namespace Uetm_2_0
                 SetFieldsReadOnly(false);
                 return;
             }
-            if (breakerPresets.TryGetValue(selected, out var preset))
+            if (breakerPresets.TryGetValue(selected, out BreakerPreset? preset))
             {
                 bool same = nominalCurrentTextBox.Text == preset.Inn &&
                             thresholdCurrentTextBox.Text == preset.Iotc &&
@@ -177,7 +184,7 @@ namespace Uetm_2_0
             c4TextBox.ReadOnly = readOnly;
 
             // Задаём свой цвет фона для заблокированных полей
-            Color lockedColor = Color.Gainsboro;  
+            Color lockedColor = Color.Gainsboro;
             nominalCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
             maxCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
             thresholdCurrentTextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
@@ -188,12 +195,16 @@ namespace Uetm_2_0
             c4TextBox.BackColor = readOnly ? lockedColor : SystemColors.Window;
         }
 
-        public new void UpdateFromDatabase()
+        public void UpdateFromDatabase()
         {
-            if (_updating) return;
+            if (_updating)
+            {
+                return;
+            }
+
             _updating = true;
 
-            var settings = Database.GeneralSettings_TextFormat;
+            GeneralSettings_TextFormat settings = Database.GeneralSettings_TextFormat;
 
             nominalCurrentTextBox.Text = settings.swrcs.swnf.Inn ?? "";
             maxCurrentTextBox.Text = settings.swrcs.swnf.Imax ?? "";
@@ -209,34 +220,29 @@ namespace Uetm_2_0
             installationPlaceTextBox.Text = settings.cmns.MntPlce ?? "";
             primaryCurrentTextBox.Text = settings.meas.primct.Inom1 ?? "";
 
-            if (int.TryParse(settings.meas.primct.Inom2, out int secMA))
-                secondaryCurrentTextBox.Text = (secMA / 1000.0).ToString(CultureInfo.InvariantCulture);
-            else secondaryCurrentTextBox.Text = settings.meas.primct.Inom2 ?? "";
+            secondaryCurrentTextBox.Text = int.TryParse(settings.meas.primct.Inom2, out int secMA)
+                ? (secMA / 1000.0).ToString(CultureInfo.InvariantCulture)
+                : settings.meas.primct.Inom2 ?? "";
 
-            if (short.TryParse(settings.swrcs.contacts.ajtr.offd, out short offdTenths))
-                debounceOffTextBox.Text = (offdTenths / 10.0).ToString(CultureInfo.InvariantCulture);
-            else debounceOffTextBox.Text = settings.swrcs.contacts.ajtr.offd ?? "";
+            debounceOffTextBox.Text = short.TryParse(settings.swrcs.contacts.ajtr.offd, out short offdTenths)
+                ? (offdTenths / 10.0).ToString(CultureInfo.InvariantCulture)
+                : settings.swrcs.contacts.ajtr.offd ?? "";
 
-            if (short.TryParse(settings.swrcs.contacts.ajtr.ond, out short ondTenths))
-                debounceOnTextBox.Text = (ondTenths / 10.0).ToString(CultureInfo.InvariantCulture);
-            else debounceOnTextBox.Text = settings.swrcs.contacts.ajtr.ond ?? "";
+            debounceOnTextBox.Text = short.TryParse(settings.swrcs.contacts.ajtr.ond, out short ondTenths)
+                ? (ondTenths / 10.0).ToString(CultureInfo.InvariantCulture)
+                : settings.swrcs.contacts.ajtr.ond ?? "";
 
             delayTable.Rows.Clear();
-            var cdly = settings.swrcs.contacts.cdly ?? new SCDLY_cdly_TextFormat[0];
+            SCDLY_cdly_TextFormat[] cdly = settings.swrcs.contacts.cdly ?? new SCDLY_cdly_TextFormat[0];
             string[] uiChannels = { "A", "B", "C" };
             for (int i = 0; i < uiChannels.Length; i++)
             {
                 int cdlyIndex = i;  // 0=A, 1=B, 2=C
-                if (cdlyIndex < cdly.Length)
-                {
-                    delayTable.Rows.Add(uiChannels[i],
+                _ = cdlyIndex < cdly.Length
+                    ? delayTable.Rows.Add(uiChannels[i],
                         (cdly[cdlyIndex].offd / 10.0).ToString(CultureInfo.InvariantCulture),
-                        (cdly[cdlyIndex].ond / 10.0).ToString(CultureInfo.InvariantCulture));
-                }
-                else
-                {
-                    delayTable.Rows.Add(uiChannels[i], "0", "0");
-                }
+                        (cdly[cdlyIndex].ond / 10.0).ToString(CultureInfo.InvariantCulture))
+                    : delayTable.Rows.Add(uiChannels[i], "0", "0");
             }
 
             string detected = DetectBreakerType();
@@ -247,7 +253,11 @@ namespace Uetm_2_0
 
         public bool SaveToDatabase()
         {
-            if (_updating) return false;
+            if (_updating)
+            {
+                return false;
+            }
+
             _updating = true;
 
             if (Database.CurrentRole != "Администратор")
@@ -259,21 +269,21 @@ namespace Uetm_2_0
             // Пороги сигнализации
             if (!int.TryParse(warningThresholdTextBox.Text, out int warningThreshold) || warningThreshold < 0 || warningThreshold > 80)
             {
-                MessageBox.Show("Порог предупредительной сигнализации должен быть целым числом от 0 до 80.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Порог предупредительной сигнализации должен быть целым числом от 0 до 80.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
             }
             if (!int.TryParse(alarmThresholdTextBox.Text, out int alarmThreshold) || alarmThreshold < 80 || alarmThreshold > 100)
             {
-                MessageBox.Show("Порог аварийной сигнализации должен быть целым числом от 80 до 100.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Порог аварийной сигнализации должен быть целым числом от 80 до 100.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
             }
             if (alarmThreshold <= warningThreshold)
             {
-                MessageBox.Show("Порог аварийной сигнализации должен быть больше порога предупредительной.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Порог аварийной сигнализации должен быть больше порога предупредительной.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -282,32 +292,32 @@ namespace Uetm_2_0
             // Проверка длины строк (UTF-8)
             if (!ModBusFunctions.ValidateStringLength(switchLabelTextBox.Text, 10, out _))
             {
-                MessageBox.Show("Обозначение выключателя слишком длинное. Максимум 9 байт в UTF-8.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Обозначение выключателя слишком длинное. Максимум 9 байт в UTF-8.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
             }
             if (!ModBusFunctions.ValidateStringLength(switchModelTextBox.Text, 32, out _))
             {
-                MessageBox.Show("Марка выключателя слишком длинная. Максимум 31 байт в UTF-8.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Марка выключателя слишком длинная. Максимум 31 байт в UTF-8.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
             }
             if (!ModBusFunctions.ValidateStringLength(installationPlaceTextBox.Text, 32, out _))
             {
-                MessageBox.Show("Место установки слишком длинное. Максимум 31 байт в UTF-8.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Место установки слишком длинное. Максимум 31 байт в UTF-8.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
             }
 
-            var newSettings = Database.GeneralSettings_TextFormat;
+            GeneralSettings_TextFormat newSettings = Database.GeneralSettings_TextFormat;
 
             // Inn
             if (!TryParseInt(nominalCurrentTextBox.Text, out int innA) || innA < 0 || innA > 65000)
             {
-                MessageBox.Show("Номинальный ток должен быть целым числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Номинальный ток должен быть целым числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -317,7 +327,7 @@ namespace Uetm_2_0
             // Imax
             if (!int.TryParse(maxCurrentTextBox.Text, out int imaxKA) || imaxKA < 0 || imaxKA > 100)
             {
-                MessageBox.Show("Номинальный ток отключения должен быть целым числом от 0 до 100 кА.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Номинальный ток отключения должен быть целым числом от 0 до 100 кА.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -330,7 +340,7 @@ namespace Uetm_2_0
             // Iotc
             if (!TryParseFloat(thresholdCurrentTextBox.Text, out float iotcF) || iotcF < 0 || iotcF > 65000)
             {
-                MessageBox.Show("Ток порога должен быть числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Ток порога должен быть числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -340,7 +350,7 @@ namespace Uetm_2_0
             // Nn
             if (!int.TryParse(nominalOperationsTextBox.Text, out int nn) || nn < 0 || nn > 65000)
             {
-                MessageBox.Show("Номинальное количество отключений должно быть целым числом от 0 до 65000.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Номинальное количество отключений должно быть целым числом от 0 до 65000.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -353,7 +363,7 @@ namespace Uetm_2_0
                 !TryParseFloat(c3TextBox.Text, out float c3Val) ||
                 !TryParseFloat(c4TextBox.Text, out float c4Val))
             {
-                MessageBox.Show("Введите корректные числа для коэффициентов C1-C4.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Введите корректные числа для коэффициентов C1-C4.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -368,7 +378,7 @@ namespace Uetm_2_0
             // Inom1
             if (!TryParseInt(primaryCurrentTextBox.Text, out int inom1A) || inom1A < 0 || inom1A > 65000)
             {
-                MessageBox.Show("Номинальный первичный ток должен быть целым числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Номинальный первичный ток должен быть целым числом от 0 до 65000 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -378,7 +388,7 @@ namespace Uetm_2_0
             // Inom2
             if (!TryParseFloat(secondaryCurrentTextBox.Text, out float secA) || secA < 0 || secA > 10)
             {
-                MessageBox.Show("Номинальный вторичный ток должен быть числом от 0 до 10 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Номинальный вторичный ток должен быть числом от 0 до 10 А.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -391,7 +401,7 @@ namespace Uetm_2_0
                 !TryParseFloat(debounceOnTextBox.Text, out float ondMs) ||
                 offdMs * 10 > short.MaxValue || ondMs * 10 > short.MaxValue)
             {
-                MessageBox.Show("Введите корректные числа для задержек дребезга.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Введите корректные числа для задержек дребезга.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 UpdateFromDatabase();
                 _updating = false;
                 return false;
@@ -399,7 +409,7 @@ namespace Uetm_2_0
             newSettings.swrcs.contacts.ajtr.offd = ((int)(offdMs * 10)).ToString(CultureInfo.InvariantCulture);
             newSettings.swrcs.contacts.ajtr.ond = ((int)(ondMs * 10)).ToString(CultureInfo.InvariantCulture);
 
-            
+
             // cdly – пишем в индексы 0,1,2 (A,B,C), N(3) не трогаем
             string[] uiChannels = { "A", "B", "C" };
             for (int i = 0; i < delayTable.Rows.Count && i < uiChannels.Length; i++)
@@ -409,7 +419,7 @@ namespace Uetm_2_0
                     !TryParseFloat(row[2]?.ToString(), out float ondVal) ||
                     offdVal * 10 > short.MaxValue || ondVal * 10 > short.MaxValue)
                 {
-                    MessageBox.Show($"Введите корректные числа для задержек канала {row[0]}.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show($"Введите корректные числа для задержек канала {row[0]}.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     UpdateFromDatabase();
                     _updating = false;
                     return false;
@@ -430,13 +440,13 @@ namespace Uetm_2_0
 
         private void DelayDataGridView_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
         {
-            if (e.ColumnIndex == 1 || e.ColumnIndex == 2)
+            if (e.ColumnIndex is 1 or 2)
             {
-                string newValue = e.FormattedValue?.ToString();
+                string? newValue = e.FormattedValue?.ToString();
                 if (!string.IsNullOrEmpty(newValue) && !TryParseFloat(newValue, out _))
                 {
                     e.Cancel = true;
-                    MessageBox.Show("Введите число с точкой в качестве разделителя.", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    _ = MessageBox.Show("Введите число с точкой в качестве разделителя.", "Ошибка ввода", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 }
             }
         }
@@ -463,7 +473,10 @@ namespace Uetm_2_0
             delayDataGridView.ReadOnly = !isAdmin;
             warningThresholdTextBox.ReadOnly = !isAdmin;
             alarmThresholdTextBox.ReadOnly = !isAdmin;
-            if (!isAdmin) delayDataGridView.DefaultCellStyle.BackColor = SystemColors.Control;
+            if (!isAdmin)
+            {
+                delayDataGridView.DefaultCellStyle.BackColor = SystemColors.Control;
+            }
         }
 
         public Dictionary<string, string> GetGeneralSettingsDictionary()
@@ -491,6 +504,9 @@ namespace Uetm_2_0
             };
         }
 
-        public DataTable GetDelayTable() => delayTable;
+        public DataTable GetDelayTable()
+        {
+            return delayTable;
+        }
     }
 }

@@ -1,30 +1,32 @@
 ﻿using ModBusHelper;
+using NModbus;
 using OfficeOpenXml;
 using System.Data;
+using System.Net.Sockets;
 
 namespace Uetm_2_0
 {
     public partial class UcJournal : UserControl
     {
-        private ConfiguratorForm mainForm;
-        private ModBusProfile profileHelper = new ModBusProfile();
-        private DataTable journalTable;
+        private readonly ConfiguratorForm mainForm;
+        private readonly ModBusProfile profileHelper = new();
+        private readonly DataTable journalTable;
         private List<ModBusProfile.journal_record> records;
 
         public UcJournal(ConfiguratorForm mainForm)
         {
             InitializeComponent();
-            this.Dock = DockStyle.Fill;
+            Dock = DockStyle.Fill;
             this.mainForm = mainForm;
 
             // Таблица журнала (столбцы едины для локальных событий и событий платы)
             journalTable = new DataTable();
-            journalTable.Columns.Add("№", typeof(int));
-            journalTable.Columns.Add("Тип события", typeof(string));
-            journalTable.Columns.Add("Канал / IP", typeof(string));   // буква фазы или IP устройства
-            journalTable.Columns.Add("Дата и время", typeof(string));
-            journalTable.Columns.Add("Ток (А)", typeof(float));
-            journalTable.Columns.Add("Ресурс (%)", typeof(float));
+            _ = journalTable.Columns.Add("№", typeof(int));
+            _ = journalTable.Columns.Add("Тип события", typeof(string));
+            _ = journalTable.Columns.Add("Канал / IP", typeof(string));   // буква фазы или IP устройства
+            _ = journalTable.Columns.Add("Дата и время", typeof(string));
+            _ = journalTable.Columns.Add("Ток (А)", typeof(float));
+            _ = journalTable.Columns.Add("Ресурс (%)", typeof(float));
 
             journalDataGridView.DataSource = journalTable;
             journalDataGridView.AutoGenerateColumns = true;
@@ -52,10 +54,10 @@ namespace Uetm_2_0
             // ----- 1. Локальные события (из таблицы ChangeLog) -----
             try
             {
-                var localEntries = LocalDatabase.GetLogEntries(1000);   // последние 1000 записей
-                foreach (var entry in localEntries)
+                List<ChangeLogEntry> localEntries = LocalDatabase.GetLogEntries(1000);   // последние 1000 записей
+                foreach (ChangeLogEntry entry in localEntries)
                 {
-                    journalTable.Rows.Add(
+                    _ = journalTable.Rows.Add(
                         idx,
                         entry.Description,                              // Тип события (например, «Настройки записаны...»)
                         entry.DeviceIP ?? "",                           // IP устройства (для локальных событий)
@@ -68,23 +70,25 @@ namespace Uetm_2_0
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка чтения локального журнала: {ex.Message}");
+                _ = MessageBox.Show($"Ошибка чтения локального журнала: {ex.Message}");
             }
 
             // ----- 2. Журнал с устройства (только при активном подключении) -----
-            var conn = mainForm.GetCurrentConnection();
+            Tuple<TcpClient, IModbusMaster> conn = mainForm.GetCurrentConnection();
             if (conn?.Item1?.Connected == true)
             {
                 try
                 {
                     records = profileHelper.journal_record_Read(conn.Item2);
-                    foreach (var rec in records)
+                    foreach (ModBusProfile.journal_record rec in records)
                     {
-                        if (rec.hdr.rtype == 1 || rec.hdr.rtype == 2)
+                        if (rec.hdr.rtype is 1 or 2)
                         {
                             // Скрываем события по каналу N (udt == 3)
                             if (rec.hdr.rtype == 1 && rec.hdr.udt == 3)
+                            {
                                 continue;
+                            }
 
                             string eventType = rec.hdr.rtype == 1
                                 ? (rec.hdr.subtype == 0 ? "Отключение" : "Включение")
@@ -93,7 +97,7 @@ namespace Uetm_2_0
                             DateTime dt = PtpTimeHelper.PtpToDateTime(rec.hdr.stamp.ns, rec.hdr.stamp.slo);
                             string channel = (rec.hdr.rtype == 1) ? ChannelNumberToLetter(rec.hdr.udt) : "";
 
-                            journalTable.Rows.Add(
+                            _ = journalTable.Rows.Add(
                                 idx,
                                 eventType,
                                 channel,
@@ -107,54 +111,52 @@ namespace Uetm_2_0
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка чтения журнала устройства: {ex.Message}");
+                    _ = MessageBox.Show($"Ошибка чтения журнала устройства: {ex.Message}");
                 }
             }
 
-            MessageBox.Show($"Загружено {journalTable.Rows.Count} записей");
+            _ = MessageBox.Show($"Загружено {journalTable.Rows.Count} записей");
         }
 
         // ==================== Кнопка "Экспорт в Excel" ====================
         private void ExportButton_Click(object sender, EventArgs e)
         {
-            using (SaveFileDialog sfd = new SaveFileDialog())
+            using SaveFileDialog sfd = new();
+            sfd.Filter = "Excel файлы (*.xlsx)|*.xlsx";
+            sfd.DefaultExt = "xlsx";
+            if (sfd.ShowDialog() == DialogResult.OK)
             {
-                sfd.Filter = "Excel файлы (*.xlsx)|*.xlsx";
-                sfd.DefaultExt = "xlsx";
-                if (sfd.ShowDialog() == DialogResult.OK)
+                try
                 {
-                    try
+                    // Лицензия EPPlus (некоммерческое использование)
+                    ExcelPackage.License.SetNonCommercialPersonal("Пользователь UETM");
+
+                    using (ExcelPackage package = new())
                     {
-                        // Лицензия EPPlus (некоммерческое использование)
-                        ExcelPackage.License.SetNonCommercialPersonal("Пользователь UETM");
+                        // Лист "Состояние"
+                        ExcelWorksheet wsState = package.Workbook.Worksheets.Add("Состояние");
+                        FillStateSheet(wsState);
 
-                        using (var package = new ExcelPackage())
-                        {
-                            // Лист "Состояние"
-                            var wsState = package.Workbook.Worksheets.Add("Состояние");
-                            FillStateSheet(wsState);
+                        // Лист "Общие настройки"
+                        ExcelWorksheet wsGeneral = package.Workbook.Worksheets.Add("Общие настройки");
+                        FillGeneralSheet(wsGeneral);
 
-                            // Лист "Общие настройки"
-                            var wsGeneral = package.Workbook.Worksheets.Add("Общие настройки");
-                            FillGeneralSheet(wsGeneral);
+                        // Лист "Сетевые настройки"
+                        ExcelWorksheet wsNetwork = package.Workbook.Worksheets.Add("Сетевые настройки");
+                        FillNetworkSheet(wsNetwork);
 
-                            // Лист "Сетевые настройки"
-                            var wsNetwork = package.Workbook.Worksheets.Add("Сетевые настройки");
-                            FillNetworkSheet(wsNetwork);
+                        // Лист "Журнал"
+                        ExcelWorksheet wsJournal = package.Workbook.Worksheets.Add("Журнал");
+                        FillJournalSheet(wsJournal);
 
-                            // Лист "Журнал"
-                            var wsJournal = package.Workbook.Worksheets.Add("Журнал");
-                            FillJournalSheet(wsJournal);
-
-                            FileInfo fi = new FileInfo(sfd.FileName);
-                            package.SaveAs(fi);
-                        }
-                        MessageBox.Show("Экспорт завершён", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        FileInfo fi = new(sfd.FileName);
+                        package.SaveAs(fi);
                     }
-                    catch (Exception ex)
-                    {
-                        MessageBox.Show($"Ошибка экспорта: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                    }
+                    _ = MessageBox.Show("Экспорт завершён", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    _ = MessageBox.Show($"Ошибка экспорта: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
         }
@@ -221,9 +223,9 @@ namespace Uetm_2_0
 
         private void FillGeneralSheet(ExcelWorksheet ws)
         {
-            var dict = mainForm.ucGeneral.GetGeneralSettingsDictionary();
+            Dictionary<string, string> dict = mainForm.ucGeneral.GetGeneralSettingsDictionary();
             int row = 1;
-            foreach (var kvp in dict)
+            foreach (KeyValuePair<string, string> kvp in dict)
             {
                 ws.Cells[row, 1].Value = kvp.Key;
                 ws.Cells[row, 2].Value = kvp.Value;
@@ -250,9 +252,9 @@ namespace Uetm_2_0
 
         private void FillNetworkSheet(ExcelWorksheet ws)
         {
-            var dict = mainForm.ucNetwork.GetNetworkSettingsDictionary();
+            Dictionary<string, string> dict = mainForm.ucNetwork.GetNetworkSettingsDictionary();
             int row = 1;
-            foreach (var kvp in dict)
+            foreach (KeyValuePair<string, string> kvp in dict)
             {
                 ws.Cells[row, 1].Value = kvp.Key;
                 ws.Cells[row, 2].Value = kvp.Value;
@@ -270,12 +272,19 @@ namespace Uetm_2_0
             }
             // Заголовки столбцов
             for (int i = 0; i < journalTable.Columns.Count; i++)
+            {
                 ws.Cells[1, i + 1].Value = journalTable.Columns[i].ColumnName;
+            }
 
             // Данные
             for (int i = 0; i < journalTable.Rows.Count; i++)
+            {
                 for (int j = 0; j < journalTable.Columns.Count; j++)
+                {
                     ws.Cells[i + 2, j + 1].Value = journalTable.Rows[i][j]?.ToString();
+                }
+            }
+
             ws.Cells.AutoFitColumns();
         }
     }

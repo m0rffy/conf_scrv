@@ -1,5 +1,6 @@
 ﻿using ModBusHelper;
 using NModbus;
+using NModbus.Message;
 using System.ComponentModel;
 using System.Data;
 using System.Globalization;
@@ -10,12 +11,12 @@ namespace Uetm_2_0
 {
     public partial class UcManagement : UserControl
     {
-        private ConfiguratorForm mainForm;
+        private readonly ConfiguratorForm mainForm;
         private BackgroundWorker backgroundWorker;
         private DataTable rmsTable;
         private DataTable cntvTable;
-        private ModBusProfile profileHelper = new ModBusProfile();
-        private ModBusCommands commandsHelper = new ModBusCommands();
+        private readonly ModBusProfile profileHelper = new();
+        private readonly ModBusCommands commandsHelper = new();
         private Tuple<TcpClient, IModbusMaster> _connection;
         private string _lastIp = "";
         private bool _manualTimeSet = false;
@@ -24,7 +25,7 @@ namespace Uetm_2_0
         public UcManagement(ConfiguratorForm mainForm)
         {
             InitializeComponent();
-            this.Dock = DockStyle.Fill;
+            Dock = DockStyle.Fill;
             this.mainForm = mainForm;
             InitializeDataTables();
             InitializeBackgroundWorker();
@@ -34,7 +35,7 @@ namespace Uetm_2_0
 
             ipTextBox.Text = _lastIp;
 
-            var existingConnection = mainForm.GetCurrentConnection();
+            Tuple<TcpClient, IModbusMaster> existingConnection = mainForm.GetCurrentConnection();
             if (existingConnection != null && existingConnection.Item1.Connected)
             {
                 OnConnectionStarted(existingConnection);
@@ -44,8 +45,8 @@ namespace Uetm_2_0
         private void InitializeDataTables()
         {
             rmsTable = new DataTable();
-            rmsTable.Columns.Add("Канал", typeof(string));
-            rmsTable.Columns.Add("Значение (А)", typeof(float));
+            _ = rmsTable.Columns.Add("Канал", typeof(string));
+            _ = rmsTable.Columns.Add("Значение (А)", typeof(float));
             rmsDataGridView.DataSource = rmsTable;
             rmsDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             rmsDataGridView.RowHeadersVisible = false;
@@ -54,10 +55,10 @@ namespace Uetm_2_0
             rmsDataGridView.DataError += (s, e) => e.ThrowException = false;
 
             cntvTable = new DataTable();
-            cntvTable.Columns.Add("Канал", typeof(string));
-            cntvTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
-            cntvTable.Columns.Add("Количество отключений", typeof(int));
-            cntvTable.Columns.Add("Количество включений", typeof(int));
+            _ = cntvTable.Columns.Add("Канал", typeof(string));
+            _ = cntvTable.Columns.Add("Выработанный ресурс (%)", typeof(float));
+            _ = cntvTable.Columns.Add("Количество отключений", typeof(int));
+            _ = cntvTable.Columns.Add("Количество включений", typeof(int));
             cntvDataGridView.DataSource = cntvTable;
             cntvDataGridView.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.Fill;
             cntvDataGridView.RowHeadersVisible = false;
@@ -68,8 +69,10 @@ namespace Uetm_2_0
 
         private void InitializeBackgroundWorker()
         {
-            backgroundWorker = new BackgroundWorker();
-            backgroundWorker.WorkerSupportsCancellation = true;
+            backgroundWorker = new BackgroundWorker
+            {
+                WorkerSupportsCancellation = true
+            };
             backgroundWorker.DoWork += BackgroundWorker_DoWork;
         }
 
@@ -108,13 +111,26 @@ namespace Uetm_2_0
 
         private bool IsConnectionError(Exception ex)
         {
-            if (ex == null) return false;
+            if (ex == null)
+            {
+                return false;
+            }
+
             if (ex is AggregateException agg)
+            {
                 return agg.InnerExceptions.Any(IsConnectionError);
-            if (ex is SocketException || ex is IOException)
+            }
+
+            if (ex is SocketException or IOException)
+            {
                 return true;
+            }
+
             if (ex is InvalidOperationException && ex.Message.Contains("connected"))
+            {
                 return true;
+            }
+
             string msg = ex.Message.ToLower();
             return msg.Contains("socket") ||
                    msg.Contains("connection") ||
@@ -128,39 +144,47 @@ namespace Uetm_2_0
 
         private void BackgroundWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            var connection = e.Argument as Tuple<TcpClient, IModbusMaster>;
-            if (connection == null) return;
+            if (e.Argument is not Tuple<TcpClient, IModbusMaster> connection)
+            {
+                return;
+            }
 
             TcpClient tcpClient = connection.Item1;
             IModbusMaster modbusMaster = connection.Item2;
-            string deviceIP = null;
+            string? deviceIP = null;
             if (tcpClient?.Client?.RemoteEndPoint is IPEndPoint ep)
             {
                 deviceIP = ep.Address.ToString();
-                if (deviceIP.StartsWith("::ffff:")) deviceIP = deviceIP.Substring(7);
+                if (deviceIP.StartsWith("::ffff:"))
+                {
+                    deviceIP = deviceIP[7..];
+                }
             }
 
             while (!backgroundWorker.CancellationPending)
             {
                 if (tcpClient == null || !tcpClient.Connected)
                 {
-                    SafeInvoke(() => mainForm.Disconnect());
+                    SafeInvoke(mainForm.Disconnect);
                     break;
                 }
 
                 try
                 {
-                    var esp = profileHelper.ect_state_page_Read(modbusMaster);
-                    var ssp = profileHelper.swrct_state_page_Read(modbusMaster);
-                    var timeData = profileHelper.time_Read(modbusMaster);
+                    ModBusProfile.esp esp = profileHelper.ect_state_page_Read(modbusMaster);
+                    ModBusProfile.ssp ssp = profileHelper.swrct_state_page_Read(modbusMaster);
+                    ModBusProfile.time timeData = profileHelper.time_Read(modbusMaster);
                     DateTime dt = PtpTimeHelper.PtpToDateTime(timeData.ptpval.ns, timeData.ptpval.slo, timeData.ptsecHi);
-                    var cmns = profileHelper.cmns_Read(modbusMaster);
+                    ModBusProfile.cmns cmns = profileHelper.cmns_Read(modbusMaster);
 
                     // Вычисляем Inom1 для пересчёта тока
                     float inom1 = 1.0f;
                     string inom1Str = Database.GeneralSettings_TextFormat.meas.primct.Inom1;
                     if (!string.IsNullOrEmpty(inom1Str))
-                        float.TryParse(inom1Str, NumberStyles.Any, CultureInfo.InvariantCulture, out inom1);
+                    {
+                        _ = float.TryParse(inom1Str, NumberStyles.Any, CultureInfo.InvariantCulture, out inom1);
+                    }
+
                     _inom1 = inom1;
 
                     SafeInvoke(() =>
@@ -170,7 +194,10 @@ namespace Uetm_2_0
                         UpdateStatus(esp.ste);
                         UpdateRtcStatus(ssp.ste[2]);
                         if (!_manualTimeSet)
+                        {
                             deviceTimeLabel.Text = dt.ToString("dd.MM.yyyy HH:mm:ss");
+                        }
+
                         serialNumberLabel.Text = cmns.SerialNo.ToString();
                         firmwareVersionLabel.Text = cmns.FmwVer.ToString();
                     });
@@ -179,7 +206,7 @@ namespace Uetm_2_0
                 {
                     if (IsConnectionError(ex))
                     {
-                        SafeInvoke(() => mainForm.Disconnect());
+                        SafeInvoke(mainForm.Disconnect);
                         break;
                     }
                     else
@@ -206,7 +233,7 @@ namespace Uetm_2_0
                 if (i < rms.Length)
                 {
                     float current = (float)Math.Sqrt(Math.Max(0, rms[i])) * _inom1;
-                    rmsTable.Rows.Add(labels[i], current);
+                    _ = rmsTable.Rows.Add(labels[i], current);
                 }
             }
         }
@@ -219,7 +246,7 @@ namespace Uetm_2_0
             {
                 if (i < cntv.Length)
                 {
-                    cntvTable.Rows.Add(labels[i], cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
+                    _ = cntvTable.Rows.Add(labels[i], cntv[i].Racc, cntv[i].ofcnt, cntv[i].oNacnt);
                 }
             }
         }
@@ -228,6 +255,7 @@ namespace Uetm_2_0
         {
             deviceStatusLabel.Text = (ste.Length > 0 && ste[0] == 0) ? "В работе" : "Ошибка";
             if (ste.Length > 1)
+            {
                 syncStatusLabel.Text = ste[1] switch
                 {
                     0 => "Не синхронизированы",
@@ -235,15 +263,29 @@ namespace Uetm_2_0
                     2 => "Точная",
                     _ => "Неизвестно"
                 };
+            }
         }
 
-        private void UpdateRtcStatus(byte rtcSte) => rtcStatusLabel.Text = rtcSte == 0 ? "Работают" : "Ошибка";
+        private void UpdateRtcStatus(byte rtcSte)
+        {
+            rtcStatusLabel.Text = rtcSte == 0 ? "Работают" : "Ошибка";
+        }
 
         private void SafeInvoke(Action action)
         {
-            if (this.IsDisposed || this.Disposing) return;
-            if (InvokeRequired) Invoke(action);
-            else action();
+            if (IsDisposed || Disposing)
+            {
+                return;
+            }
+
+            if (InvokeRequired)
+            {
+                Invoke(action);
+            }
+            else
+            {
+                action();
+            }
         }
 
         // ======================= Кнопки управления =======================
@@ -253,24 +295,23 @@ namespace Uetm_2_0
             string ip = ipTextBox.Text.Trim();
             if (!IPAddress.TryParse(ip, out _))
             {
-                MessageBox.Show("Некорректный IP адрес.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Некорректный IP адрес.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
-            int port;
-            if (!int.TryParse(portTextBox.Text, out port) || port < 1 || port > 65535)
+            if (!int.TryParse(portTextBox.Text, out int port) || port < 1 || port > 65535)
             {
-                MessageBox.Show("Некорректный порт (1–65535).", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Некорректный порт (1–65535).", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
             if (Database.Devices.Exists(d => d.IP == ip))
             {
-                MessageBox.Show("Устройство с таким IP уже есть в списке.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                _ = MessageBox.Show("Устройство с таким IP уже есть в списке.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                 return;
             }
 
             _lastIp = ip;
 
-            var newDev = new DeviceInfo
+            DeviceInfo newDev = new()
             {
                 IP = ip,
                 Port = port,
@@ -290,31 +331,32 @@ namespace Uetm_2_0
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
             if (MessageBox.Show("Обнулить счётчик ресурса выключателя?", "Подтверждение", MessageBoxButtons.YesNo, MessageBoxIcon.Question) != DialogResult.Yes)
+            {
                 return;
+            }
 
-            var conn = mainForm.GetCurrentConnection();
+            Tuple<TcpClient, IModbusMaster> conn = mainForm.GetCurrentConnection();
             if (conn?.Item1?.Connected == true)
             {
                 try
                 {
-                    var response = commandsHelper.nulify_swrc(conn.Item2);
-                    if (response.Data[0] == 0xFF)
-                        MessageBox.Show("Счётчик ресурса обнулён.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                    else
-                        MessageBox.Show("Ошибка обнуления счётчика.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    WriteSingleRegisterRequestResponse response = commandsHelper.nulify_swrc(conn.Item2);
+                    _ = response.Data[0] == 0xFF
+                        ? MessageBox.Show("Счётчик ресурса обнулён.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information)
+                        : MessageBox.Show("Ошибка обнуления счётчика.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
                 catch (Exception ex)
                 {
-                    MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    _ = MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 }
             }
             else
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -322,75 +364,73 @@ namespace Uetm_2_0
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
-            var conn = mainForm.GetCurrentConnection();
+            Tuple<TcpClient, IModbusMaster> conn = mainForm.GetCurrentConnection();
             if (conn?.Item1?.Connected != true)
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
             try
             {
-                var esp = profileHelper.ect_state_page_Read(conn.Item2);
+                ModBusProfile.esp esp = profileHelper.ect_state_page_Read(conn.Item2);
                 if (esp.ste.Length > 1 && esp.ste[1] != 0)
                 {
-                    MessageBox.Show("Невозможно изменить время – устройство синхронизировано с PTP мастером.",
+                    _ = MessageBox.Show("Невозможно изменить время – устройство синхронизировано с PTP мастером.",
                         "Операция запрещена", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                     return;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Ошибка проверки синхронизации: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show($"Ошибка проверки синхронизации: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            using (var dialog = new SetTimeDialog())
+            using SetTimeDialog dialog = new();
+            if (dialog.ShowDialog() == DialogResult.OK)
             {
-                if (dialog.ShowDialog() == DialogResult.OK)
+                try
                 {
-                    try
+                    (uint ns, uint slo, ushort ptsecHi) = PtpTimeHelper.DateTimeToPtp(dialog.SelectedDateTime);
+                    ushort[] registers = new ushort[6];
+                    registers[0] = (ushort)((ns >> 16) & 0xFFFF);
+                    registers[1] = (ushort)(ns & 0xFFFF);
+                    registers[2] = (ushort)((slo >> 16) & 0xFFFF);
+                    registers[3] = (ushort)(slo & 0xFFFF);
+                    registers[4] = ptsecHi;
+                    registers[5] = 0;
+
+                    conn.Item2.WriteMultipleRegisters(0, 2816, registers);
+                    System.Threading.Thread.Sleep(200);
+
+                    ModBusCommands commands = new();
+                    _ = commands.upload_settings(conn.Item2, 0x0100);
+
+                    SafeInvoke(() => deviceTimeLabel.Text = dialog.SelectedDateTime.ToString("dd.MM.yyyy HH:mm:ss"));
+                    mainForm.Disconnect();
+                    mainForm.RefreshDevicesList();
+
+                    _ = MessageBox.Show("Время установлено. Устройство перезагружается. Подождите несколько секунд и подключитесь заново.",
+                        "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                }
+                catch (Exception ex)
+                {
+                    if (IsConnectionError(ex))
                     {
-                        (uint ns, uint slo, ushort ptsecHi) = PtpTimeHelper.DateTimeToPtp(dialog.SelectedDateTime);
-                        ushort[] registers = new ushort[6];
-                        registers[0] = (ushort)((ns >> 16) & 0xFFFF);
-                        registers[1] = (ushort)(ns & 0xFFFF);
-                        registers[2] = (ushort)((slo >> 16) & 0xFFFF);
-                        registers[3] = (ushort)(slo & 0xFFFF);
-                        registers[4] = ptsecHi;
-                        registers[5] = 0;
-
-                        conn.Item2.WriteMultipleRegisters(0, 2816, registers);
-                        System.Threading.Thread.Sleep(200);
-
-                        var commands = new ModBusCommands();
-                        commands.upload_settings(conn.Item2, 0x0100);
-
                         SafeInvoke(() => deviceTimeLabel.Text = dialog.SelectedDateTime.ToString("dd.MM.yyyy HH:mm:ss"));
                         mainForm.Disconnect();
                         mainForm.RefreshDevicesList();
-
-                        MessageBox.Show("Время установлено. Устройство перезагружается. Подождите несколько секунд и подключитесь заново.",
-                            "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        _ = MessageBox.Show("Время установлено. Устройство перезагружается.",
+                            "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                     }
-                    catch (Exception ex)
+                    else
                     {
-                        if (IsConnectionError(ex))
-                        {
-                            SafeInvoke(() => deviceTimeLabel.Text = dialog.SelectedDateTime.ToString("dd.MM.yyyy HH:mm:ss"));
-                            mainForm.Disconnect();
-                            mainForm.RefreshDevicesList();
-                            MessageBox.Show("Время установлено. Устройство перезагружается.",
-                                "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
-                        }
-                        else
-                        {
-                            MessageBox.Show($"Ошибка установки времени: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                        }
+                        _ = MessageBox.Show($"Ошибка установки времени: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
@@ -398,7 +438,11 @@ namespace Uetm_2_0
 
         public void WaitForBackgroundWorkerStop()
         {
-            if (backgroundWorker == null) return;
+            if (backgroundWorker == null)
+            {
+                return;
+            }
+
             if (backgroundWorker.IsBusy)
             {
                 backgroundWorker.CancelAsync();
@@ -415,57 +459,92 @@ namespace Uetm_2_0
         {
             if (Database.CurrentRole != "Администратор")
             {
-                MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                _ = MessageBox.Show("Требуются права администратора.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return;
             }
 
             if (MessageBox.Show("Перезагрузить устройство? Соединение будет разорвано.", "Подтверждение",
                 MessageBoxButtons.YesNo, MessageBoxIcon.Warning) != DialogResult.Yes)
+            {
                 return;
+            }
 
-            var conn = mainForm.GetCurrentConnection();
+            Tuple<TcpClient, IModbusMaster> conn = mainForm.GetCurrentConnection();
             if (conn?.Item1?.Connected == true)
             {
                 try
                 {
-                    var response = commandsHelper.reset_ect(conn.Item2);
+                    WriteSingleRegisterRequestResponse response = commandsHelper.reset_ect(conn.Item2);
                     if (response.Data[0] == 0xFF)
                     {
-                        MessageBox.Show("Устройство перезагружается.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        _ = MessageBox.Show("Устройство перезагружается.", "Успешно", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         mainForm.Disconnect();
                         mainForm.RefreshDevicesList();
                     }
                     else
-                        MessageBox.Show("Ошибка перезагрузки.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    {
+                        _ = MessageBox.Show("Ошибка перезагрузки.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
                 }
                 catch (Exception ex)
                 {
                     if (IsConnectionError(ex))
                     {
-                        MessageBox.Show("Устройство перезагружается.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        _ = MessageBox.Show("Устройство перезагружается.", "Информация", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         mainForm.Disconnect();
                         mainForm.RefreshDevicesList();
                     }
                     else
                     {
-                        MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        _ = MessageBox.Show($"Ошибка: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                     }
                 }
             }
             else
             {
-                MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                _ = MessageBox.Show("Нет подключения к устройству.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
         // Публичные свойства для экспорта в Excel
-        public DataTable GetRmsDataTable() => rmsTable;
-        public DataTable GetCntvDataTable() => cntvTable;
-        public string GetDeviceStatusText() => deviceStatusLabel.Text;
-        public string GetSyncStatusText() => syncStatusLabel.Text;
-        public string GetRtcStatusText() => rtcStatusLabel.Text;
-        public string GetDeviceTimeText() => deviceTimeLabel.Text;
-        public string GetSerialNumberText() => serialNumberLabel.Text;
-        public string GetFirmwareVersionText() => firmwareVersionLabel.Text;
+        public DataTable GetRmsDataTable()
+        {
+            return rmsTable;
+        }
+
+        public DataTable GetCntvDataTable()
+        {
+            return cntvTable;
+        }
+
+        public string GetDeviceStatusText()
+        {
+            return deviceStatusLabel.Text;
+        }
+
+        public string GetSyncStatusText()
+        {
+            return syncStatusLabel.Text;
+        }
+
+        public string GetRtcStatusText()
+        {
+            return rtcStatusLabel.Text;
+        }
+
+        public string GetDeviceTimeText()
+        {
+            return deviceTimeLabel.Text;
+        }
+
+        public string GetSerialNumberText()
+        {
+            return serialNumberLabel.Text;
+        }
+
+        public string GetFirmwareVersionText()
+        {
+            return firmwareVersionLabel.Text;
+        }
     }
 }

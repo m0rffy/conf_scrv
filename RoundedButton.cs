@@ -1,7 +1,4 @@
-﻿using System;
-using System.Drawing;
-using System.Drawing.Drawing2D;
-using System.Windows.Forms;
+﻿using System.Drawing.Drawing2D;
 
 namespace Uetm_2_0
 {
@@ -11,15 +8,15 @@ namespace Uetm_2_0
         private Color _borderColor = Color.Black;
         private float _borderWidth = 1f;
 
-        private Color _normalBackColor = Color.SkyBlue;
-        private Color _hoverBackColor = Color.SteelBlue;
-        private Color _pressedBackColor = Color.DeepSkyBlue;   
+        private readonly Color _normalBackColor = Color.SkyBlue;
+        private readonly Color _hoverBackColor = Color.SteelBlue;
+        private Color _pressedBackColor = Color.DeepSkyBlue;
 
         private bool _isHovered = false;
         private bool _isPressed = false;
 
         // Сдвиг текста (эффект вдавливания) – теперь включён по умолчанию
-        private bool _textShiftOnPress = true;  
+        private bool _textShiftOnPress = true;
         private int _textShiftAmount = 1;        // сдвиг при нажатии
         public int BorderRadius
         {
@@ -96,37 +93,36 @@ namespace Uetm_2_0
             g.SmoothingMode = SmoothingMode.AntiAlias;
             g.PixelOffsetMode = PixelOffsetMode.HighQuality;
 
-            Color currentBack;
-            if (_isPressed)
-                currentBack = _pressedBackColor;
-            else if (_isHovered)
-                currentBack = _hoverBackColor;
-            else
-                currentBack = _normalBackColor;
-
+            Color currentBack = _isPressed ? _pressedBackColor : _isHovered ? _hoverBackColor : _normalBackColor;
             Color parentBack = GetActualParentBackColor();
 
             // 1. Заливка родительским цветом
-            using (SolidBrush br = new SolidBrush(parentBack))
+            using (SolidBrush br = new(parentBack))
+            {
                 g.FillRectangle(br, ClientRectangle);
+            }
 
             // 2. Чёрная рамка
             using (GraphicsPath outerPath = GetRoundedPath(ClientRectangle, _borderRadius))
-            using (SolidBrush borderBrush = new SolidBrush(_borderColor))
+            using (SolidBrush borderBrush = new(_borderColor))
+            {
                 g.FillPath(borderBrush, outerPath);
+            }
 
             // 3. Внутренний фон
             float inset = _borderWidth;
-            Rectangle innerRect = new Rectangle(
+            Rectangle innerRect = new(
                 (int)(ClientRectangle.X + inset),
                 (int)(ClientRectangle.Y + inset),
-                (int)(ClientRectangle.Width - 2 * inset),
-                (int)(ClientRectangle.Height - 2 * inset)
+                (int)(ClientRectangle.Width - (2 * inset)),
+                (int)(ClientRectangle.Height - (2 * inset))
             );
             int innerRadius = Math.Max(0, _borderRadius - (int)inset);
             using (GraphicsPath innerPath = GetRoundedPath(innerRect, innerRadius))
-            using (SolidBrush fillBrush = new SolidBrush(currentBack))
+            using (SolidBrush fillBrush = new(currentBack))
+            {
                 g.FillPath(fillBrush, innerPath);
+            }
 
             // 4. Текст с возможным сдвигом при нажатии
             Rectangle textRect = ClientRectangle;
@@ -136,22 +132,23 @@ namespace Uetm_2_0
                 textRect.Y += _textShiftAmount;
             }
 
-            using (StringFormat sf = new StringFormat())
-            {
-                sf.Alignment = StringAlignment.Center;
-                sf.LineAlignment = StringAlignment.Center;
-                using (SolidBrush textBrush = new SolidBrush(ForeColor))
-                    g.DrawString(Text, Font, textBrush, textRect, sf);
-            }
+            using StringFormat sf = new();
+            sf.Alignment = StringAlignment.Center;
+            sf.LineAlignment = StringAlignment.Center;
+            using SolidBrush textBrush = new(ForeColor);
+            g.DrawString(Text, Font, textBrush, textRect, sf);
         }
 
         private Color GetActualParentBackColor()
         {
-            Control parent = this.Parent;
+            Control parent = Parent;
             while (parent != null)
             {
                 if (parent.BackColor != Color.Transparent)
+                {
                     return parent.BackColor;
+                }
+
                 parent = parent.Parent;
             }
             return SystemColors.Control;
@@ -159,7 +156,7 @@ namespace Uetm_2_0
 
         private GraphicsPath GetRoundedPath(Rectangle rect, int radius)
         {
-            GraphicsPath path = new GraphicsPath();
+            GraphicsPath path = new();
             path.AddArc(rect.X, rect.Y, radius, radius, 180, 90);
             path.AddArc(rect.Right - radius, rect.Y, radius, radius, 270, 90);
             path.AddArc(rect.Right - radius, rect.Bottom - radius, radius, radius, 0, 90);

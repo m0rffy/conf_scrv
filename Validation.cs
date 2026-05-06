@@ -16,7 +16,7 @@
             {
                 string original = textBox.Text;
                 string withDot = original.Replace(',', '.');
-                string filtered = new string(withDot.Where(c => char.IsDigit(c) || c == '-' || c == '.').ToArray());
+                string filtered = new(withDot.Where(c => char.IsDigit(c) || c == '-' || c == '.').ToArray());
                 if (original != filtered)
                 {
                     textBox.Text = filtered;
