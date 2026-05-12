@@ -11,7 +11,6 @@
         "dependencies": {
           "EPPlus": "8.5.3",
           "System.Data.SQLite.Core": "1.0.119",
-          "CommonFunctions": "1.0.0.0",
           "ModBusHelper": "1.0.0.0",
           "NModbus": "1.0.0.0",
           "runtimepack.Microsoft.NETCore.App.Runtime.win-x64": "8.0.26",
@@ -1105,14 +1104,6 @@
           "Stub.System.Data.SQLite.Core.NetStandard": "1.0.119"
         }
       },
-      "CommonFunctions/1.0.0.0": {
-        "runtime": {
-          "CommonFunctions.dll": {
-            "assemblyVersion": "1.0.0.0",
-            "fileVersion": "1.0.0.0"
-          }
-        }
-      },
       "ModBusHelper/1.0.0.0": {
         "runtime": {
           "ModBusHelper.dll": {
@@ -1237,11 +1228,6 @@
       "sha512": "sha512-bhQB8HVtRA+OOYw8UTD1F1kU+nGJ0/OZvH1JmlVUI4bGvgVEWeX1NcHjA765NvUoRVuCPlt8PrEpZ1thSsk1jg==",
       "path": "system.data.sqlite.core/1.0.119",
       "hashPath": "system.data.sqlite.core.1.0.119.nupkg.sha512"
-    },
-    "CommonFunctions/1.0.0.0": {
-      "type": "reference",
-      "serviceable": false,
-      "sha512": ""
     },
     "ModBusHelper/1.0.0.0": {
       "type": "reference",
